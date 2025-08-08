@@ -1,4 +1,3 @@
-# Laravel CAS Server - Production Docker Image
 FROM php:8.3-fpm-alpine
 
 WORKDIR /var/www/html
@@ -16,7 +15,8 @@ RUN apk add --no-cache \
     supervisor \
     bash \
     nodejs \
-    npm
+    npm \
+    openssl
 
 RUN docker-php-ext-install \
     pdo_pgsql \
