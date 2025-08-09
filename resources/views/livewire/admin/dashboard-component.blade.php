@@ -96,7 +96,6 @@
                     <div class="flex items-center space-x-3">
                         <div class="w-16 text-xs text-gray-500">{{ $day['label'] }}</div>
                         <div class="flex-1 flex space-x-1">
-                            <!-- Logins Bar -->
                             <div class="flex-1">
                                 <div class="flex items-center justify-between text-xs text-gray-600 mb-1">
                                     <span>Logins: {{ $day['logins'] }}</span>
@@ -105,7 +104,6 @@
                                     <div class="bg-blue-600 h-2 rounded-full" style="width: {{ $activityData ? min(100, ($day['logins'] / max(1, collect($activityData)->max('logins'))) * 100) : 0 }}%"></div>
                                 </div>
                             </div>
-                            <!-- SSO Tokens Bar -->
                             <div class="flex-1">
                                 <div class="flex items-center justify-between text-xs text-gray-600 mb-1">
                                     <span>SSO: {{ $day['sso_tokens'] }}</span>
@@ -194,7 +192,7 @@
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center">
                                     <div class="flex-shrink-0">
-                                        @if($activity->success)
+                                        @if($activity['success'])
                                             <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
                                                 <svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
                                                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
@@ -210,18 +208,18 @@
                                     </div>
                                     <div class="ml-4">
                                         <div class="text-sm font-medium text-gray-900">
-                                            {{ ucfirst(str_replace('_', ' ', $activity->event_type)) }}
+                                            {{ ucfirst(str_replace('_', ' ', $activity['event_type'])) }}
                                         </div>
                                         <div class="text-sm text-gray-500">
-                                            {{ $activity->username ?? 'System' }} • {{ $activity->ip_address }}
-                                            @if($activity->client_system_name)
-                                                • {{ $activity->client_system_name }}
+                                            {{ $activity['username'] ?? 'System' }} • {{ $activity['ip_address'] }}
+                                            @if($activity['client_system_name'] && $activity['client_system_name'] !== 'N/A')
+                                                • {{ $activity['client_system_name'] }}
                                             @endif
                                         </div>
                                     </div>
                                 </div>
                                 <div class="text-sm text-gray-500">
-                                    {{ $activity->created_at ? \Carbon\Carbon::parse($activity->created_at)->diffForHumans() : 'Unknown' }}
+                                    {{ $activity['created_at'] ? \Carbon\Carbon::parse($activity['created_at'])->diffForHumans() : 'Unknown' }}
                                 </div>
                             </div>
                         </li>

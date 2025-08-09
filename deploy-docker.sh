@@ -167,6 +167,39 @@ show_logs() {
     fi
 }
 
+update_code() {
+#    log_info "Updating code from Git repository..."
+#
+#    if git pull origin master; then
+#        log_success "Git pull completed successfully"
+#    else
+#        log_warning "Git pull failed or no changes to pull"
+#    fi
+
+    log_info "Restarting one system container..."
+    docker compose restart
+
+    # Wait for application to be ready
+    log_info "Waiting for application to restart..."
+    timeout=60
+    while [ $timeout -gt 0 ]; do
+        if curl -f http://localhost:8000/health &> /dev/null; then
+            log_success "One System application is ready"
+            break
+        fi
+        sleep 2
+        timeout=$((timeout-2))
+    done
+
+    if [ $timeout -le 0 ]; then
+        log_error "Application failed to restart within timeout"
+        exit 1
+    fi
+
+    log_success "Code updated successfully!"
+    show_status
+}
+
 main() {
     case "${1:-deploy}" in
         "deploy")
@@ -188,6 +221,9 @@ main() {
             log_info "Restarting services..."
             docker-compose restart
             log_success "Services restarted"
+            ;;
+        "update")
+            update_code
             ;;
         "logs")
             show_logs "logs"
