@@ -60,6 +60,8 @@ services:
       - .:/var/www/html
     working_dir: /var/www/html
     entrypoint: ['composer']
+    networks:
+      - one-system-network
 
   artisan:
     build:
@@ -74,6 +76,8 @@ services:
       - .env
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    networks:
+      - one-system-network
 
 volumes:
   redis_data:
