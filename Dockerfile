@@ -27,7 +27,8 @@ RUN docker-php-ext-install \
     bcmath \
     gd \
     xml \
-    soap
+    soap \
+    intl
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
@@ -35,7 +36,7 @@ RUN addgroup -g 1000 www && \
     adduser -u 1000 -G www -s /bin/sh -D www
 
 COPY --chown=www:www . .
-
+RUN cp .env.docker .env
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 
 RUN npm install && npm run build
@@ -52,9 +53,12 @@ COPY docker/supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
+RUN mkdir -p /var/log/supervisor && \
+    chown -R www:www /var/log/supervisor
+
 EXPOSE 80
 
-USER www
+#USER www
 
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
     CMD curl -f http://localhost/health || exit 1

@@ -14,7 +14,7 @@ echo "Database connected successfully!"
 
 echo "Running Laravel setup commands..."
 
-if grep -q "APP_KEY=base64:CHANGEME" /var/www/html/.env; then
+if grep -q "APP_KEY=base64::CHANGEME" /var/www/html/.env; then
     echo "Generating application key..."
     php artisan key:generate --force
 fi
@@ -25,10 +25,10 @@ php artisan config:cache
 echo "Running database migrations..."
 php artisan migrate --force
 
-if [ "$APP_ENV" = "local" ] || [ "$APP_ENV" = "development" ]; then
+#if [ "$APP_ENV" = "local" ] || [ "$APP_ENV" = "development" ]; then
     echo "Seeding database..."
     php artisan db:seed --force
-fi
+#fi
 
 echo "Creating storage symlink..."
 php artisan storage:link || true
@@ -44,10 +44,10 @@ chown -R www:www /var/www/html/bootstrap/cache
 chmod -R 775 /var/www/html/storage
 chmod -R 775 /var/www/html/bootstrap/cache
 
-mkdir -p /var/log/supervisor
-mkdir -p /var/www/html/storage/logs
+#mkdir -p /var/log/supervisor
+#mkdir -p /var/www/html/storage/logs
 
-echo "Laravel CAS Server setup completed!"
+echo "One System setup completed!"
 
 echo "Starting supervisor..."
 exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf

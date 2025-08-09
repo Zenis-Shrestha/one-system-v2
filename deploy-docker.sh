@@ -3,7 +3,7 @@
 set -e
 
 PROJECT_NAME="one-system"
-COMPOSE_FILE="docker-compose.yml"
+COMPOSE_FILE="docker compose.yml"
 ENV_FILE=".env"
 
 RED='\033[0;31m'
@@ -35,7 +35,7 @@ check_docker() {
         exit 1
     fi
     
-    if ! command -v docker-compose &> /dev/null; then
+    if ! command -v docker compose &> /dev/null; then
         log_error "Docker Compose is not installed. Please install Docker Compose first."
         exit 1
     fi
@@ -59,6 +59,7 @@ prepare_environment() {
     if grep -q "APP_KEY=base64:CHANGEME" "$ENV_FILE"; then
         log_info "Generating new application key..."
         NEW_KEY=$(openssl rand -base64 32)
+#        sed -i '' "s|APP_KEY=base64:CHANGEME|APP_KEY=base64:$NEW_KEY|g" "$ENV_FILE"
         sed -i "s|APP_KEY=base64:CHANGEME|APP_KEY=base64:$NEW_KEY|g" "$ENV_FILE"
         log_success "Application key generated"
     fi
@@ -66,6 +67,7 @@ prepare_environment() {
     if grep -q "your-super-secure-jwt-secret-key-change-this" "$ENV_FILE"; then
         log_info "Generating JWT secret..."
         JWT_SECRET=$(openssl rand -hex 32)
+#        sed -i '' "s|your-super-secure-jwt-secret-key-change-this|$JWT_SECRET|g" "$ENV_FILE"
         sed -i "s|your-super-secure-jwt-secret-key-change-this|$JWT_SECRET|g" "$ENV_FILE"
         log_success "JWT secret generated"
     fi
@@ -73,6 +75,7 @@ prepare_environment() {
     if grep -q "your-super-secure-signature-secret-change-this" "$ENV_FILE"; then
         log_info "Generating signature secret..."
         SIG_SECRET=$(openssl rand -hex 32)
+#        sed -i '' "s|your-super-secure-signature-secret-change-this|$SIG_SECRET|g" "$ENV_FILE"
         sed -i "s|your-super-secure-signature-secret-change-this|$SIG_SECRET|g" "$ENV_FILE"
         log_success "Signature secret generated"
     fi
@@ -81,13 +84,13 @@ prepare_environment() {
 deploy_services() {
     log_info "Building and starting Docker services..."
     
-    docker-compose down --remove-orphans
+    docker compose down --remove-orphans
     
     log_info "Building Docker images..."
-    docker-compose build --no-cache
+    docker compose build --no-cache
     
     log_info "Starting services..."
-    docker-compose up -d
+    docker compose up -d
     
     log_success "Services started successfully"
 }
@@ -98,7 +101,7 @@ wait_for_services() {
     log_info "Waiting for PostgreSQL..."
     timeout=60
     while [ $timeout -gt 0 ]; do
-        if docker-compose exec -T postgres pg_isready -U cas_user -d cas_system &> /dev/null; then
+        if docker compose exec -T postgres pg_isready -U cas_user -d cas_system &> /dev/null; then
             log_success "PostgreSQL is ready"
             break
         fi
@@ -114,7 +117,7 @@ wait_for_services() {
     log_info "Waiting for Redis..."
     timeout=30
     while [ $timeout -gt 0 ]; do
-        if docker-compose exec -T redis redis-cli ping &> /dev/null; then
+        if docker compose exec -T redis redis-cli ping &> /dev/null; then
             log_success "Redis is ready"
             break
         fi
@@ -147,7 +150,7 @@ wait_for_services() {
 show_status() {
     log_info "Deployment Status:"
     echo ""
-    docker-compose ps
+    docker compose ps
     echo ""
 
     log_info "Health Check:"
@@ -158,7 +161,7 @@ show_status() {
 show_logs() {
     if [ "$1" = "logs" ]; then
         log_info "Showing application logs..."
-        docker-compose logs -f one-system
+        docker compose logs -f one-system
     fi
 }
 
@@ -174,12 +177,12 @@ main() {
             ;;
         "stop")
             log_info "Stopping services..."
-            docker-compose down
+            docker compose down
             log_success "Services stopped"
             ;;
         "restart")
             log_info "Restarting services..."
-            docker-compose restart
+            docker compose restart
             log_success "Services restarted"
             ;;
         "logs")
@@ -193,7 +196,7 @@ main() {
             read -p "Are you sure? (y/N): " -n 1 -r
             echo
             if [[ $REPLY =~ ^[Yy]$ ]]; then
-                docker-compose down -v --remove-orphans
+                docker compose down -v --remove-orphans
                 docker system prune -af
                 log_success "Clean up completed"
             fi
