@@ -36,7 +36,7 @@ RUN addgroup -g 1000 www && \
     adduser -u 1000 -G www -s /bin/sh -D www
 
 COPY --chown=www:www . .
-RUN cp .env .env
+#RUN cp .env .env
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 
 RUN npm install && npm run build
