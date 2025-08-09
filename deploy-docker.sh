@@ -96,23 +96,23 @@ deploy_services() {
 }
 
 wait_for_services() {
-    log_info "Waiting for services to be ready..."
-    
-    log_info "Waiting for PostgreSQL..."
-    timeout=60
-    while [ $timeout -gt 0 ]; do
-        if docker compose exec -T postgres pg_isready -U cas_user -d cas_system &> /dev/null; then
-            log_success "PostgreSQL is ready"
-            break
-        fi
-        sleep 2
-        timeout=$((timeout-2))
-    done
-    
-    if [ $timeout -le 0 ]; then
-        log_error "PostgreSQL failed to start within timeout"
-        exit 1
-    fi
+#    log_info "Waiting for services to be ready..."
+#
+#    log_info "Waiting for PostgreSQL..."
+#    timeout=60
+#    while [ $timeout -gt 0 ]; do
+#        if docker compose exec -T postgres pg_isready -U cas_user -d cas_system &> /dev/null; then
+#            log_success "PostgreSQL is ready"
+#            break
+#        fi
+#        sleep 2
+#        timeout=$((timeout-2))
+#    done
+#
+#    if [ $timeout -le 0 ]; then
+#        log_error "PostgreSQL failed to start within timeout"
+#        exit 1
+#    fi
     
     log_info "Waiting for Redis..."
     timeout=30
