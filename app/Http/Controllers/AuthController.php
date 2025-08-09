@@ -593,7 +593,7 @@ class AuthController extends Controller
                 return true;
             }
 
-            $whitelistEntries = DB::connection('cas_system')->table('cas_admin.ip_whitelist')
+            $whitelistEntries = DB::table('cas_admin.ip_whitelist')
                 ->where('is_active', true)
                 ->get();
 

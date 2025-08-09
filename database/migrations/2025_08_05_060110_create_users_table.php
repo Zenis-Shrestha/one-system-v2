@@ -12,7 +12,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::connection('cas_system')->create('cas_user.users', function (Blueprint $table) {
+        Schema::create('cas_user.users', function (Blueprint $table) {
             $table->id();
             $table->string('username')->unique();
             $table->string('email')->unique();
@@ -42,6 +42,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        DB::connection('cas_system')->statement('DROP TABLE IF EXISTS cas_user.users CASCADE');
+        DB::statement('DROP TABLE IF EXISTS cas_user.users CASCADE');
     }
 };

@@ -27,11 +27,11 @@ class DatabaseStatusCommand extends Command
             $this->line("Database: " . $connection->getDatabaseName());
 
             // Get PostgreSQL version and status
-            $version = DB::connection('cas_system')->select('SELECT version() as version')[0];
+            $version = DB::select('SELECT version() as version')[0];
             $this->line("Version: " . explode(',', $version->version)[0]);
 
             // Connection pool info
-            $stats = DB::connection('cas_system')->select("
+            $stats = DB::select("
                 SELECT
                     count(*) as total_connections,
                     count(*) FILTER (WHERE state = 'active') as active_connections,
@@ -47,7 +47,7 @@ class DatabaseStatusCommand extends Command
             $this->line("Idle connections: {$stats->idle_connections}");
 
             // Database size info
-            $dbSize = DB::connection('cas_system')->select("
+            $dbSize = DB::select("
                 SELECT pg_size_pretty(pg_database_size(current_database())) as size
             ")[0];
 
@@ -58,7 +58,7 @@ class DatabaseStatusCommand extends Command
             // Schema and table info
             $schemas = ['cas_user', 'cas_admin', 'cas_audit'];
             foreach ($schemas as $schema) {
-                $tables = DB::connection('cas_system')->select("
+                $tables = DB::select("
                     SELECT
                         schemaname,
                         tablename,
@@ -82,9 +82,9 @@ class DatabaseStatusCommand extends Command
             $this->info("Recent Activity (24 hours):");
 
             $activity = [
-                'users' => DB::connection('cas_system')->table('cas_user.users')->where('created_at', '>=', now()->subDay())->count(),
-                'audit_logs' => DB::connection('cas_system')->table('cas_audit.audit_logs')->where('created_at', '>=', now()->subDay())->count(),
-                'client_systems' => DB::connection('cas_system')->table('cas_admin.client_systems')->where('updated_at', '>=', now()->subDay())->count(),
+                'users' => DB::table('cas_user.users')->where('created_at', '>=', now()->subDay())->count(),
+                'audit_logs' => DB::table('cas_audit.audit_logs')->where('created_at', '>=', now()->subDay())->count(),
+                'client_systems' => DB::table('cas_admin.client_systems')->where('updated_at', '>=', now()->subDay())->count(),
             ];
 
             foreach ($activity as $type => $count) {
@@ -95,7 +95,7 @@ class DatabaseStatusCommand extends Command
             $this->line("");
             $this->info("Performance Test:");
             $start = microtime(true);
-            DB::connection('cas_system')->select('SELECT 1 as test');
+            DB::select('SELECT 1 as test');
             $queryTime = round((microtime(true) - $start) * 1000, 2);
             $this->line("Simple query: {$queryTime}ms");
 

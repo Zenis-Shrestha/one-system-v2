@@ -10,10 +10,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        DB::connection('cas_system')->statement('CREATE SCHEMA IF NOT EXISTS cas_admin;');
-        DB::connection('cas_system')->statement('CREATE SCHEMA IF NOT EXISTS cas_user;');
-        DB::connection('cas_system')->statement('CREATE SCHEMA IF NOT EXISTS cas_public;');
-        DB::connection('cas_system')->statement('CREATE SCHEMA IF NOT EXISTS cas_audit;');
+        DB::statement('CREATE SCHEMA IF NOT EXISTS cas_admin;');
+        DB::statement('CREATE SCHEMA IF NOT EXISTS cas_user;');
+        DB::statement('CREATE SCHEMA IF NOT EXISTS cas_public;');
+        DB::statement('CREATE SCHEMA IF NOT EXISTS cas_audit;');
     }
 
     /**
@@ -21,9 +21,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        DB::connection('cas_system')->statement('DROP SCHEMA IF EXISTS cas_audit CASCADE;');
-        DB::connection('cas_system')->statement('DROP SCHEMA IF EXISTS cas_public CASCADE;');
-        DB::connection('cas_system')->statement('DROP SCHEMA IF EXISTS cas_user CASCADE;');
-        DB::connection('cas_system')->statement('DROP SCHEMA IF EXISTS cas_admin CASCADE;');
+        DB::statement('DROP SCHEMA IF EXISTS cas_audit CASCADE;');
+        DB::statement('DROP SCHEMA IF EXISTS cas_public CASCADE;');
+        DB::statement('DROP SCHEMA IF EXISTS cas_user CASCADE;');
+        DB::statement('DROP SCHEMA IF EXISTS cas_admin CASCADE;');
     }
 };

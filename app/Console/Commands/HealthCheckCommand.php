@@ -91,9 +91,9 @@ class HealthCheckCommand extends Command
         $this->line("");
         $this->info("5. Data Integrity:");
         try {
-            $userCount = DB::connection('cas_system')->table('cas_user.users')->count();
-            $clientCount = DB::connection('cas_system')->table('cas_admin.client_systems')->count();
-            $auditCount = DB::connection('cas_system')->table('cas_audit.audit_logs')->count();
+            $userCount = DB::table('cas_user.users')->count();
+            $clientCount = DB::table('cas_admin.client_systems')->count();
+            $auditCount = DB::table('cas_audit.audit_logs')->count();
 
             $this->line("   Users: {$userCount}");
             $this->line("   Client systems: {$clientCount}");

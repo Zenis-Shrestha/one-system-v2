@@ -31,7 +31,7 @@ class PerformanceCheckCommand extends Command
             $times = [];
             for ($i = 0; $i < 3; $i++) {
                 $start = microtime(true);
-                DB::connection('cas_system')->select($sql);
+                DB::select($sql);
                 $times[] = (microtime(true) - $start) * 1000;
             }
             $avgTime = round(array_sum($times) / count($times), 2);
@@ -86,7 +86,7 @@ class PerformanceCheckCommand extends Command
         $this->line("");
         $this->info("4. Database Statistics:");
         
-        $stats = DB::connection('cas_system')->select("
+        $stats = DB::select("
             SELECT 
                 schemaname,
                 tablename,
@@ -122,7 +122,7 @@ class PerformanceCheckCommand extends Command
         }
         
         // Check audit log size
-        $auditCount = DB::connection('cas_system')->table('cas_audit.audit_logs')->count();
+        $auditCount = DB::table('cas_audit.audit_logs')->count();
         if ($auditCount > 10000) {
             $recommendations[] = "Consider audit log cleanup - {$auditCount} records found";
         }

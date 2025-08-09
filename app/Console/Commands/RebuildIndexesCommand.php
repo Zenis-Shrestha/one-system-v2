@@ -27,7 +27,7 @@ class RebuildIndexesCommand extends Command
         
         try {
             // Get all indexes for CAS schemas
-            $indexes = DB::connection('cas_system')->select("
+            $indexes = DB::select("
                 SELECT 
                     schemaname,
                     tablename,
@@ -44,7 +44,7 @@ class RebuildIndexesCommand extends Command
             
             // Show current index status
             $this->info("Current Index Statistics:");
-            $indexStats = DB::connection('cas_system')->select("
+            $indexStats = DB::select("
                 SELECT 
                     schemaname,
                     tablename,
@@ -74,7 +74,7 @@ class RebuildIndexesCommand extends Command
                     $this->line("  Rebuilding {$index->schemaname}.{$index->indexname}...");
                     
                     // REINDEX command
-                    DB::connection('cas_system')->statement("REINDEX INDEX \"{$index->schemaname}\".\"{$index->indexname}\"");
+                    DB::statement("REINDEX INDEX \"{$index->schemaname}\".\"{$index->indexname}\"");
                     
                     $rebuiltCount++;
                 } catch (\Exception $e) {
@@ -119,7 +119,7 @@ class RebuildIndexesCommand extends Command
                     $columns = implode(', ', array_map(fn($col) => "\"{$col}\"", $indexDef['columns']));
                     
                     // Check if index exists
-                    $exists = DB::connection('cas_system')->select("
+                    $exists = DB::select("
                         SELECT 1 FROM pg_indexes 
                         WHERE schemaname = ? AND tablename = ? AND indexname = ?
                     ", [explode('.', $table)[0], explode('.', $table)[1], $indexName]);
@@ -127,7 +127,7 @@ class RebuildIndexesCommand extends Command
                     if (empty($exists)) {
                         try {
                             $this->line("  Creating missing index: {$indexName}");
-                            DB::connection('cas_system')->statement("CREATE INDEX \"{$indexName}\" ON \"{$table}\" ({$columns})");
+                            DB::statement("CREATE INDEX \"{$indexName}\" ON \"{$table}\" ({$columns})");
                             $createdIndexes++;
                         } catch (\Exception $e) {
                             $this->line("    ✗ Failed to create {$indexName}: " . $e->getMessage());

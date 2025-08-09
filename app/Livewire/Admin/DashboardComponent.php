@@ -29,21 +29,21 @@ class DashboardComponent extends Component
     {
         try {
             // User statistics
-            $totalUsers = DB::connection('cas_system')->table('users')->count();
-            $adminUsers = DB::connection('cas_system')->table('users')->where('role', 'admin')->count();
-            $regularUsers = DB::connection('cas_system')->table('users')->where('role', 'user')->count();
+            $totalUsers = DB::table('users')->count();
+            $adminUsers = DB::table('users')->where('role', 'admin')->count();
+            $regularUsers = DB::table('users')->where('role', 'user')->count();
 
             // Client system statistics
-            $totalClientSystems = DB::connection('cas_system')->table('client_systems')->count();
-            $activeClientSystems = DB::connection('cas_system')->table('client_systems')->where('is_active', true)->count();
+            $totalClientSystems = DB::table('client_systems')->count();
+            $activeClientSystems = DB::table('client_systems')->where('is_active', true)->count();
 
             // Authentication statistics (last 24 hours)
-            $totalLogins24h = DB::connection('cas_system')->table('audit_logs')
+            $totalLogins24h = DB::table('audit_logs')
                 ->where('event_type', 'login')
                 ->where('created_at', '>=', now()->subDay())
                 ->count();
 
-            $successfulLogins24h = DB::connection('cas_system')->table('audit_logs')
+            $successfulLogins24h = DB::table('audit_logs')
                 ->where('event_type', 'login')
                 ->where('success', true)
                 ->where('created_at', '>=', now()->subDay())
@@ -52,13 +52,13 @@ class DashboardComponent extends Component
             $failedLogins24h = $totalLogins24h - $successfulLogins24h;
 
             // SSO token statistics (last 24 hours)
-            $ssoTokens24h = DB::connection('cas_system')->table('audit_logs')
+            $ssoTokens24h = DB::table('audit_logs')
                 ->where('event_type', 'sso_token_generated')
                 ->where('created_at', '>=', now()->subDay())
                 ->count();
 
             // IP whitelist entries
-            $ipWhitelistEntries = DB::connection('cas_system')->table('ip_whitelist')->count();
+            $ipWhitelistEntries = DB::table('ip_whitelist')->count();
 
             return [
                 'users' => [
@@ -105,12 +105,12 @@ class DashboardComponent extends Component
                 $date = now()->subDays($i);
                 $dateStr = $date->format('Y-m-d');
 
-                $logins = DB::connection('cas_system')->table('audit_logs')
+                $logins = DB::table('audit_logs')
                     ->where('event_type', 'login')
                     ->whereDate('created_at', $date)
                     ->count();
 
-                $ssoTokens = DB::connection('cas_system')->table('audit_logs')
+                $ssoTokens = DB::table('audit_logs')
                     ->where('event_type', 'sso_token_generated')
                     ->whereDate('created_at', $date)
                     ->count();
@@ -132,7 +132,7 @@ class DashboardComponent extends Component
     private function getRecentActivity()
     {
         try {
-            return DB::connection('cas_system')->table('audit_logs')
+            return DB::table('audit_logs')
                 ->leftJoin('users', 'audit_logs.user_id', '=', 'users.id')
                 ->leftJoin('client_systems', 'audit_logs.client_system_id', '=', 'client_systems.id')
                 ->select([

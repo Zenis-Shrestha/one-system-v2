@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::connection('cas_system')->create('cas_admin.sso_settings', function (Blueprint $table) {
+        Schema::create('cas_admin.sso_settings', function (Blueprint $table) {
             $table->id();
             $table->string('setting_key')->unique();
             $table->text('setting_value')->nullable();
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::connection('cas_system')->dropIfExists('cas_admin.sso_settings');
+        Schema::dropIfExists('cas_admin.sso_settings');
     }
 };

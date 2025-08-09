@@ -13,7 +13,7 @@ class SsoConfigService
     public static function getSettings()
     {
         return Cache::remember('sso_settings', 3600, function () {
-            $settings = DB::connection('cas_system')->table('cas_admin.sso_settings')->first();
+            $settings = DB::table('cas_admin.sso_settings')->first();
 
             if (!$settings) {
                 return (object) [

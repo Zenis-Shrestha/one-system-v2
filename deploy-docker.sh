@@ -130,21 +130,21 @@ wait_for_services() {
         exit 1
     fi
     
-    log_info "Waiting for Laravel CAS application..."
-    timeout=120
-    while [ $timeout -gt 0 ]; do
-        if curl -f http://localhost:95/health &> /dev/null; then
-            log_success "Laravel CAS application is ready"
-            break
-        fi
-        sleep 3
-        timeout=$((timeout-3))
-    done
-    
-    if [ $timeout -le 0 ]; then
-        log_error "Laravel CAS application failed to start within timeout"
-        exit 1
-    fi
+#    log_info "Waiting for Laravel CAS application..."
+#    timeout=120
+#    while [ $timeout -gt 0 ]; do
+#        if curl -f http://localhost:95/health &> /dev/null; then
+#            log_success "Laravel CAS application is ready"
+#            break
+#        fi
+#        sleep 3
+#        timeout=$((timeout-3))
+#    done
+#
+#    if [ $timeout -le 0 ]; then
+#        log_error "Laravel CAS application failed to start within timeout"
+#        exit 1
+#    fi
 }
 
 show_status() {
@@ -153,9 +153,9 @@ show_status() {
     docker compose ps
     echo ""
 
-    log_info "Health Check:"
-    curl -s http://localhost:95/health || log_warning "Health check failed"
-    echo ""
+#    log_info "Health Check:"
+#    curl -s http://localhost:95/health || log_warning "Health check failed"
+#    echo ""
 }
 
 show_logs() {

@@ -56,7 +56,7 @@ class ClientSystemsManager extends Component
         try {
             $this->loading = true;
 
-            $systems = DB::connection('cas_system')->table('cas_admin.client_systems')
+            $systems = DB::table('cas_admin.client_systems')
                 ->select(
                     'id',
                     'name',
@@ -116,7 +116,7 @@ class ClientSystemsManager extends Component
             $webhookSecret = bin2hex(random_bytes(32));
             $clientId = 'client_' . bin2hex(random_bytes(8));
 
-            $clientSystemId = DB::connection('cas_system')->table('cas_admin.client_systems')->insertGetId([
+            $clientSystemId = DB::table('cas_admin.client_systems')->insertGetId([
                 'name' => $this->name,
                 'description' => $this->description,
                 'callback_url' => $this->callback_url,
@@ -132,7 +132,7 @@ class ClientSystemsManager extends Component
                 'updated_at' => now(),
             ]);
 
-            DB::connection('cas_system')->table('cas_audit.audit_logs')->insert([
+            DB::table('cas_audit.audit_logs')->insert([
                 'user_id' => session('user_id'),
                 'client_system_id' => $clientSystemId,
                 'event_type' => 'client_system_created',
@@ -178,7 +178,7 @@ class ClientSystemsManager extends Component
 
         if ($clientSystem) {
             try {
-                DB::connection('cas_system')->table('cas_admin.client_systems')
+                DB::table('cas_admin.client_systems')
                     ->where('id', $clientSystem['id'])
                     ->update([
                         'credentials_shown' => true,
@@ -187,7 +187,7 @@ class ClientSystemsManager extends Component
                         'updated_at' => now()
                     ]);
 
-                DB::connection('cas_system')->table('cas_audit.audit_logs')->insert([
+                DB::table('cas_audit.audit_logs')->insert([
                     'user_id' => session('user_id'),
                     'client_system_id' => $clientSystem['id'],
                     'event_type' => 'security_event',
@@ -252,11 +252,11 @@ class ClientSystemsManager extends Component
                 'updated_at' => now()
             ];
 
-            DB::connection('cas_system')->table('cas_admin.client_systems')
+            DB::table('cas_admin.client_systems')
                 ->where('id', $this->editingSystemId)
                 ->update($updateData);
 
-            DB::connection('cas_system')->table('cas_audit.audit_logs')->insert([
+            DB::table('cas_audit.audit_logs')->insert([
                 'user_id' => session('user_id'),
                 'client_system_id' => $this->editingSystemId,
                 'event_type' => 'client_system_updated',
@@ -295,14 +295,14 @@ class ClientSystemsManager extends Component
             $newIsActive = !$system['is_active'];
             $statusText = $newIsActive ? 'activated' : 'deactivated';
 
-            DB::connection('cas_system')->table('cas_admin.client_systems')
+            DB::table('cas_admin.client_systems')
                 ->where('id', $systemId)
                 ->update([
                     'is_active' => $newIsActive,
                     'updated_at' => now()
                 ]);
 
-            DB::connection('cas_system')->table('cas_audit.audit_logs')->insert([
+            DB::table('cas_audit.audit_logs')->insert([
                 'user_id' => session('user_id'),
                 'client_system_id' => $systemId,
                 'event_type' => 'client_system_status_changed',
@@ -351,7 +351,7 @@ class ClientSystemsManager extends Component
         ]);
 
         try {
-            $clientSystem = DB::connection('cas_system')->table('cas_admin.client_systems')
+            $clientSystem = DB::table('cas_admin.client_systems')
                 ->find($this->regenerateSystemId);
 
             if (!$clientSystem) {
@@ -362,7 +362,7 @@ class ClientSystemsManager extends Component
             $newClientSecret = bin2hex(random_bytes(32));
             $newWebhookSecret = bin2hex(random_bytes(32));
 
-            DB::connection('cas_system')->table('cas_admin.client_systems')
+            DB::table('cas_admin.client_systems')
                 ->where('id', $this->regenerateSystemId)
                 ->update([
                     'client_secret' => $newClientSecret,
@@ -373,11 +373,11 @@ class ClientSystemsManager extends Component
                     'updated_at' => now()
                 ]);
 
-            DB::connection('cas_system')->table('cas_user.sso_tokens')
+            DB::table('cas_user.sso_tokens')
                 ->where('client_system_id', $this->regenerateSystemId)
                 ->update(['is_active' => false]);
 
-            DB::connection('cas_system')->table('cas_audit.audit_logs')->insert([
+            DB::table('cas_audit.audit_logs')->insert([
                 'user_id' => session('user_id'),
                 'client_system_id' => $this->regenerateSystemId,
                 'event_type' => 'critical_security_event',
@@ -432,7 +432,7 @@ class ClientSystemsManager extends Component
                 return;
             }
 
-            DB::connection('cas_system')->table('cas_audit.audit_logs')->insert([
+            DB::table('cas_audit.audit_logs')->insert([
                 'user_id' => session('user_id'),
                 'client_system_id' => $systemId,
                 'event_type' => 'client_system_deleted',
@@ -448,7 +448,7 @@ class ClientSystemsManager extends Component
                 'updated_at' => now(),
             ]);
 
-            DB::connection('cas_system')->table('cas_admin.client_systems')
+            DB::table('cas_admin.client_systems')
                 ->where('id', $systemId)
                 ->delete();
 

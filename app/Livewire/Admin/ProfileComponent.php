@@ -204,7 +204,7 @@ class ProfileComponent extends Component
             $this->backup_codes = $backupCodes;
             $this->qr_code_url = $this->generateQRCodeUrl($user->email, $secret);
 
-            DB::connection('cas_system')->table('cas_audit.audit_logs')->insert([
+            DB::table('cas_audit.audit_logs')->insert([
                 'user_id' => $user->id,
                 'client_system_id' => null,
                 'event_type' => 'security_action',
@@ -257,7 +257,7 @@ class ProfileComponent extends Component
             $this->backup_codes = [];
             $this->qr_code_url = null;
 
-            DB::connection('cas_system')->table('cas_audit.audit_logs')->insert([
+            DB::table('cas_audit.audit_logs')->insert([
                 'user_id' => $user->id,
                 'client_system_id' => null,
                 'event_type' => 'security_action',
@@ -306,7 +306,7 @@ class ProfileComponent extends Component
 
             $this->backup_codes = $backupCodes;
 
-            DB::connection('cas_system')->table('cas_audit.audit_logs')->insert([
+            DB::table('cas_audit.audit_logs')->insert([
                 'user_id' => $user->id,
                 'client_system_id' => null,
                 'event_type' => 'security_action',

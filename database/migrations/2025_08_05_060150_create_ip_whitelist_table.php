@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::connection('cas_system')->create('cas_admin.ip_whitelist', function (Blueprint $table) {
+        Schema::create('cas_admin.ip_whitelist', function (Blueprint $table) {
             $table->id();
             $table->string('ip_address');
             $table->string('subnet_mask')->default('full');
@@ -40,6 +40,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::connection('cas_system')->dropIfExists('cas_admin.ip_whitelist');
+        Schema::dropIfExists('cas_admin.ip_whitelist');
     }
 };

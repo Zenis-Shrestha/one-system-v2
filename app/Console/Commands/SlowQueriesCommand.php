@@ -21,7 +21,7 @@ class SlowQueriesCommand extends Command
         
         try {
             // Get current PostgreSQL slow query settings
-            $slowQueryLog = DB::connection('cas_system')->select("
+            $slowQueryLog = DB::select("
                 SELECT name, setting, unit 
                 FROM pg_settings 
                 WHERE name IN ('log_min_duration_statement', 'log_statement', 'log_duration')
@@ -39,7 +39,7 @@ class SlowQueriesCommand extends Command
             // Analyze current database statistics
             $this->info("Query Performance Statistics:");
             
-            $queryStats = DB::connection('cas_system')->select("
+            $queryStats = DB::select("
                 SELECT 
                     schemaname,
                     tablename,
@@ -95,7 +95,7 @@ class SlowQueriesCommand extends Command
                 $times = [];
                 for ($i = 0; $i < 3; $i++) {
                     $start = microtime(true);
-                    DB::connection('cas_system')->select($query['sql'], $query['params']);
+                    DB::select($query['sql'], $query['params']);
                     $times[] = (microtime(true) - $start) * 1000;
                 }
                 
@@ -110,7 +110,7 @@ class SlowQueriesCommand extends Command
             $this->line("");
             $this->info("Index Analysis:");
             
-            $indexes = DB::connection('cas_system')->select("
+            $indexes = DB::select("
                 SELECT 
                     schemaname,
                     tablename,

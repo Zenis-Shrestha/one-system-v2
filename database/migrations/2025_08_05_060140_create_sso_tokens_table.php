@@ -12,7 +12,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::connection('cas_system')->create('cas_user.sso_tokens', function (Blueprint $table) {
+        Schema::create('cas_user.sso_tokens', function (Blueprint $table) {
             $table->id();
             $table->string('token')->unique();
             $table->string('token_hash')->nullable()->index();
@@ -48,6 +48,6 @@ return new class extends Migration
     public function down(): void
     {
         // Drop with CASCADE to handle foreign key dependencies
-        DB::connection('cas_system')->statement('DROP TABLE IF EXISTS cas_user.sso_tokens CASCADE');
+        DB::statement('DROP TABLE IF EXISTS cas_user.sso_tokens CASCADE');
     }
 };

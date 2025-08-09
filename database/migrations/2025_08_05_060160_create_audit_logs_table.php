@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::connection('cas_system')->create('cas_audit.audit_logs', function (Blueprint $table) {
+        Schema::create('cas_audit.audit_logs', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('client_system_id')->nullable();
@@ -42,6 +42,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::connection('cas_system')->dropIfExists('cas_audit.audit_logs');
+        Schema::dropIfExists('cas_audit.audit_logs');
     }
 };

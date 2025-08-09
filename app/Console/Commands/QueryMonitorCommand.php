@@ -18,7 +18,7 @@ class QueryMonitorCommand extends Command
         $this->info("=" . str_repeat("=", 50));
         
         // Enable query logging
-        DB::connection('cas_system')->enableQueryLog();
+        DB::enableQueryLog();
         
         $startTime = time();
         $queryCount = 0;
@@ -33,9 +33,9 @@ class QueryMonitorCommand extends Command
                 $start = microtime(true);
                 
                 // Sample monitoring queries
-                $users = DB::connection('cas_system')->table('cas_user.users')->count();
-                $clients = DB::connection('cas_system')->table('cas_admin.client_systems')->count();
-                $audits = DB::connection('cas_system')->table('cas_audit.audit_logs')
+                $users = DB::table('cas_user.users')->count();
+                $clients = DB::table('cas_admin.client_systems')->count();
+                $audits = DB::table('cas_audit.audit_logs')
                     ->where('created_at', '>=', now()->subMinutes(5))
                     ->count();
                 
@@ -60,7 +60,7 @@ class QueryMonitorCommand extends Command
         }
         
         // Get query log
-        $queries = DB::connection('cas_system')->getQueryLog();
+        $queries = DB::getQueryLog();
         
         $this->line("");
         $this->info("Query Monitor Summary:");

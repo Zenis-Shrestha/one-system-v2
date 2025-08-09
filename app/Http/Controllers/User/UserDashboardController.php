@@ -175,7 +175,7 @@ class UserDashboardController extends Controller
         }
 
         try {
-            $userLink = DB::connection('cas_system')->table('user_client_links')
+            $userLink = DB::table('user_client_links')
                 ->where('user_id', $userId)
                 ->where('client_system_id', $clientSystemId)
                 ->where('is_active', true)
@@ -188,7 +188,7 @@ class UserDashboardController extends Controller
                 ], 403);
             }
 
-            $clientSystem = DB::connection('cas_system')->table('client_systems')
+            $clientSystem = DB::table('client_systems')
                 ->where('id', $clientSystemId)
                 ->where('is_active', true)
                 ->first();
@@ -203,7 +203,7 @@ class UserDashboardController extends Controller
             $tokenResponse = $this->generateSSOTokenForUser($userId, $clientSystem, $userLink->linked_username, $request);
 
             if ($tokenResponse['success']) {
-                DB::connection('cas_system')->table('user_client_links')
+                DB::table('user_client_links')
                     ->where('id', $userLink->id)
                     ->update(['last_login' => now()]);
 
@@ -233,7 +233,7 @@ class UserDashboardController extends Controller
     private function generateSSOTokenForUser($userId, $clientSystem, $linkedUsername, $request)
     {
         try {
-            $user = DB::connection('cas_system')->table('users')->find($userId);
+            $user = DB::table('users')->find($userId);
 
             if (!$user) {
                 return ['success' => false, 'message' => 'User not found'];
@@ -257,7 +257,7 @@ class UserDashboardController extends Controller
             $token = JWT::encode($payload, $jwtSecret, 'HS256');
             $expiresAt = date('Y-m-d H:i:s', $payload['exp']);
 
-            DB::connection('cas_system')->table('sso_tokens')->insert([
+            DB::table('sso_tokens')->insert([
                 'token' => $token,
                 'user_id' => $user->id,
                 'client_system_id' => $clientSystem->id,
@@ -267,11 +267,11 @@ class UserDashboardController extends Controller
                 'updated_at' => now(),
             ]);
 
-            DB::connection('cas_system')->table('client_systems')
+            DB::table('client_systems')
                 ->where('id', $clientSystem->id)
                 ->update(['last_accessed' => now()]);
 
-            DB::connection('cas_system')->table('audit_logs')->insert([
+            DB::table('audit_logs')->insert([
                 'user_id' => $user->id,
                 'client_system_id' => $clientSystem->id,
                 'event_type' => 'sso_login',
@@ -315,13 +315,13 @@ class UserDashboardController extends Controller
         }
 
         try {
-            $deleted = DB::connection('cas_system')->table('user_client_links')
+            $deleted = DB::table('user_client_links')
                 ->where('user_id', $userId)
                 ->where('client_system_id', $clientSystemId)
                 ->delete();
 
             if ($deleted) {
-                DB::connection('cas_system')->table('audit_logs')->insert([
+                DB::table('audit_logs')->insert([
                     'user_id' => $userId,
                     'client_system_id' => $clientSystemId,
                     'event_type' => 'user_unlink',

@@ -36,7 +36,7 @@ class ForgotPasswordController extends Controller
             return back()->with('message', 'If an account with that email exists, a password reset link has been sent.');
         }
 
-        $recentAttempts = DB::connection('cas_system')->table('cas_admin.password_resets')
+        $recentAttempts = DB::table('cas_admin.password_resets')
             ->where('email', $request->email)
             ->where('created_at', '>', now()->subMinutes(5))
             ->count();
@@ -48,7 +48,7 @@ class ForgotPasswordController extends Controller
         $token = Str::random(64);
         $expiresAt = now()->addMinutes($settings->password_reset_expiry ?? 60);
 
-        DB::connection('cas_system')->table('cas_admin.password_resets')->insert([
+        DB::table('cas_admin.password_resets')->insert([
             'email' => $request->email,
             'token' => Hash::make($token),
             'expires_at' => $expiresAt,
@@ -76,7 +76,7 @@ class ForgotPasswordController extends Controller
             'password' => 'required|min:8|confirmed',
         ]);
 
-        $resetRecords = DB::connection('cas_system')->table('cas_admin.password_resets')
+        $resetRecords = DB::table('cas_admin.password_resets')
             ->where('email', $request->email)
             ->where('expires_at', '>', now())
             ->where('used_at', null)
@@ -94,18 +94,18 @@ class ForgotPasswordController extends Controller
             return back()->withErrors(['email' => 'This password reset token is invalid or has expired.']);
         }
 
-        DB::connection('cas_system')->table('cas_admin.users')
+        DB::table('cas_admin.users')
             ->where('email', $request->email)
             ->update([
                 'password' => Hash::make($request->password),
                 'updated_at' => now()
             ]);
 
-        DB::connection('cas_system')->table('cas_admin.password_resets')
+        DB::table('cas_admin.password_resets')
             ->where('id', $validToken->id)
             ->update(['used_at' => now()]);
 
-        DB::connection('cas_system')->table('cas_admin.password_resets')
+        DB::table('cas_admin.password_resets')
             ->where('email', $request->email)
             ->delete();
 
@@ -193,7 +193,7 @@ class ForgotPasswordController extends Controller
 
     public function cleanupExpiredTokens()
     {
-        DB::connection('cas_system')->table('cas_admin.password_resets')
+        DB::table('cas_admin.password_resets')
             ->where('expires_at', '<', now())
             ->delete();
     }

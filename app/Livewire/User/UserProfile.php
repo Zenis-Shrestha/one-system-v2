@@ -216,7 +216,7 @@ class UserProfile extends Component
                 'two_factor_backup_codes' => $backupCodes,
             ]);
 
-            DB::connection('cas_system')->table('cas_audit.audit_logs')->insert([
+            DB::table('cas_audit.audit_logs')->insert([
                 'user_id' => $this->user->id,
                 'client_system_id' => null,
                 'event_type' => 'security_action',
@@ -253,7 +253,7 @@ class UserProfile extends Component
                 'two_factor_backup_codes' => null,
             ]);
 
-            DB::connection('cas_system')->table('cas_audit.audit_logs')->insert([
+            DB::table('cas_audit.audit_logs')->insert([
                 'user_id' => $this->user->id,
                 'client_system_id' => null,
                 'event_type' => 'security_action',

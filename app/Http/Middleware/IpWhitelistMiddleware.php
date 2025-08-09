@@ -18,7 +18,7 @@ class IpWhitelistMiddleware
 
 
         if (!$this->isIpWhitelisted($clientIp)) {
-            DB::connection('cas_system')->table('audit_logs')->insert([
+            DB::table('audit_logs')->insert([
                 'user_id' => null,
                 'client_system_id' => null,
                 'event_type' => 'security_violation',

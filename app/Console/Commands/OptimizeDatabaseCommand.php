@@ -25,7 +25,7 @@ class OptimizeDatabaseCommand extends Command
         
         try {
             // Get all CAS tables
-            $tables = DB::connection('cas_system')->select("
+            $tables = DB::select("
                 SELECT schemaname, tablename 
                 FROM pg_tables 
                 WHERE schemaname IN ('cas_user', 'cas_admin', 'cas_audit')
@@ -39,7 +39,7 @@ class OptimizeDatabaseCommand extends Command
             $this->info("Pre-optimization Statistics:");
             $totalSize = 0;
             foreach ($tables as $table) {
-                $size = DB::connection('cas_system')->select("
+                $size = DB::select("
                     SELECT pg_size_pretty(pg_total_relation_size('{$table->schemaname}.{$table->tablename}')) as size,
                            pg_total_relation_size('{$table->schemaname}.{$table->tablename}') as bytes
                 ")[0];
@@ -48,7 +48,7 @@ class OptimizeDatabaseCommand extends Command
                 $totalSize += $size->bytes;
             }
             
-            $totalSizePretty = DB::connection('cas_system')->select("SELECT pg_size_pretty({$totalSize}) as size")[0]->size;
+            $totalSizePretty = DB::select("SELECT pg_size_pretty({$totalSize}) as size")[0]->size;
             $this->line("Total size: {$totalSizePretty}");
             $this->line("");
             
@@ -57,7 +57,7 @@ class OptimizeDatabaseCommand extends Command
                 $this->info("Running ANALYZE...");
                 foreach ($tables as $table) {
                     $this->line("  Analyzing {$table->schemaname}.{$table->tablename}");
-                    DB::connection('cas_system')->statement("ANALYZE \"{$table->schemaname}\".\"{$table->tablename}\"");
+                    DB::statement("ANALYZE \"{$table->schemaname}\".\"{$table->tablename}\"");
                 }
                 $this->line("✓ ANALYZE completed");
                 $this->line("");
@@ -68,7 +68,7 @@ class OptimizeDatabaseCommand extends Command
                 $this->info("Running VACUUM...");
                 foreach ($tables as $table) {
                     $this->line("  Vacuuming {$table->schemaname}.{$table->tablename}");
-                    DB::connection('cas_system')->statement("VACUUM \"{$table->schemaname}\".\"{$table->tablename}\"");
+                    DB::statement("VACUUM \"{$table->schemaname}\".\"{$table->tablename}\"");
                 }
                 $this->line("✓ VACUUM completed");
                 $this->line("");
@@ -79,7 +79,7 @@ class OptimizeDatabaseCommand extends Command
                 $this->info("Post-optimization Statistics:");
                 $newTotalSize = 0;
                 foreach ($tables as $table) {
-                    $size = DB::connection('cas_system')->select("
+                    $size = DB::select("
                         SELECT pg_size_pretty(pg_total_relation_size('{$table->schemaname}.{$table->tablename}')) as size,
                                pg_total_relation_size('{$table->schemaname}.{$table->tablename}') as bytes
                     ")[0];
@@ -88,9 +88,9 @@ class OptimizeDatabaseCommand extends Command
                     $newTotalSize += $size->bytes;
                 }
                 
-                $newTotalSizePretty = DB::connection('cas_system')->select("SELECT pg_size_pretty({$newTotalSize}) as size")[0]->size;
+                $newTotalSizePretty = DB::select("SELECT pg_size_pretty({$newTotalSize}) as size")[0]->size;
                 $savedBytes = $totalSize - $newTotalSize;
-                $savedPretty = $savedBytes > 0 ? DB::connection('cas_system')->select("SELECT pg_size_pretty({$savedBytes}) as size")[0]->size : '0 bytes';
+                $savedPretty = $savedBytes > 0 ? DB::select("SELECT pg_size_pretty({$savedBytes}) as size")[0]->size : '0 bytes';
                 
                 $this->line("New total size: {$newTotalSizePretty}");
                 $this->line("Space reclaimed: {$savedPretty}");
@@ -101,7 +101,7 @@ class OptimizeDatabaseCommand extends Command
             $this->info("Additional Optimization Checks:");
             
             // Check for bloated tables
-            $bloatInfo = DB::connection('cas_system')->select("
+            $bloatInfo = DB::select("
                 SELECT 
                     schemaname,
                     tablename,

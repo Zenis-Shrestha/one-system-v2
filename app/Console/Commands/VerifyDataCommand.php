@@ -21,7 +21,7 @@ class VerifyDataCommand extends Command
         $this->info("1. Checking for orphaned records...");
         
         // Orphaned user_client_links
-        $orphanedLinks = DB::connection('cas_system')->select("
+        $orphanedLinks = DB::select("
             SELECT ucl.id 
             FROM cas_user.user_client_links ucl
             LEFT JOIN cas_user.users u ON ucl.user_id = u.id
@@ -38,7 +38,7 @@ class VerifyDataCommand extends Command
         }
         
         // Orphaned audit logs
-        $orphanedAudits = DB::connection('cas_system')->select("
+        $orphanedAudits = DB::select("
             SELECT al.id 
             FROM cas_audit.audit_logs al
             LEFT JOIN cas_user.users u ON al.user_id = u.id
@@ -60,7 +60,7 @@ class VerifyDataCommand extends Command
         $this->info("2. Checking data consistency...");
         
         // Check for duplicate usernames
-        $duplicateUsernames = DB::connection('cas_system')->select("
+        $duplicateUsernames = DB::select("
             SELECT username, COUNT(*) as count
             FROM cas_user.users 
             GROUP BY username 
@@ -78,7 +78,7 @@ class VerifyDataCommand extends Command
         }
         
         // Check for duplicate emails
-        $duplicateEmails = DB::connection('cas_system')->select("
+        $duplicateEmails = DB::select("
             SELECT email, COUNT(*) as count
             FROM cas_user.users 
             GROUP BY email 
@@ -100,7 +100,7 @@ class VerifyDataCommand extends Command
         $this->info("3. Checking required data...");
         
         // Users without passwords
-        $usersWithoutPasswords = DB::connection('cas_system')->select("
+        $usersWithoutPasswords = DB::select("
             SELECT COUNT(*) as count 
             FROM cas_user.users 
             WHERE password IS NULL OR password = ''
@@ -114,7 +114,7 @@ class VerifyDataCommand extends Command
         }
         
         // Client systems without credentials
-        $clientsWithoutCreds = DB::connection('cas_system')->select("
+        $clientsWithoutCreds = DB::select("
             SELECT COUNT(*) as count 
             FROM cas_admin.client_systems 
             WHERE client_id IS NULL OR client_secret IS NULL

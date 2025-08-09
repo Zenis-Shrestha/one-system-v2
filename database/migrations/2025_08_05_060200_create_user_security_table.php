@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::connection('cas_system')->create('cas_user.user_security', function (Blueprint $table) {
+        Schema::create('cas_user.user_security', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->boolean('two_factor_enabled')->default(false);
@@ -41,6 +41,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::connection('cas_system')->dropIfExists('cas_user.user_security');
+        Schema::dropIfExists('cas_user.user_security');
     }
 };

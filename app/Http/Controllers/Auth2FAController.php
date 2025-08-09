@@ -69,7 +69,7 @@ class Auth2FAController extends Controller
 
             session()->forget(['temp_user_id', 'temp_username', 'temp_role', '2fa_required']);
 
-            DB::connection('cas_system')->table('cas_audit.audit_logs')->insert([
+            DB::table('cas_audit.audit_logs')->insert([
                 'user_id' => $user->id,
                 'client_system_id' => null,
                 'event_type' => 'authentication',
@@ -89,7 +89,7 @@ class Auth2FAController extends Controller
                 return redirect()->intended('/user/dashboard');
             }
         } else {
-            DB::connection('cas_system')->table('cas_audit.audit_logs')->insert([
+            DB::table('cas_audit.audit_logs')->insert([
                 'user_id' => $userId,
                 'client_system_id' => null,
                 'event_type' => 'authentication',
