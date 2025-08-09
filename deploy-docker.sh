@@ -133,7 +133,7 @@ wait_for_services() {
     log_info "Waiting for Laravel CAS application..."
     timeout=120
     while [ $timeout -gt 0 ]; do
-        if curl -f http://localhost:8000/health &> /dev/null; then
+        if curl -f http://localhost:95/health &> /dev/null; then
             log_success "Laravel CAS application is ready"
             break
         fi
@@ -154,7 +154,7 @@ show_status() {
     echo ""
 
     log_info "Health Check:"
-    curl -s http://localhost:8000/health || log_warning "Health check failed"
+    curl -s http://localhost:95/health || log_warning "Health check failed"
     echo ""
 }
 
