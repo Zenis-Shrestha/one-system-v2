@@ -1,55 +1,40 @@
 version: '3.8'
 
+networks:
+  one-system-network:
+    driver: bridge
+
 services:
-  one-system:
+  app:
     build:
-      context: .
+      context: ./docker/nginx
       dockerfile: Dockerfile
     container_name: one-system-app
     restart: unless-stopped
     ports:
       - "95:80"
     volumes:
-      - ./storage/app:/var/www/html/storage/app
-      - ./storage/logs:/var/www/html/storage/logs
+      - .:/var/www/html:delegated
     depends_on:
-#      - postgres
+      - php
       - redis
     networks:
-      - cas-network
-#    healthcheck:
-#      test: ["CMD", "curl", "-f", "http://localhost/health"]
-#      interval: 30s
-#      timeout: 10s
-#      retries: 3
+      - one-system-network
 
-#  postgres:
-#    image: postgres:16-alpine
-#    container_name: one-system-postgres
-#    restart: unless-stopped
-#    command:
-#      - "postgres"
-#      - "-c"
-#      - "shared_preload_libraries=pg_stat_statements"
-#      - "-c"
-#      - "pg_stat_statements.track=all"
-#    environment:
-#      - POSTGRES_DB=cas_system
-#      - POSTGRES_USER=cas_user
-#      - POSTGRES_PASSWORD=cas_secure_password
-#      - POSTGRES_INITDB_ARGS=--auth-host=scram-sha-256
-#    volumes:
-#      - postgres_data:/var/lib/postgresql/data
-#      - ./docker/postgres/init:/docker-entrypoint-initdb.d
-#    ports:
-#      - "5432:5432"
-#    networks:
-#      - cas-network
-#    healthcheck:
-#      test: ["CMD-SHELL", "pg_isready -U cas_user -d cas_system"]
-#      interval: 10s
-#      timeout: 5s
-#      retries: 5
+  php:
+    build:
+      context: ./docker/php
+      dockerfile: Dockerfile
+    container_name: one-system-php
+    restart: unless-stopped
+    volumes:
+      - .:/var/www/html:delegated
+    networks:
+      - one-system-network
+    env_file:
+      - .env
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   redis:
     image: redis:7-alpine
@@ -61,68 +46,35 @@ services:
     ports:
       - "6379:6379"
     networks:
-      - cas-network
-#    healthcheck:
-#      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
-#      interval: 10s
-#      timeout: 3s
-#      retries: 5
+      - one-system-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "-p", "6379", "--raw", "incr", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
 
-  nginx-lb:
-    image: nginx:alpine
-    container_name: one-system-nginx
-    restart: unless-stopped
-    ports:
-      - "80:80"
-      - "443:443"
+  composer:
+    image: composer:latest
+    container_name: one-system-composer
     volumes:
-      - ./docker/nginx/nginx-lb.conf:/etc/nginx/nginx.conf
-      - ./docker/nginx/ssl:/etc/nginx/ssl
-    depends_on:
-      - one-system
-    networks:
-      - cas-network
-    profiles:
-      - with-lb
+      - .:/var/www/html
+    working_dir: /var/www/html
+    entrypoint: ['composer']
 
-  queue-worker:
+  artisan:
     build:
-      context: .
+      context: ./docker/php
       dockerfile: Dockerfile
-    container_name: one-system-queue
-    restart: unless-stopped
-    command: php artisan queue:work --sleep=3 --tries=3 --max-time=3600
+    container_name: one-system-artisan
     volumes:
-      - ./storage/logs:/var/www/html/storage/logs
-    depends_on:
-#      - postgres
-      - redis
-    networks:
-      - cas-network
-
-  scheduler:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: one-system-scheduler
-    restart: unless-stopped
-    command: php artisan schedule:work
-    volumes:
-      - ./storage/logs:/var/www/html/storage/logs
-    depends_on:
-#      - postgres
-      - redis
-    networks:
-      - cas-network
-    profiles:
-      - with-scheduler
+      - .:/var/www/html:delegated
+    working_dir: /var/www/html
+    entrypoint: ['php', 'artisan']
+    env_file:
+      - .env
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
 volumes:
-#  postgres_data:
-#    driver: local
   redis_data:
     driver: local
-
-networks:
-  cas-network:
-    driver: bridge
