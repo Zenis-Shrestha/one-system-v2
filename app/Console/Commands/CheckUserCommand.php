@@ -38,8 +38,7 @@ class CheckUserCommand extends Command
             $this->line("Last Login: " . ($user->last_login ? $user->last_login->format('Y-m-d H:i:s') : 'Never'));
 
             // Check for failed login attempts (if audit logs exist)
-            $recentFailedLogins = DB::connection('cas_system')
-                ->table('cas_audit.audit_logs')
+            $recentFailedLogins = DB::table('cas_audit.audit_logs')
                 ->where('user_id', $user->id)
                 ->where('action', 'login_failed')
                 ->where('created_at', '>=', now()->subDays(7))
@@ -55,8 +54,7 @@ class CheckUserCommand extends Command
             }
 
             // Check user-client links
-            $clientLinks = DB::connection('cas_system')
-                ->table('cas_user.user_client_links')
+            $clientLinks = DB::table('cas_user.user_client_links')
                 ->where('user_id', $user->id)
                 ->count();
 

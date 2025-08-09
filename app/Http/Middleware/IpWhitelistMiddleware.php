@@ -85,8 +85,7 @@ class IpWhitelistMiddleware
     private function isIpWhitelisted(string $ip): bool
     {
         try {
-            $whitelistEntries = DB::connection('cas_system')
-                ->table('ip_whitelist')
+            $whitelistEntries = DB::table('ip_whitelist')
                 ->where('status', 'active')
                 ->get();
 

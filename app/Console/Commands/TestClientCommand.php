@@ -17,8 +17,7 @@ class TestClientCommand extends Command
         
         try {
             // Find client system
-            $client = DB::connection('cas_system')
-                ->table('cas_admin.client_systems')
+            $client = DB::table('cas_admin.client_systems')
                 ->where('id', $clientId)
                 ->first();
             
@@ -76,8 +75,7 @@ class TestClientCommand extends Command
             }
             
             // Check recent activity
-            $recentActivity = DB::connection('cas_system')
-                ->table('cas_audit.audit_logs')
+            $recentActivity = DB::table('cas_audit.audit_logs')
                 ->where('client_system_id', $client->id)
                 ->where('created_at', '>=', now()->subDays(7))
                 ->count();

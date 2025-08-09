@@ -17,8 +17,7 @@ class TestDatabaseCommand extends Command
         
         try {
             // Test main connection
-            $connection = DB::connection('cas_system');
-            $connection->getPdo();
+            $connection = DB::connection()->getPdo();
             $this->line("✓ Database connection: SUCCESS");
             
             // Test each schema and count records

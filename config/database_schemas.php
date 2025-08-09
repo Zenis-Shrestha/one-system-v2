@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default_connection' => 'cas_system',
+    'default_connection' => 'pgsql',
 
     'schemas' => [
 

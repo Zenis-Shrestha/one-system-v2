@@ -142,8 +142,7 @@ Route::get('/downloads/one-system-client-package.zip', function() {
 Route::get('/health/database', function() {
     try {
         // Test database connection
-        $connection = DB::connection('cas_system');
-        $connection->getPdo();
+        $connection = DB::connection()->getPdo();
 
         // Test basic queries
         $userCount = $connection->table('cas_user.users')->count();
@@ -152,7 +151,6 @@ Route::get('/health/database', function() {
         return response()->json([
             'status' => 'healthy',
             'database' => 'connected',
-            'connection' => 'cas_system',
             'stats' => [
                 'users' => $userCount,
                 'client_systems' => $clientCount
@@ -171,8 +169,7 @@ Route::get('/health/database', function() {
 
 Route::get('/health', function() {
     try {
-        $connection = DB::connection('cas_system');
-        $connection->getPdo();
+        $connection = DB::connection()->getPdo();
 
         return response()->json([
             'status' => 'healthy',
@@ -199,8 +196,7 @@ Route::get('/health', function() {
 
 Route::get('/health/full', function() {
     try {
-        $connection = DB::connection('cas_system');
-        $connection->getPdo();
+        $connection = DB::connection()->getPdo();
 
         $userCount = $connection->table('cas_user.users')->count();
         $activeUsers = $connection->table('cas_user.users')->where('is_active', true)->count();
@@ -231,7 +227,6 @@ Route::get('/health/full', function() {
             'timestamp' => now()->toISOString(),
             'system' => $systemInfo,
             'database' => [
-                'connection' => 'cas_system',
                 'status' => 'connected',
                 'stats' => [
                     'users' => [

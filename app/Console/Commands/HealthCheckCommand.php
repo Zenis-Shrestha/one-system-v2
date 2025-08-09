@@ -18,14 +18,11 @@ class HealthCheckCommand extends Command
 
         $overallHealth = true;
 
-        // 1. Database Check
         $this->info("1. Database Health:");
         try {
-            $connection = DB::connection('cas_system');
-            $connection->getPdo();
+            $connection = DB::connection()->getPdo();
             $this->line("   ✓ Database connection: OK");
 
-            // Test each schema
             $schemas = ['cas_user', 'cas_admin', 'cas_audit'];
             foreach ($schemas as $schema) {
                 $testQuery = $connection->select("SELECT 1 FROM information_schema.schemata WHERE schema_name = ?", [$schema]);
@@ -41,7 +38,6 @@ class HealthCheckCommand extends Command
             $overallHealth = false;
         }
 
-        // 2. Cache Check
         $this->line("");
         $this->info("2. Cache System:");
         try {
@@ -61,7 +57,6 @@ class HealthCheckCommand extends Command
             $overallHealth = false;
         }
 
-        // 3. Configuration Check
         $this->line("");
         $this->info("3. Configuration:");
 
@@ -81,13 +76,11 @@ class HealthCheckCommand extends Command
             }
         }
 
-        // 4. System Resources
         $this->line("");
         $this->info("4. System Resources:");
         $this->line("   Memory usage: " . round(memory_get_usage(true) / 1024 / 1024, 2) . " MB");
         $this->line("   Peak memory: " . round(memory_get_peak_usage(true) / 1024 / 1024, 2) . " MB");
 
-        // 5. Data Integrity
         $this->line("");
         $this->info("5. Data Integrity:");
         try {
@@ -107,7 +100,6 @@ class HealthCheckCommand extends Command
             $overallHealth = false;
         }
 
-        // Final result
         $this->line("");
         $this->info("=" . str_repeat("=", 50));
 

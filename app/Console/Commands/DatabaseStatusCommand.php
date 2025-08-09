@@ -16,13 +16,11 @@ class DatabaseStatusCommand extends Command
         $this->info("=" . str_repeat("=", 50));
 
         try {
-            $connection = DB::connection('cas_system');
-            $pdo = $connection->getPdo();
+            $connection = DB::connection()->getPdo();
 
             // Basic connection info
             $this->info("Connection Details:");
             $this->line("✓ Database: Connected successfully");
-            $this->line("Connection: cas_system");
             $this->line("Driver: " . $connection->getDriverName());
             $this->line("Database: " . $connection->getDatabaseName());
 

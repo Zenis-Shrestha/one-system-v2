@@ -34,8 +34,7 @@ class UnlockUserCommand extends Command
             }
             
             // Clear recent failed login attempts by adding a successful unlock audit log
-            DB::connection('cas_system')
-                ->table('cas_audit.audit_logs')
+            DB::table('cas_audit.audit_logs')
                 ->insert([
                     'user_id' => $user->id,
                     'client_system_id' => null,
@@ -58,8 +57,7 @@ class UnlockUserCommand extends Command
             $this->line("✓ Unlock event logged to audit trail");
             
             // Check current status
-            $recentFailedLogins = DB::connection('cas_system')
-                ->table('cas_audit.audit_logs')
+            $recentFailedLogins = DB::table('cas_audit.audit_logs')
                 ->where('user_id', $user->id)
                 ->where('action', 'login_failed')
                 ->where('created_at', '>=', now()->subHour())

@@ -18,8 +18,7 @@ class RegenerateSecretsCommand extends Command
         
         try {
             // Find client system
-            $client = DB::connection('cas_system')
-                ->table('cas_admin.client_systems')
+            $client = DB::table('cas_admin.client_systems')
                 ->where('id', $clientId)
                 ->first();
             
@@ -54,14 +53,12 @@ class RegenerateSecretsCommand extends Command
             $updates['updated_at'] = now();
             
             // Update database
-            DB::connection('cas_system')
-                ->table('cas_admin.client_systems')
+            DB::table('cas_admin.client_systems')
                 ->where('id', $clientId)
                 ->update($updates);
             
             // Log the action
-            DB::connection('cas_system')
-                ->table('cas_audit.audit_logs')
+            DB::table('cas_audit.audit_logs')
                 ->insert([
                     'user_id' => null,
                     'client_system_id' => $clientId,
