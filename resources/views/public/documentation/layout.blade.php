@@ -93,12 +93,13 @@
             background: #1e293b;
             color: #e2e8f0;
             border-radius: 0.5rem;
-            padding: 1rem;
+            padding: 0.5rem; /* Reduced from 1rem */
             overflow-x: auto;
         }
         
         .code-block pre {
             margin: 0;
+            padding: 0.5rem; /* moved inner padding to pre if needed, or keep 0 */
             font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
             font-size: 0.875rem;
             line-height: 1.5;

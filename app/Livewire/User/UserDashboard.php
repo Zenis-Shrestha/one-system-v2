@@ -11,6 +11,7 @@ use App\Models\ClientSystem;
 use App\Models\UserClientSystem;
 use App\Models\AuditLog;
 use App\Models\SsoToken;
+use App\Services\SsoService;
 
 class UserDashboard extends Component
 {
@@ -72,6 +73,14 @@ class UserDashboard extends Component
 
     public function mount()
     {
+        if (request()->has('error')) {
+            $this->showMessage(request()->query('error'), 'error');
+        }
+
+        if (request()->has('success')) {
+            $this->showMessage(request()->query('success'), 'success');
+        }
+
         $this->loadUserDashboard();
     }
 
@@ -129,6 +138,8 @@ class UserDashboard extends Component
             return;
         }
 
+        Log::info('UserDashboard: loginToSystem called', ['clientSystemId' => $clientSystemId]);
+
         $this->processing = true;
 
         $userId = session('user_id');
@@ -164,49 +175,23 @@ class UserDashboard extends Component
                 return;
             }
 
-            $tokenString = bin2hex(random_bytes(32));
-            $token = SsoToken::create([
-                'user_id' => $userId,
-                'client_system_id' => $clientSystemId,
-                'token' => $tokenString,
-                'user_role' => $user->role ?? 'user',
-                'token_hash' => hash('sha256', $tokenString),
-                'payload' => [
-                    'user_id' => $userId,
-                    'username' => $userLink->linked_username,
-                    'client_system_id' => $clientSystemId,
-                    'client_id' => $clientSystem->client_id,
-                    'issued_at' => now()->timestamp,
-                    'expires_at' => now()->addMinutes(5)->timestamp,
-                    'login_type' => 'dashboard_sso'
-                ],
-                'expires_at' => now()->addMinutes(5),
-                'is_active' => true,
-                'is_used' => false,
-                'user_agent' => request()->userAgent(),
-                'ip_address' => request()->ip()
-            ]);
+            // Use SsoService to generate the web SSO token (JWT)
+            $ssoService = app(SsoService::class);
+            $result = $ssoService->generateWebSsoToken($user, $clientSystem->client_id, request());
+
+            if ($result['status'] !== 'success') {
+                $this->showMessage('Login failed: ' . $result['message'], 'error');
+                $this->processing = false;
+                return;
+            }
+
+            // Use the secure redirect URL from the service (no sensitive user_id in params)
+            $tokenUrl = $result['redirect_url'];
+            
+            // SsoService handles SsoToken and AuditLog creation
 
             $userLink = UserClientSystem::find($userLink->id);
             $userLink->update(['last_used' => now()]);
-
-            AuditLog::create([
-                'user_id' => $userId,
-                'event_type' => 'sso_login',
-                'action' => 'login_initiated',
-                'description' => "SSO login initiated for {$clientSystem->name}",
-                'details' => [
-                    'client_system' => $clientSystem->name,
-                    'username' => $userLink->linked_username,
-                    'token_id' => $token->id
-                ],
-                'success' => true,
-                'ip_address' => request()->ip(),
-                'user_agent' => request()->userAgent(),
-            ]);
-
-            $callbackUrl = $clientSystem->callback_url;
-            $tokenUrl = $callbackUrl . '?sso_token=' . $tokenString . '&user_id=' . $userId;
 
             $this->processing = false;
 
@@ -451,7 +436,7 @@ class UserDashboard extends Component
     {
         $this->message = $message;
         $this->messageType = $type;
-        $this->dispatch('show-message');
+        $this->dispatch('show-message', message: $message, type: $type);
     }
 
     public function clearMessage()

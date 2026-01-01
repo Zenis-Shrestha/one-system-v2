@@ -33,8 +33,9 @@ Route::get('/api/user', [AuthController::class, 'user']);
 
 // SSO Routes
 Route::post('/api/sso/token', [AuthController::class, 'generateSSOToken'])->middleware('ip.whitelist');
-Route::post('/api/sso/validate', [AuthController::class, 'validateSSOToken'])->middleware('ip.whitelist');
+// Route::post('/api/sso/validate', [AuthController::class, 'validateSSOToken'])->middleware('ip.whitelist');
 Route::post('/api/validate-token', [AuthController::class, 'validateToken'])->middleware('ip.whitelist');
+Route::get('/sso/login', [AuthController::class, 'ssoLogin'])->name('sso.login');
 Route::get('/auth/sso/callback', [AuthController::class, 'ssoCallback'])->name('sso.callback');
 Route::post('/api/sso/process', [AuthController::class, 'processSSOCallback']);
 

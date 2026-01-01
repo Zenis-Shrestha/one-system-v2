@@ -11,6 +11,122 @@
         <p class="text-xl text-gray-600">Complete overview of our modular Central Authentication Service with enterprise-grade organization</p>
     </div>
 
+    <!-- Architecture Diagrams -->
+    <div class="bg-white shadow rounded-lg p-6 mb-8">
+        <h2 class="text-2xl font-semibold text-gray-900 mb-4">📊 Visual Architecture</h2>
+        
+        <!-- Mermaid Support -->
+        <script type="module">
+            import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+            mermaid.initialize({ startOnLoad: true, theme: 'default' });
+        </script>
+
+        <div class="space-y-8">
+            <!-- SSO Data Flow -->
+            <div>
+                <h3 class="text-lg font-semibold text-blue-900 mb-3">🔄 Dashboard SSO Flow</h3>
+                <p class="text-gray-600 mb-4 text-sm">Sequence of events during a user-initiated login from the dashboard.</p>
+                <div class="bg-slate-50 border border-slate-200 rounded-lg p-4 overflow-x-auto">
+                    <pre class="mermaid">
+sequenceDiagram
+    actor User
+    participant Dashboard as CAS Dashboard
+    participant Server as CAS Server
+    participant Client as Client App
+    
+    User->>Dashboard: Clicks "Launch App"
+    Dashboard->>Server: Request One-Time Token (Auth Check)
+    Server-->>Dashboard: Return Token + Redirect URL
+    Dashboard->>Client: Redirect User with ?token=xyz
+    Client->>Server: Validate Token (Back-channel)
+    Server-->>Client: Return User Data (XML/JSON)
+    Client->>User: Create Session & Log In
+                    </pre>
+                </div>
+            </div>
+
+            <!-- Admin Workflow -->
+            <div>
+                <h3 class="text-lg font-semibold text-red-900 mb-3">🛡️ Admin Onboarding Flow</h3>
+                <p class="text-gray-600 mb-4 text-sm">Process for administrators to register and secure new client systems.</p>
+                <div class="bg-slate-50 border border-slate-200 rounded-lg p-4 overflow-x-auto">
+                    <pre class="mermaid">
+sequenceDiagram
+    actor Admin
+    participant Panel as Admin Panel
+    participant DB as System DB
+    
+    Admin->>Panel: Create New System
+    Panel-->>DB: Insert CLIENT_SYSTEMS record
+    DB-->>Panel: Return generated Client ID/Secret
+    
+    Admin->>Panel: Configure IP Whitelisting
+    Panel-->>DB: Insert IP_WHITELIST records
+    
+    Admin->>Panel: Review Audit Logs
+    Panel-->>DB: Query AUDIT_LOGS
+    DB-->>Panel: Return Activity Report
+                    </pre>
+                </div>
+            </div>
+
+            <!-- ER Diagram -->
+            <div>
+                <h3 class="text-lg font-semibold text-purple-900 mb-3">🗄️ Entity Relationships</h3>
+                <p class="text-gray-600 mb-4 text-sm">Core database models and their relationships, including security and audit layers.</p>
+                <div class="bg-slate-50 border border-slate-200 rounded-lg p-4 overflow-x-auto">
+                    <pre class="mermaid">
+erDiagram
+    USERS ||--o{ USER_CLIENT_LINKS : "links"
+    USERS ||--o{ SSO_TOKENS : "generates"
+    USERS ||--o{ AUDIT_LOGS : "triggers"
+    CLIENT_SYSTEMS ||--o{ USER_CLIENT_LINKS : "has"
+    CLIENT_SYSTEMS ||--o{ SSO_TOKENS : "validates"
+    CLIENT_SYSTEMS ||--o{ IP_WHITELIST : "has"
+    CLIENT_SYSTEMS ||--o{ AUDIT_LOGS : "logged_against"
+
+    USERS {
+        uuid id PK
+        string email
+        string password
+        string role "user|admin"
+    }
+
+    CLIENT_SYSTEMS {
+        bigint id PK
+        string client_id
+        string client_secret
+        string callback_url
+        boolean is_active
+    }
+
+    SSO_TOKENS {
+        uuid id PK
+        string token
+        timestamp expires_at
+        boolean consumed
+    }
+
+    IP_WHITELIST {
+        bigint id PK
+        string ip_address
+        string description
+        boolean is_active
+    }
+
+    AUDIT_LOGS {
+        bigint id PK
+        string event
+        json payload
+        string ip_address
+        timestamp created_at
+    }
+                    </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Architecture Overview -->
     <div class="bg-white shadow rounded-lg p-6 mb-8">
         <h2 class="text-2xl font-semibold text-gray-900 mb-4">📐 System Design Principles</h2>

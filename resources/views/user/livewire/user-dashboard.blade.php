@@ -149,48 +149,39 @@
                     <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
                         @forelse($this->clientSystems as $system)
                             <div wire:key="system-{{ $system['id'] }}-{{ $refreshData }}"
-                                 class="group relative bg-gradient-to-br from-white to-gray-50 rounded-3xl border-2 border-gray-100 hover:border-blue-300 hover:shadow-2xl transition-all duration-500 overflow-hidden transform hover:-translate-y-1">
+                                 class="group relative bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-xl hover:border-blue-200 transition-all duration-300 overflow-hidden">
 
-                                <div class="absolute inset-0 bg-gradient-to-br {{ $system['is_linked'] ? 'from-green-400/5 to-blue-400/5' : 'from-gray-400/5 to-slate-400/5' }} opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-
-                                <div class="absolute top-6 right-6 z-10">
-                                    @if($system['is_linked'])
-                                        <div class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-bold flex items-center shadow-sm">
-                                            <div class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div>
-                                            CONNECTED
+                                <div class="p-6">
+                                    <div class="flex items-start justify-between mb-6">
+                                        <div class="flex items-center space-x-4">
+                                            <div class="w-14 h-14 {{ $system['is_linked'] ? 'bg-gradient-to-br from-blue-500 to-indigo-600' : 'bg-slate-100' }} rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-md group-hover:scale-110 transition-transform duration-300">
+                                                @if($system['is_linked'])
+                                                    {{ strtoupper(substr($system['name'], 0, 2)) }}
+                                                @else
+                                                    <x-icon name="desktop" class="w-6 h-6 text-slate-400" />
+                                                @endif
+                                            </div>
+                                            <div>
+                                                <h3 class="text-lg font-bold text-slate-900 group-hover:text-blue-600 transition-colors duration-300">
+                                                    {{ $system['name'] }}
+                                                </h3>
+                                                <p class="text-sm text-slate-500 truncate max-w-[180px]">
+                                                    {{ $system['description'] ?? 'Application system' }}
+                                                </p>
+                                            </div>
                                         </div>
-                                    @else
-                                        <div class="bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-xs font-bold flex items-center shadow-sm">
-                                            <div class="w-2 h-2 bg-amber-500 rounded-full mr-2"></div>
-                                            SETUP REQUIRED
-                                        </div>
-                                    @endif
-                                </div>
-
-                                <div class="relative p-8 pt-16">
-                                    <div class="flex items-center space-x-4 mb-6">
-                                        <div class="w-16 h-16 {{ $system['is_linked'] ? 'bg-gradient-to-br from-green-400 to-blue-600' : 'bg-gradient-to-br from-gray-400 to-slate-600' }} rounded-3xl flex items-center justify-center text-white font-bold text-xl shadow-xl group-hover:scale-110 transition-transform duration-300">
-                                            {{ strtoupper(substr($system['name'], 0, 2)) }}
-                                        </div>
-                                        <div class="flex-1 min-w-0">
-                                            <h3 class="text-xl font-bold text-gray-900 truncate group-hover:text-blue-600 transition-colors duration-300">
-                                                {{ $system['name'] }}
-                                            </h3>
-                                            <p class="text-sm text-gray-600 truncate">
-                                                {{ $system['description'] ?? 'Application system' }}
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    <div class="flex items-center mb-6 space-x-3">
-                                        <span class="inline-flex items-center px-2 py-1 rounded-lg text-xs font-medium {{ $system['is_active'] ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
-                                            <div class="w-1.5 h-1.5 {{ $system['is_active'] ? 'bg-green-500' : 'bg-red-500' }} rounded-full mr-1"></div>
-                                            {{ $system['is_active'] ? 'Active' : 'Inactive' }}
-                                        </span>
+                                        
                                         @if($system['is_linked'])
-                                            <span class="inline-flex items-center px-2 py-1 rounded-lg text-xs font-medium bg-blue-100 text-blue-800">
-                                                <x-icon name="lock" class="w-3 h-3 mr-1" />
-                                                Encrypted
+                                            <div class="flex items-center">
+                                                <span class="relative flex h-3 w-3 mr-2">
+                                                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                                  <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+                                                </span>
+                                                <span class="text-xs font-semibold text-emerald-600">Live</span>
+                                            </div>
+                                        @else
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-800">
+                                                Not Linked
                                             </span>
                                         @endif
                                     </div>
@@ -199,46 +190,49 @@
                                         @if($system['is_linked'])
                                             <button wire:click="loginToSystem({{ $system['id'] }})"
                                                     wire:loading.attr="disabled"
-                                                    class="w-full bg-gradient-to-r from-green-500 to-blue-600 hover:from-green-600 hover:to-blue-700 text-white font-bold py-4 px-6 rounded-2xl transition-all duration-300 transform group-hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center group/btn">
-                                                <div wire:loading.remove wire:target="loginToSystem({{ $system['id'] }})" class="flex items-center">
-                                                    <x-icon name="login" class="w-5 h-5 mr-3 group-hover/btn:translate-x-1 transition-transform duration-300" />
-                                                    <span class="text-lg">Access {{ $system['name'] }}</span>
+                                                    class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center group/btn active:scale-95">
+                                                <div wire:loading.remove wire:target="loginToSystem({{ $system['id'] }})" class="flex items-center whitespace-nowrap">
+                                                    <x-icon name="login" class="w-5 h-5 mr-2" />
+                                                    <span class="text-sm">Launch Application</span>
                                                 </div>
                                                 <div wire:loading wire:target="loginToSystem({{ $system['id'] }})" class="flex items-center">
-                                                    <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-3"></div>
-                                                    <span>Logging in...</span>
+                                                    <div class="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent mr-2"></div>
+                                                    <span class="text-sm">Launching...</span>
                                                 </div>
                                             </button>
 
-                                            <button wire:click="openEditModal({{ $system['id'] }})"
-                                                    class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 px-6 rounded-2xl transition-all duration-300 flex items-center justify-center group/edit">
-                                                <x-icon name="settings" class="w-4 h-4 mr-2 group-hover/edit:rotate-90 transition-transform duration-300" />
-                                                Manage Connection
-                                            </button>
+                                            <div class="grid grid-cols-2 gap-2">
+                                                <button wire:click="openEditModal({{ $system['id'] }})"
+                                                        class="w-full bg-slate-50 hover:bg-slate-100 text-slate-600 font-medium py-2.5 px-4 rounded-xl transition-colors duration-200 flex items-center justify-center text-sm border border-slate-200">
+                                                    <x-icon name="settings" class="w-4 h-4 mr-2" />
+                                                    Settings
+                                                </button>
+                                                
+                                                <div class="w-full bg-slate-50 text-slate-500 font-medium py-2.5 px-4 rounded-xl flex items-center justify-center text-xs border border-slate-200 cursor-default" title="Connection Encrypted">
+                                                    <x-icon name="lock" class="w-3 h-3 mr-1.5 text-emerald-500" />
+                                                    Secure
+                                                </div>
+                                            </div>
                                         @else
                                             <button wire:click="openEditModal({{ $system['id'] }})"
-                                                    class="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold py-4 px-6 rounded-2xl transition-all duration-300 transform group-hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center group/setup">
-                                                <x-icon name="plus" class="w-5 h-5 mr-3 group-hover/setup:rotate-90 transition-transform duration-300" />
-                                                <span class="text-lg">Setup Connection</span>
+                                                    class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center group/setup">
+                                                <x-icon name="plus" class="w-5 h-5 mr-2" />
+                                                <span class="text-sm">Connect System</span>
                                             </button>
-
-                                            <div class="text-center">
-                                                <p class="text-sm text-gray-500">Connect your credentials to enable one-click access</p>
-                                            </div>
+                                            <p class="text-xs text-center text-slate-400 mt-2">
+                                                Setup required to access this application
+                                            </p>
                                         @endif
                                     </div>
+                                </div>
 
-                                    <div class="mt-6 pt-4 border-t border-gray-100">
-                                        <div class="grid grid-cols-2 gap-4 text-sm">
-                                            <div>
-                                                <p class="text-gray-500 font-medium">Client ID</p>
-                                                <p class="text-gray-900 font-mono text-xs">{{ substr($system['client_id'], 0, 8) }}...</p>
-                                            </div>
-                                            <div>
-                                                <p class="text-gray-500 font-medium">Last Used</p>
-                                                <p class="text-gray-900">{{ $system['is_linked'] ? 'Today' : 'Never' }}</p>
-                                            </div>
-                                        </div>
+                                <div class="bg-slate-50 px-6 py-3 border-t border-slate-100 flex items-center justify-between">
+                                    <div class="flex items-center space-x-2 text-xs text-slate-500">
+                                        <span class="font-medium text-slate-700">ID:</span>
+                                        <span class="font-mono bg-white px-1.5 py-0.5 rounded border border-slate-200">{{ substr($system['client_id'], 0, 8) }}</span>
+                                    </div>
+                                    <div class="text-xs text-slate-400">
+                                        {{ $system['is_linked'] ? 'Last used: Today' : 'Never used' }}
                                     </div>
                                 </div>
                             </div>
@@ -251,7 +245,7 @@
                                 <p class="text-gray-600 mb-8 max-w-md mx-auto">
                                     It looks like no client systems have been configured yet. Contact your administrator to set up applications.
                                 </p>
-                                <button wire:click="loadUserDashboard" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-semibold transition-colors duration-300">
+                                <button wire:click="loadUserDashboard" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-semibold transition-colors duration-300 inline-flex items-center">
                                     <x-icon name="refresh" class="w-4 h-4 mr-2" />
                                     Refresh
                                 </button>
@@ -271,151 +265,142 @@
                 <p class="text-gray-600 mb-6">
                     Having trouble connecting to an application or need assistance with your account?
                 </p>
-                <div class="flex flex-wrap justify-center gap-4">
-                    <a href="{{ route('user.profile.livewire') }}" class="bg-white hover:bg-gray-50 text-blue-600 px-6 py-3 rounded-xl font-semibold transition-colors duration-300 shadow-sm border">
+                <div class="flex justify-center gap-4">
+                    <a href="{{ route('user.profile.livewire') }}" class="bg-white hover:bg-gray-50 text-blue-600 px-6 py-3 rounded-xl font-semibold transition-colors duration-300 shadow-sm border whitespace-nowrap flex items-center">
                         <x-icon name="user" class="w-4 h-4 mr-2" />
                         Profile Settings
                     </a>
-                    <a href="/docs" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-semibold transition-colors duration-300">
+                    <a href="/docs" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-semibold transition-colors duration-300 whitespace-nowrap flex items-center">
                         <x-icon name="book" class="w-4 h-4 mr-2" />
                         Documentation
                     </a>
                 </div>
             </div>
         </div>
-    </div>
 
-    @include('user.livewire.partials.edit-credentials-modal')
+        @include('user.livewire.partials.edit-credentials-modal')
+
+    </div>
 </div>
-        @if($message)
-            <div class="fixed top-4 right-4 z-50 max-w-sm">
-                <div class="@if($messageType === 'success') bg-green-100 border border-green-400 text-green-700 @else bg-red-100 border border-red-400 text-red-700 @endif px-4 py-3 rounded-lg shadow-lg">
-                    {{ $message }}
-                    <button wire:click="clearMessage" class="ml-2 text-sm underline">×</button>
-                </div>
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('DOM loaded, setting up Livewire listeners');
+    });
+
+    document.addEventListener('livewire:initialized', () => {
+        console.log('Livewire initialized, setting up redirect listener');
+
+        Livewire.on('show-popup-blocked', (url) => {
+            console.log('Popup was blocked for URL:', url);
+            const message = 'Please allow popups for this site to open the client portal in a new tab. You can enable popups in your browser settings.';
+
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-4 right-4 bg-yellow-500 text-white px-6 py-4 rounded-lg shadow-lg z-50 max-w-sm';
+            notification.innerHTML = `
+                <div class="flex items-center space-x-2">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                    </svg>
+                    <div>
+                        <div class="font-semibold">Popup Blocked</div>
+                        <div class="text-sm">${message}</div>
+                    </div>
+                    <button onclick="this.parentElement.parentElement.remove()" class="ml-2 text-white hover:text-gray-200">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    </svg>
+                </button>
             </div>
-            <script>
+        `;
+
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+            if (notification.parentElement) {
+                notification.remove();
+            }
+        }, 8000);
+    });
+
+    Livewire.on('show-popup-error', (message) => {
+        const notification = document.createElement('div');
+        notification.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-4 rounded-lg shadow-lg z-50';
+        notification.innerHTML = `
+            <div class="flex items-center space-x-2">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+                </svg>
+                <span>${message}</span>
+                <button onclick="this.parentElement.parentElement.remove()" class="ml-2 text-white hover:text-gray-200">×</button>
+            </div>
+        `;
+
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+            if (notification.parentElement) {
+                notification.remove();
+            }
+        }, 5000);
+    });
+            Livewire.on('redirect-to-client', (event) => {
+                const urlToOpen = event.url || event[0]?.url || event;
+                if (!urlToOpen) return;
+                window.open(urlToOpen, '_blank', 'noopener,noreferrer');
+            });
+
+            Livewire.on('openInNewTab', (url) => {
+                if (!url) return;
+                const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
+                
+                // Check if popup was blocked
+                if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
+                    console.log('Popup blocked detected');
+                    const message = 'Popup blocked! Please allow popups for this site to access the application.';
+                    Livewire.dispatch('show-popup-blocked', { url: url });
+                }
+            });
+
+            Livewire.on('show-message', (data) => {
+                // Livewire 3 passes named arguments as an object (e.g. data.message, data.type) 
+                // OR it might pass them as event detail if using traditional event listener.
+                // In $this->dispatch('name', param: value), the listener callback receives an object { param: value }.
+                
+                const message = data.message || data[0]?.message || 'Operation successful';
+                const type = data.type || data[0]?.type || 'success';
+                
+                const bgColor = type === 'error' ? 'bg-red-500' : 'bg-green-500';
+                
+                const notification = document.createElement('div');
+                notification.className = `fixed top-4 right-4 ${bgColor} text-white px-6 py-4 rounded-lg shadow-lg z-50 transition-opacity duration-500`;
+                notification.innerHTML = `
+                    <div class="flex items-center space-x-2">
+                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            ${type === 'error' 
+                                ? '<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>'
+                                : '<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>'
+                            }
+                        </svg>
+                        <span>${message}</span>
+                        <button onclick="this.parentElement.parentElement.remove()" class="ml-2 text-white hover:text-gray-200">×</button>
+                    </div>
+                `;
+
+                document.body.appendChild(notification);
+
                 setTimeout(() => {
-                    @this.call('clearMessage');
+                    if (notification.parentElement) {
+                        notification.style.opacity = '0';
+                        setTimeout(() => notification.remove(), 500);
+                    }
                 }, 5000);
-            </script>
-        @endif
-
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                console.log('DOM loaded, setting up Livewire listeners');
             });
+});
 
-            document.addEventListener('livewire:initialized', () => {
-                console.log('Livewire initialized, setting up redirect listener');
-
-                Livewire.on('show-popup-blocked', (url) => {
-                    console.log('Popup was blocked for URL:', url);
-                    const message = 'Please allow popups for this site to open the client portal in a new tab. You can enable popups in your browser settings.';
-
-                    const notification = document.createElement('div');
-                    notification.className = 'fixed top-4 right-4 bg-yellow-500 text-white px-6 py-4 rounded-lg shadow-lg z-50 max-w-sm';
-                    notification.innerHTML = `
-                        <div class="flex items-center space-x-2">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
-                            </svg>
-                            <div>
-                                <div class="font-semibold">Popup Blocked</div>
-                                <div class="text-sm">${message}</div>
-                            </div>
-                            <button onclick="this.parentElement.parentElement.remove()" class="ml-2 text-white hover:text-gray-200">
-                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                                </svg>
-                            </button>
-                        </div>
-                    `;
-
-                    document.body.appendChild(notification);
-
-                    setTimeout(() => {
-                        if (notification.parentElement) {
-                            notification.remove();
-                        }
-                    }, 8000);
-                });
-
-                Livewire.on('show-popup-error', (message) => {
-                    const notification = document.createElement('div');
-                    notification.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-4 rounded-lg shadow-lg z-50';
-                    notification.innerHTML = `
-                        <div class="flex items-center space-x-2">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
-                            </svg>
-                            <span>${message}</span>
-                            <button onclick="this.parentElement.parentElement.remove()" class="ml-2 text-white hover:text-gray-200">×</button>
-                        </div>
-                    `;
-
-                    document.body.appendChild(notification);
-
-                    setTimeout(() => {
-                        if (notification.parentElement) {
-                            notification.remove();
-                        }
-                    }, 5000);
-                });
-
-                Livewire.on('redirect-to-client', (event) => {
-                    console.log('=== REDIRECT EVENT RECEIVED ===');
-                    console.log('Full event object:', event);
-                    console.log('Event URL:', event.url);
-                    console.log('Event type:', typeof event);
-                    console.log('Event keys:', Object.keys(event));
-
-                    const urlToOpen = event.url || event[0]?.url || event;
-                    console.log('Final URL to open:', urlToOpen);
-
-                    if (!urlToOpen || urlToOpen === 'undefined' || urlToOpen === '') {
-                        console.error('Invalid URL for redirect:', urlToOpen);
-                        alert('Error: Invalid redirect URL: ' + urlToOpen);
-                        return;
-                    }
-
-                    console.log('Attempting to open URL:', urlToOpen);
-                    const newWindow = window.open(urlToOpen, '_blank', 'noopener,noreferrer');
-
-                    if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
-                        console.error('Popup blocked or failed to open');
-                        alert('Popup blocked. Please allow popups and try again.\nURL: ' + urlToOpen);
-                    } else {
-                        console.log('Successfully opened new window');
-                    }
-                });
-
-                Livewire.on('openInNewTab', (url) => {
-                    console.log('=== OPEN IN NEW TAB EVENT ===');
-                    console.log('URL to open:', url);
-
-                    if (!url || url === 'undefined' || url === '') {
-                        console.error('Invalid URL for new tab:', url);
-                        window.Livewire.dispatch('show-popup-error', 'Invalid login URL');
-                        return;
-                    }
-
-                    const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
-
-                    setTimeout(() => {
-                        if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
-                            console.error('Popup blocked or failed to open new tab');
-                        } else {
-                            console.log('Successfully opened new tab');
-                        }
-                    }, 100);
-                });
-            });
-
-            window.testRedirect = function(url) {
-                console.log('Testing redirect with URL:', url);
-                window.open(url, '_blank');
-            };
-        </script>
-    </div>
-</div>
+window.testRedirect = function(url) {
+    window.open(url, '_blank');
+};
+</script>
+@endpush

@@ -37,43 +37,23 @@ class ClientCredentialValidator
             $clientSystem
         );
 
-        $isDevelopment = config('app.env') === 'local' || config('app.debug') === true;
-
         if (!$validationResult['success']) {
-            if ($isDevelopment) {
-                AuditLog::create([
-                    'user_id' => $userId,
-                    'event_type' => 'credential_validation',
-                    'action' => 'validation_skipped_dev',
-                    'description' => "Credential validation skipped in development mode for {$clientSystem->name}",
-                    'details' => [
-                        'username' => $username,
-                        'client_system' => $clientSystem->name,
-                        'mode' => 'development',
-                        'original_error' => $validationResult['message']
-                    ],
-                    'success' => true,
-                    'ip_address' => request()->ip(),
-                    'user_agent' => request()->userAgent(),
-                ]);
-            } else {
-                AuditLog::create([
-                    'user_id' => $userId,
-                    'event_type' => 'credential_validation',
-                    'action' => 'validation_failed',
-                    'description' => "Failed credential validation for {$clientSystem->name}",
-                    'details' => [
-                        'username' => $username,
-                        'client_system' => $clientSystem->name,
-                        'error' => $validationResult['message']
-                    ],
-                    'success' => false,
-                    'ip_address' => request()->ip(),
-                    'user_agent' => request()->userAgent(),
-                ]);
+            AuditLog::create([
+                'user_id' => $userId,
+                'event_type' => 'credential_validation',
+                'action' => 'validation_failed',
+                'description' => "Failed credential validation for {$clientSystem->name}",
+                'details' => [
+                    'username' => $username,
+                    'client_system' => $clientSystem->name,
+                    'error' => $validationResult['message']
+                ],
+                'success' => false,
+                'ip_address' => request()->ip(),
+                'user_agent' => request()->userAgent(),
+            ]);
 
-                return $validationResult;
-            }
+            return $validationResult;
         }
 
         try {

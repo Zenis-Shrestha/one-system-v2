@@ -45,36 +45,8 @@
             <div class="flex">
                 <div class="ml-3">
                     <p class="text-sm text-blue-700">
-                        <strong>Prerequisites:</strong> Laravel 8+ and PHP 8.0+
+                        <strong>Prerequisites:</strong> Laravel 10.0+ and PHP 8.1+
                     </p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Package Download -->
-        <div class="bg-gradient-to-r from-red-50 to-red-100 border border-red-200 rounded-lg p-6 mb-6">
-            <div class="flex items-center justify-between">
-                <div>
-                    <h3 class="text-lg font-semibold text-red-900 mb-2">📦 CAS Laravel Client Package</h3>
-                    <p class="text-red-700 mb-3">Complete Laravel integration package with all necessary files, middleware, and configuration.</p>
-                    <ul class="text-sm text-red-600 space-y-1">
-                        <li>✓ CAS Authentication Service</li>
-                        <li>✓ HMAC Signature Validation</li>
-                        <li>✓ Middleware Components</li>
-                        <li>✓ Configuration Files</li>
-                        <li>✓ Service Provider</li>
-                        <li>✓ Example Controllers</li>
-                    </ul>
-                </div>
-                <div class="text-center">
-                    <a href="/downloads/one-system-client-package.zip"
-                       class="inline-flex items-center bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition-colors font-medium">
-                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                        </svg>
-                        Download Package
-                    </a>
-                    <p class="text-xs text-red-500 mt-1">v2.0 - Updated for new architecture</p>
                 </div>
             </div>
         </div>
@@ -83,42 +55,60 @@
         
         <div class="space-y-4">
             <div class="flex items-start">
-                <div class="flex-shrink-0 w-8 h-8 bg-red-100 rounded-full flex items-center justify-center mr-4 mt-1">
-                    <span class="text-red-600 font-semibold text-sm">1</span>
+                <div class="flex-shrink-0 w-8 h-8 bg-black rounded-full flex items-center justify-center mr-4 mt-1">
+                    <span class="text-white font-semibold text-sm">1</span>
                 </div>
                 <div>
-                    <h4 class="font-semibold text-gray-900 mb-2">Download and Extract Package</h4>
+                    <h4 class="font-semibold text-gray-900 mb-2">Prepare Packages Directory</h4>
+                    <p class="text-gray-600 mb-3">Create a <code>packages</code> directory in your project root and extract the client package there:</p>
                     <div class="code-block mb-3">
-                        <pre class="language-bash"><code># Extract the downloaded package to your Laravel project
-unzip one-system-client-package.zip -d temp-cas/
-cp -r temp-cas/* your-laravel-project/
-rm -rf temp-cas/</code></pre>
+                        <pre class="language-bash"><code>mkdir packages
+# Extract the package zip to packages/laravel-cas-client-package</code></pre>
                     </div>
                 </div>
             </div>
 
             <div class="flex items-start">
-                <div class="flex-shrink-0 w-8 h-8 bg-red-100 rounded-full flex items-center justify-center mr-4 mt-1">
-                    <span class="text-red-600 font-semibold text-sm">2</span>
+                <div class="flex-shrink-0 w-8 h-8 bg-black rounded-full flex items-center justify-center mr-4 mt-1">
+                    <span class="text-white font-semibold text-sm">2</span>
                 </div>
                 <div>
-                    <h4 class="font-semibold text-gray-900 mb-2">Register Service Provider</h4>
-                    <p class="text-gray-600 mb-3">Add the CAS service provider to your <code class="bg-gray-100 px-2 py-1 rounded">config/app.php</code>:</p>
+                    <h4 class="font-semibold text-gray-900 mb-2">Configure Composer</h4>
+                    <p class="text-gray-600 mb-3">Update your <code>composer.json</code> to include the local repository path and require the package:</p>
                     <div class="code-block mb-3">
-                        <pre class="language-php"><code>'providers' => [
-    // Other providers...
-    App\Providers\CasClientServiceProvider::class,
-],</code></pre>
+                        <pre class="language-json"><code>"repositories": [
+    {
+        "type": "path",
+        "url": "./packages/laravel-cas-client-package"
+    }
+],
+"require": {
+    "cas-system/laravel-client": "@dev"
+}</code></pre>
                     </div>
                 </div>
             </div>
 
             <div class="flex items-start">
-                <div class="flex-shrink-0 w-8 h-8 bg-red-100 rounded-full flex items-center justify-center mr-4 mt-1">
-                    <span class="text-red-600 font-semibold text-sm">3</span>
+                <div class="flex-shrink-0 w-8 h-8 bg-black rounded-full flex items-center justify-center mr-4 mt-1">
+                    <span class="text-white font-semibold text-sm">3</span>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-gray-900 mb-2">Install Dependencies</h4>
+                    <p class="text-gray-600 mb-3">Run composer update to install the local package:</p>
+                    <div class="code-block mb-3">
+                        <pre class="language-bash"><code>composer update</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex items-start">
+                <div class="flex-shrink-0 w-8 h-8 bg-black rounded-full flex items-center justify-center mr-4 mt-1">
+                    <span class="text-white font-semibold text-sm">4</span>
                 </div>
                 <div>
                     <h4 class="font-semibold text-gray-900 mb-2">Publish Configuration</h4>
+                    <p class="text-gray-600 mb-3">Publish the package configuration:</p>
                     <div class="code-block mb-3">
                         <pre class="language-bash"><code>php artisan vendor:publish --tag=cas-client-config</code></pre>
                     </div>
@@ -214,6 +204,7 @@ return [
 CAS_SERVER_URL=https://your-cas-server.com
 CAS_CLIENT_ID=your-client-id
 CAS_CLIENT_SECRET=your-client-secret
+CAS_SIGNATURE_SECRET=your-signature-verification-secret
 CAS_TOKEN_EXPIRY=3600
 CAS_SIGNATURE_VALIDATION=true
 
@@ -383,38 +374,6 @@ class DashboardController extends Controller
 }</code></pre>
         </div>
 
-        <h3 class="text-xl font-semibold mb-3">Blade Template Example</h3>
-        <div class="code-block mb-6">
-            <pre class="language-php"><code>{{-- resources/views/dashboard.blade.php --}}
-@@extends('layouts.app')
-
-@@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
-                <div class="card-body">
-                    @@if(session('cas_user'))
-                        <h4>Welcome, @{{ session('cas_user')['first_name'] }}!</h4>
-                        <p>Email: @{{ session('cas_user')['email'] }}</p>
-                        <p>Role: @{{ session('cas_user')['role'] }}</p>
-                        <p>Username: @{{ session('cas_user')['username'] }}</p>
-                        
-                        <div class="mt-4">
-                            <a href="@{{ route('profile') }}" class="btn btn-primary">View Profile</a>
-                            <a href="@{{ route('cas.logout') }}" class="btn btn-secondary">Logout</a>
-                        </div>
-                    @@else
-                        <p>Please <a href="@{{ route('cas.login') }}">login</a> to continue.</p>
-                    @@endif
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-@@endsection</code></pre>
-        </div>
 
         <h3 class="text-xl font-semibold mb-3">Service Provider Example</h3>
         <div class="code-block mb-6">

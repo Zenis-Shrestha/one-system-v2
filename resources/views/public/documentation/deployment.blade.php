@@ -176,7 +176,7 @@ data:
   APP_DEBUG: "false"
   APP_URL: "https://cas.yourdomain.com"
   DB_CONNECTION: "cas_system"
-  PGHOST: "cas-postgresql"
+  PGHOST=cas-postgresql"
   PGPORT: "5432"
   PGDATABASE: "cas_production"
   REDIS_HOST: "cas-redis"
@@ -230,7 +230,47 @@ spec:
             path: /health
             port: 8000
           initialDelaySeconds: 60
-          periodSeconds: 30</code></pre>
+          periodSeconds: 30
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cas-service
+  namespace: cas-system
+spec:
+  selector:
+    app: cas-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: cas-ingress
+  namespace: cas-system
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - auth.example.com
+    secretName: cas-tls-secret
+  rules:
+  - host: auth.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: cas-service
+            port:
+              number: 80</code></pre>
                 </div>
             </div>
         </div>

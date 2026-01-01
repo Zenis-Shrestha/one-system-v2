@@ -22,8 +22,9 @@
             <form wire:submit.prevent="saveCredentials" class="bg-white">
                 <div class="px-6 py-6 space-y-6">
                     <div>
-                        <label for="modalUsername" class="block text-sm font-semibold text-gray-700 mb-2">
-                            <x-icon name="user" class="w-4 h-4 mr-2 text-blue-600" />Username
+                        <label for="modalUsername" class="flex items-center text-sm font-semibold text-gray-700 mb-2">
+                            <x-icon name="user" class="w-4 h-4 mr-2 text-blue-600" />
+                            Username
                         </label>
                         <input type="text"
                                id="modalUsername"
@@ -38,21 +39,23 @@
                         @enderror
                     </div>
 
-                    <div>
-                        <label for="modalPassword" class="block text-sm font-semibold text-gray-700 mb-2">
-                            <x-icon name="lock" class="w-4 h-4 mr-2 text-blue-600" />Password
+                    <div x-data="{ showPassword: false }">
+                        <label for="modalPassword" class="flex items-center text-sm font-semibold text-gray-700 mb-2">
+                            <x-icon name="lock" class="w-4 h-4 mr-2 text-blue-600" />
+                            Password
                         </label>
                         <div class="relative">
-                            <input type="password"
+                            <input :type="showPassword ? 'text' : 'password'"
                                    id="modalPassword"
                                    wire:model.defer="modalPassword"
                                    class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
                                    placeholder="Enter your password for this system"
                                    required>
                             <button type="button"
-                                    onclick="togglePasswordVisibility('modalPassword')"
+                                    @click="showPassword = !showPassword"
                                     class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600">
-                                <x-icon name="eye" class="w-4 h-4" id="modalPassword-eye" />
+                                <x-icon name="eye" class="w-4 h-4" x-show="!showPassword" />
+                                <x-icon name="eye-off" class="w-4 h-4" x-show="showPassword" style="display: none;" />
                             </button>
                         </div>
                         @error('modalPassword')
@@ -99,7 +102,7 @@
                             {{ $selectedSystemName && collect($this->clientSystems)->firstWhere('id', $selectedSystemId)['is_linked'] ? 'Update Credentials' : 'Link System' }}
                         </div>
 
-                        <div wire:loading wire:target="saveCredentials" class="flex items-center">
+                        <div wire:loading wire:target="saveCredentials" class="flex items-center whitespace-nowrap">
                             <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
                             <span>Processing...</span>
                         </div>
@@ -110,18 +113,5 @@
     </div>
 </div>
 
-<script>
-function togglePasswordVisibility(inputId) {
-    const input = document.getElementById(inputId);
-    const eyeIcon = document.getElementById(inputId + '-eye');
 
-    if (input.type === 'password') {
-        input.type = 'text';
-        eyeIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21 M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>';
-    } else {
-        input.type = 'password';
-        eyeIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>';
-    }
-}
-</script>
 @endif

@@ -4,15 +4,20 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\AuditLog;
-use Firebase\JWT\JWT;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\ClientSystem;
 use App\Models\UserClientSystem;
 
 class UserDashboardController extends Controller
 {
+    private $ssoService;
+
+    public function __construct(\App\Services\SsoService $ssoService)
+    {
+        $this->ssoService = $ssoService;
+    }
+
     /**
      * Display the user dashboard view
      */
@@ -118,7 +123,7 @@ class UserDashboardController extends Controller
                 ], 404);
             }
 
-            $existingLink = UserClientLink::where('user_id', $userId)
+            $existingLink = UserClientSystem::where('user_id', $userId)
                 ->where('client_system_id', $request->client_system_id)
                 ->first();
 
@@ -128,7 +133,7 @@ class UserDashboardController extends Controller
                     'is_active' => true,
                 ]);
             } else {
-                UserClientLink::create([
+                UserClientSystem::create([
                     'user_id' => $userId,
                     'client_system_id' => $request->client_system_id,
                     'linked_username' => $request->linked_username,
@@ -175,8 +180,7 @@ class UserDashboardController extends Controller
         }
 
         try {
-            $userLink = DB::table('user_client_links')
-                ->where('user_id', $userId)
+            $userLink = UserClientSystem::where('user_id', $userId)
                 ->where('client_system_id', $clientSystemId)
                 ->where('is_active', true)
                 ->first();
@@ -188,8 +192,7 @@ class UserDashboardController extends Controller
                 ], 403);
             }
 
-            $clientSystem = DB::table('client_systems')
-                ->where('id', $clientSystemId)
+            $clientSystem = ClientSystem::where('id', $clientSystemId)
                 ->where('is_active', true)
                 ->first();
 
@@ -200,12 +203,12 @@ class UserDashboardController extends Controller
                 ], 404);
             }
 
-            $tokenResponse = $this->generateSSOTokenForUser($userId, $clientSystem, $userLink->linked_username, $request);
+            // Use SsoService to generate token
+            $user = User::find($userId);
+            $tokenResponse = $this->ssoService->generateWebSsoToken($user, $clientSystem->client_id, $request);
 
-            if ($tokenResponse['success']) {
-                DB::table('user_client_links')
-                    ->where('id', $userLink->id)
-                    ->update(['last_login' => now()]);
+            if ($tokenResponse['status'] === 'success') {
+                $userLink->update(['last_login' => now()]);
 
                 return response()->json([
                     'success' => true,
@@ -228,83 +231,6 @@ class UserDashboardController extends Controller
     }
 
     /**
-     * Generate SSO token for a specific user and client system
-     */
-    private function generateSSOTokenForUser($userId, $clientSystem, $linkedUsername, $request)
-    {
-        try {
-            $user = DB::table('users')->find($userId);
-
-            if (!$user) {
-                return ['success' => false, 'message' => 'User not found'];
-            }
-
-            $jwtSecret = config('app.jwt_secret', env('JWT_SECRET', 'your-secret-key'));
-
-            $payload = [
-                'userId' => $user->id,
-                'username' => $user->username,
-                'linkedUsername' => $linkedUsername,
-                'email' => $user->email,
-                'role' => $user->role ?? 'user',
-                'clientSystemId' => $clientSystem->id,
-                'clientId' => $clientSystem->client_id,
-                'iat' => time(),
-                'exp' => time() + (8 * 60 * 60),
-                'jti' => bin2hex(random_bytes(16)),
-            ];
-
-            $token = JWT::encode($payload, $jwtSecret, 'HS256');
-            $expiresAt = date('Y-m-d H:i:s', $payload['exp']);
-
-            DB::table('sso_tokens')->insert([
-                'token' => $token,
-                'user_id' => $user->id,
-                'client_system_id' => $clientSystem->id,
-                'expires_at' => $expiresAt,
-                'is_active' => true,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-
-            DB::table('client_systems')
-                ->where('id', $clientSystem->id)
-                ->update(['last_accessed' => now()]);
-
-            DB::table('audit_logs')->insert([
-                'user_id' => $user->id,
-                'client_system_id' => $clientSystem->id,
-                'event_type' => 'sso_login',
-                'action' => 'dashboard_login',
-                'description' => "User logged into {$clientSystem->name} via dashboard",
-                'details' => json_encode([
-                    'linked_username' => $linkedUsername,
-                    'client_system_name' => $clientSystem->name
-                ]),
-                'success' => true,
-                'ip_address' => $request->ip(),
-                'user_agent' => $request->userAgent(),
-                'created_at' => now(),
-                'updated_at' => now()
-            ]);
-
-            $redirectUrl = $clientSystem->callback_url . '?token=' . $token;
-
-            return [
-                'success' => true,
-                'redirect_url' => $redirectUrl,
-                'token' => $token
-            ];
-
-        } catch (\Exception $e) {
-            return [
-                'success' => false,
-                'message' => 'Token generation failed: ' . $e->getMessage()
-            ];
-        }
-    }
-
-    /**
      * Unlink user from a client system
      */
     public function unlinkClientSystem(Request $request, $clientSystemId)
@@ -315,13 +241,12 @@ class UserDashboardController extends Controller
         }
 
         try {
-            $deleted = DB::table('user_client_links')
-                ->where('user_id', $userId)
+            $deleted = UserClientSystem::where('user_id', $userId)
                 ->where('client_system_id', $clientSystemId)
                 ->delete();
 
             if ($deleted) {
-                DB::table('audit_logs')->insert([
+                AuditLog::create([
                     'user_id' => $userId,
                     'client_system_id' => $clientSystemId,
                     'event_type' => 'user_unlink',
@@ -330,8 +255,6 @@ class UserDashboardController extends Controller
                     'success' => true,
                     'ip_address' => $request->ip(),
                     'user_agent' => $request->userAgent(),
-                    'created_at' => now(),
-                    'updated_at' => now()
                 ]);
 
                 return response()->json([

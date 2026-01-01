@@ -16,15 +16,15 @@ class ClientSystemSeeder extends Seeder
             [
                 'name' => 'Laravel Customer Portal',
                 'description' => 'Laravel-based customer portal with e-commerce features',
-                'callback_url' => 'http://localhost:9000/auth/sso/callback',
-                'client_id' => 'client_' . bin2hex(random_bytes(8)),
-                'client_secret' => 'laravel-portal-secret',
+                'callback_url' => 'http://127.0.0.1:9001/cas/callback',
+                'client_id' => 'laravel_customer_portal_id',
+                'client_secret' => 'laravel_portal_secret',
                 'allowed_scopes' => json_encode(['read', 'write', 'orders']),
                 'is_active' => true,
-                'credentials_viewed' => false,
+                'credentials_viewed' => true,
                 'server_config' => json_encode([
-                    'domain' => 'http://localhost:9000',
-                    'webhook_secret' => bin2hex(random_bytes(16)),
+                    'domain' => 'http://127.0.0.1:9001',
+                    'webhook_secret' => 'laravel_portal_webhook_secret',
                     'signature_validation_enabled' => true
                 ]),
             ]
