@@ -175,9 +175,19 @@ class UserDashboard extends Component
                 return;
             }
 
-            // Use SsoService to generate the web SSO token (JWT)
             $ssoService = app(SsoService::class);
-            $result = $ssoService->generateWebSsoToken($user, $clientSystem->client_id, request());
+            
+            $linkedUser = null;
+            if ($userLink && $userLink->linked_username) {
+                $linkedUser = [
+                    'id' => $user->id,
+                    'username' => $userLink->linked_username,
+                    'email' => $userLink->linked_username,
+                ];
+                Log::info('UserDashboard: Using linked identity', ['linked_username' => $userLink->linked_username]);
+            }
+            
+            $result = $ssoService->generateWebSsoToken($user, $clientSystem->client_id, request(), $linkedUser);
 
             if ($result['status'] !== 'success') {
                 $this->showMessage('Login failed: ' . $result['message'], 'error');
