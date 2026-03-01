@@ -103,7 +103,7 @@ class SsoService
         ];
     }
 
-    public function generateWebSsoToken(User $user, $clientId, $request)
+    public function generateWebSsoToken(User $user, $clientId, $request, $linkedUser = null)
     {
         $clientSystem = ClientSystem::where('client_id', $clientId)
             ->active()
@@ -118,16 +118,28 @@ class SsoService
             return ['status' => 'error', 'code' => 400, 'message' => 'Invalid client ID'];
         }
 
+        // Use linked user details if provided, otherwise use authenticated user
+        $tokenUser = $user;
+        if ($linkedUser) {
+            $tokenUser = new User();
+            $tokenUser->id = $linkedUser['id'] ?? $user->id;
+            $tokenUser->username = $linkedUser['username'];
+            $tokenUser->email = $linkedUser['email'] ?? $linkedUser['username'];
+            $tokenUser->role = 'user';
+        }
+
         $payload = [
-            'userId' => $user->id,
-            'username' => $user->username,
-            'email' => $user->email,
-            'role' => $user->role ?? 'user',
+            'userId' => $tokenUser->id,
+            'username' => $tokenUser->username,
+            'email' => $tokenUser->email,
+            'role' => $tokenUser->role ?? 'user',
             'clientSystemId' => $clientSystem->id,
             'clientId' => $clientSystem->client_id,
             'iat' => time(),
             'exp' => time() + (8 * 60 * 60), // 8 hours
             'jti' => bin2hex(random_bytes(16)), // Unique token ID
+            'is_linked_account' => (bool) $linkedUser,
+            'original_user_id' => $user->id
         ];
 
         $token = JWT::encode($payload, $this->jwtSecret, 'HS256');
@@ -136,15 +148,15 @@ class SsoService
         SsoToken::create([
             'token' => $token,
             'token_hash' => hash('sha256', $token),
-            'user_id' => $user->id,
+            'user_id' => $user->id, // Owner of the session
             'client_system_id' => $clientSystem->id,
-            'user_role' => $user->role ?? 'user',
+            'user_role' => $tokenUser->role ?? 'user',
             'expires_at' => $expiresAt,
             'is_active' => true,
             'is_used' => false,
             'user_agent' => $request->userAgent(),
             'ip_address' => $request->ip(),
-            'payload' => $payload,
+            'payload' => $payload, // Store full payload including masqueraded identity
         ]);
 
         $clientSystem->update(['last_accessed' => now()]);
@@ -154,9 +166,10 @@ class SsoService
             'client_system_id' => $clientSystem->id,
             'event_type' => 'sso_login',
             'action' => 'generate_web_sso_token',
-            'description' => "Web SSO token generated for user {$user->username} and client {$clientSystem->name}",
+            'description' => "Web SSO token generated for user {$user->username} (linked as {$tokenUser->username}) and client {$clientSystem->name}",
             'details' => [
                 'client_system_name' => $clientSystem->name,
+                'linked_identity' => $linkedUser ? $tokenUser->username : null,
                 'ip' => $request->ip()
             ],
             'success' => true,
@@ -212,7 +225,8 @@ class SsoService
         Log::info('SsoService: Looking up SsoToken in DB...');
         $ssoToken = SsoToken::where('token_hash', hash('sha256', $token))
             ->active()
-            ->with(['user', 'clientSystem'])
+            // ->with(['user', 'clientSystem']) // We might revert to payload data if masquerading
+            ->with(['clientSystem'])
             ->first();
 
         if (!$ssoToken) {
@@ -235,25 +249,45 @@ class SsoService
              throw new \Exception('Token not valid for this client system', 401);
         }
 
-        $user = $ssoToken->user;
-
-        if (!$user) {
-             Log::error('SsoService: User not found for token');
-             throw new \Exception('User not found', 401);
+        // Determine effective user from Payload (relies on 'payload' cast to array)
+        $payload = is_string($ssoToken->payload) ? json_decode($ssoToken->payload, true) : $ssoToken->payload;
+        
+        if (isset($payload['is_linked_account']) && $payload['is_linked_account']) {
+            // Construct user object from payload
+            $userData = [
+                'id' => $payload['userId'], // This might be original ID
+                'username' => $payload['username'],
+                'email' => $payload['email'],
+                'is_linked' => true
+            ];
+        } else {
+            // Standard flow: use relational user
+            $user = $ssoToken->user; // Load relationship manually if not eager loaded above
+            if (!$user) {
+                // Fallback to finding user by ID if relation fails but ID exists
+                $user = User::find($ssoToken->user_id);
+            }
+            
+            if (!$user) {
+                 Log::error('SsoService: User not found for token');
+                 throw new \Exception('User not found', 401);
+            }
+            
+            $userData = [
+                'id' => $user->id,
+                'username' => $user->username,
+                'email' => $user->email,
+            ];
         }
         
-        Log::info('SsoService: Validation successful, returning user', ['user_id' => $user->id]);
+        Log::info('SsoService: Validation successful, returning user', ['username' => $userData['username']]);
 
         // Mark token as used to prevent replay attacks
         $ssoToken->update(['is_used' => true]);
 
         return [
             'valid' => true,
-            'user' => [
-                'id' => $user->id,
-                'username' => $user->username,
-                'email' => $user->email,
-            ],
+            'user' => $userData,
             'expires_at' => $ssoToken->expires_at,
         ];
     }
