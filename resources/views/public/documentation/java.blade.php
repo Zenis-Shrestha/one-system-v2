@@ -1,395 +1,139 @@
 @extends('public.documentation.layout')
 
-@section('title', 'Java Spring Boot CAS SSO Integration Guide')
-@section('description', 'Complete guide for integrating Java Spring Boot applications with CAS Single Sign-On authentication system.')
+@section('title', 'Java Spring Boot Integration — CAS SSO')
+@section('description', 'Complete guide for integrating Java Spring Boot applications with CAS Single Sign-On authentication.')
 
 @section('content')
-<div class="max-w-4xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-    <!-- Header -->
-    <div class="mb-8">
-        <div class="flex items-center mb-4">
-            <div class="bg-orange-100 w-12 h-12 rounded-lg flex items-center justify-center mr-4">
-                <i class="fab fa-java text-orange-600 text-2xl"></i>
+<section class="border-b border-slate-200 pb-10 mb-12">
+    <div class="max-w-3xl">
+        <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
+                <i class="fab fa-java text-orange-600 text-lg"></i>
             </div>
             <div>
-                <h1 class="text-3xl font-bold text-gray-900">{{ $javaGuide['title'] }}</h1>
-                <p class="text-gray-600 mt-1">{{ $javaGuide['description'] }}</p>
+                <p class="text-sm font-medium text-blue-600 tracking-wide uppercase">Integration Guide</p>
+                <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight leading-tight">Java Spring Boot</h1>
             </div>
         </div>
-        
-        <div class="flex items-center space-x-4 text-sm text-gray-600">
-            <span><i class="fas fa-clock mr-1"></i>Setup time: 8 minutes</span>
-            <span><i class="fas fa-code mr-1"></i>Difficulty: Intermediate</span>
-            <span><i class="fas fa-tag mr-1"></i>Spring Boot 2.7+</span>
+        <p class="text-lg text-slate-500 leading-relaxed mb-4">{{ $javaGuide['description'] }}</p>
+        <div class="flex flex-wrap gap-4 text-xs text-slate-500">
+            <span><i class="fas fa-clock mr-1"></i>8 min setup</span>
+            <span><i class="fas fa-signal mr-1"></i>Intermediate</span>
+            <span><i class="fas fa-tag mr-1"></i>Java 17+ / Spring 3</span>
         </div>
     </div>
+</section>
 
-    <!-- Dependencies -->
-    <section class="mb-12">
-        <h2 class="text-2xl font-bold mb-4">1. Dependencies (Maven)</h2>
-        
-        <div class="code-block mb-6">
-            <pre class="language-xml"><code>&lt;dependencies&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-        &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-        &lt;artifactId&gt;spring-boot-starter-security&lt;/artifactId&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;io.jsonwebtoken&lt;/groupId&gt;
-        &lt;artifactId&gt;jjwt-api&lt;/artifactId&gt;
-        &lt;version&gt;0.11.5&lt;/version&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;io.jsonwebtoken&lt;/groupId&gt;
-        &lt;artifactId&gt;jjwt-impl&lt;/artifactId&gt;
-        &lt;version&gt;0.11.5&lt;/version&gt;
-        &lt;scope&gt;runtime&lt;/scope&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;io.jsonwebtoken&lt;/groupId&gt;
-        &lt;artifactId&gt;jjwt-jackson&lt;/artifactId&gt;
-        &lt;version&gt;0.11.5&lt;/version&gt;
-        &lt;scope&gt;runtime&lt;/scope&gt;
-    &lt;/dependency&gt;
-&lt;/dependencies&gt;</code></pre>
+<nav class="mb-12 p-5 rounded-xl border border-slate-200 bg-slate-50/50">
+    <h2 class="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-3">On This Page</h2>
+    <ol class="space-y-1.5 text-sm">
+        <li><a href="#dependency" class="text-blue-600 hover:text-blue-800">1. Maven Dependency</a></li>
+        <li><a href="#configuration" class="text-blue-600 hover:text-blue-800">2. Configuration</a></li>
+        <li><a href="#service" class="text-blue-600 hover:text-blue-800">3. Auth Service</a></li>
+        <li><a href="#security" class="text-blue-600 hover:text-blue-800">4. Security Config</a></li>
+    </ol>
+</nav>
+
+<section id="dependency" class="mb-12">
+    <h2 class="text-xl font-bold text-slate-900 mb-4">1. Maven Dependency</h2>
+    <div class="rounded-xl border border-slate-200 overflow-hidden">
+        <div class="flex items-center px-4 py-2.5 bg-slate-50 border-b border-slate-200"><span class="text-xs font-medium text-slate-600">pom.xml</span></div>
+        <div class="bg-slate-900 p-5 overflow-x-auto">
+            <pre class="text-sm leading-relaxed font-mono text-slate-300"><code>&lt;<span class="text-red-300">dependency</span>&gt;
+    &lt;<span class="text-amber-300">groupId</span>&gt;com.cas-system&lt;/<span class="text-amber-300">groupId</span>&gt;
+    &lt;<span class="text-amber-300">artifactId</span>&gt;java-client&lt;/<span class="text-amber-300">artifactId</span>&gt;
+    &lt;<span class="text-amber-300">version</span>&gt;2.0.0&lt;/<span class="text-amber-300">version</span>&gt;
+&lt;/<span class="text-red-300">dependency</span>&gt;</code></pre>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Configuration -->
-    <section class="mb-12">
-        <h2 class="text-2xl font-bold mb-4">2. Configuration Properties</h2>
-        
-        <div class="code-block mb-6">
-            <pre class="language-yaml"><code># application.yml
-cas:
-  server-url: http://localhost:5000
-  client-id: your_client_id
-  client-username: your_client_username
-  client-password: your_client_password
-  signature-secret: your_signature_secret
-  callback-url: http://localhost:8080/cas/callback
-  token-expiration: 120
-
-spring:
-  session:
-    timeout: 7200s</code></pre>
+<section id="configuration" class="mb-12">
+    <h2 class="text-xl font-bold text-slate-900 mb-4">2. Configuration</h2>
+    <div class="rounded-xl border border-slate-200 overflow-hidden">
+        <div class="flex items-center px-4 py-2.5 bg-slate-50 border-b border-slate-200"><span class="text-xs font-medium text-slate-600">application.yml</span></div>
+        <div class="bg-slate-900 p-5 overflow-x-auto">
+            <pre class="text-sm leading-relaxed font-mono text-slate-300"><code><span class="text-amber-300">cas</span>:
+  <span class="text-amber-300">server-url</span>: <span class="text-green-400">https://cas-server.com</span>
+  <span class="text-amber-300">client-id</span>: <span class="text-green-400">your_client_id</span>
+  <span class="text-amber-300">client-secret</span>: <span class="text-green-400">your_client_secret</span>
+  <span class="text-amber-300">callback-url</span>: <span class="text-green-400">https://your-app.com/cas/callback</span></code></pre>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- CAS Client Service -->
-    <section class="mb-12">
-        <h2 class="text-2xl font-bold mb-4">3. CAS Client Service</h2>
-        
-        <div class="code-block mb-6">
-            <pre class="language-java"><code>// CasClientService.java
-@@Service
-public class CasClientService {
-    
-    @@Value("${cas.server-url}")
-    private String serverUrl;
-    
-    @@Value("${cas.client-id}")
-    private String clientId;
-    
-    @@Value("${cas.client-username}")
-    private String clientUsername;
-    
-    @@Value("${cas.client-password}")
-    private String clientPassword;
-    
-    @@Value("${cas.signature-secret}")
-    private String signatureSecret;
-    
-    @@Value("${cas.callback-url}")
-    private String callbackUrl;
-    
-    private final RestTemplate restTemplate;
-    private final ObjectMapper objectMapper;
-    
-    public CasClientService() {
-        this.restTemplate = new RestTemplate();
-        this.objectMapper = new ObjectMapper();
-    }
-    
-    public String getLoginUrl(String returnUrl) {
-        String loginUrl = serverUrl + "/auth/login";
-        String encodedCallbackUrl = URLEncoder.encode(
-            callbackUrl + "?return_url=" + URLEncoder.encode(returnUrl, StandardCharsets.UTF_8),
-            StandardCharsets.UTF_8
+<section id="service" class="mb-12">
+    <h2 class="text-xl font-bold text-slate-900 mb-4">3. Auth Service</h2>
+    <div class="rounded-xl border border-slate-200 overflow-hidden">
+        <div class="flex items-center px-4 py-2.5 bg-slate-50 border-b border-slate-200"><span class="text-xs font-medium text-slate-600">CasAuthService.java</span></div>
+        <div class="bg-slate-900 p-5 overflow-x-auto">
+            <pre class="text-sm leading-relaxed font-mono text-slate-300"><code><span class="text-violet-400">@Service</span>
+<span class="text-violet-400">public class</span> <span class="text-orange-300">CasAuthService</span> {
+
+    <span class="text-violet-400">private final</span> <span class="text-orange-300">RestTemplate</span> restTemplate;
+    <span class="text-violet-400">private final</span> <span class="text-orange-300">CasProperties</span> props;
+
+    <span class="text-violet-400">public</span> <span class="text-orange-300">CasUser</span> <span class="text-green-400">validateToken</span>(<span class="text-orange-300">String</span> token) {
+        <span class="text-orange-300">Map</span>&lt;String, Object&gt; body = Map.of(
+            <span class="text-amber-300">"token"</span>,         token,
+            <span class="text-amber-300">"client_id"</span>,     props.getClientId(),
+            <span class="text-amber-300">"client_secret"</span>, props.getClientSecret()
         );
-        return loginUrl + "?callback_url=" + encodedCallbackUrl;
-    }
-    
-    public CasUser validateToken(String token) {
-        try {
-            Claims claims = Jwts.parserBuilder()
-                .setSigningKey(signatureSecret.getBytes())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
-            
-            return CasUser.builder()
-                .username(claims.getSubject())
-                .email(claims.get("email", String.class))
-                .role(claims.get("role", String.class))
-                .firstName(claims.get("first_name", String.class))
-                .lastName(claims.get("last_name", String.class))
-                .build();
-                
-        } catch (Exception e) {
-            throw new InvalidTokenException("Token validation failed", e);
-        }
-    }
-    
-    public AuthResult authenticate(String username, String password) {
-        try {
-            Map&lt;String, Object&gt; requestBody = Map.of(
-                "username", username,
-                "password", password,
-                "client_id", clientId,
-                "client_username", clientUsername,
-                "client_password", clientPassword
+
+        <span class="text-orange-300">ResponseEntity</span>&lt;<span class="text-orange-300">CasResponse</span>&gt; response = restTemplate
+            .<span class="text-green-400">postForEntity</span>(
+                props.getServerUrl() + <span class="text-amber-300">"/api/validate-token"</span>,
+                body,
+                <span class="text-orange-300">CasResponse</span>.<span class="text-blue-400">class</span>
             );
-            
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
-            
-            HttpEntity&lt;Map&lt;String, Object&gt;&gt; request = new HttpEntity&lt;&gt;(requestBody, headers);
-            
-            ResponseEntity&lt;String&gt; response = restTemplate.postForEntity(
-                serverUrl + "/api/sso/token",
-                request,
-                String.class
-            );
-            
-            return objectMapper.readValue(response.getBody(), AuthResult.class);
-            
-        } catch (Exception e) {
-            throw new AuthenticationException("Authentication failed", e);
-        }
+
+        <span class="text-violet-400">return</span> response.getBody().getUser();
     }
 }</code></pre>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Security Configuration -->
-    <section class="mb-12">
-        <h2 class="text-2xl font-bold mb-4">4. Security Configuration</h2>
-        
-        <div class="code-block mb-6">
-            <pre class="language-java"><code>// SecurityConfig.java
-@@Configuration
-@@EnableWebSecurity
-@@EnableMethodSecurity(prePostEnabled = true)
-public class SecurityConfig {
-    
-    @@Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+<section id="security" class="mb-12">
+    <h2 class="text-xl font-bold text-slate-900 mb-4">4. Security Config</h2>
+    <div class="rounded-xl border border-slate-200 overflow-hidden mb-6">
+        <div class="flex items-center px-4 py-2.5 bg-slate-50 border-b border-slate-200"><span class="text-xs font-medium text-slate-600">SecurityConfig.java</span></div>
+        <div class="bg-slate-900 p-5 overflow-x-auto">
+            <pre class="text-sm leading-relaxed font-mono text-slate-300"><code><span class="text-violet-400">@Configuration</span>
+<span class="text-violet-400">@EnableWebSecurity</span>
+<span class="text-violet-400">public class</span> <span class="text-orange-300">SecurityConfig</span> {
+
+    <span class="text-violet-400">@Bean</span>
+    <span class="text-violet-400">public</span> <span class="text-orange-300">SecurityFilterChain</span> <span class="text-green-400">filterChain</span>(<span class="text-orange-300">HttpSecurity</span> http) {
         http
-            .authorizeHttpRequests(authz -> authz
-                .requestMatchers("/", "/cas/**", "/login", "/error").permitAll()
-                .requestMatchers("/admin/**").hasRole("ADMIN")
+            .<span class="text-green-400">authorizeHttpRequests</span>(auth -> auth
+                .requestMatchers(<span class="text-amber-300">"/cas/**"</span>).permitAll()
                 .anyRequest().authenticated()
             )
-            .formLogin(form -> form
-                .loginPage("/login")
-                .permitAll()
-            )
-            .logout(logout -> logout
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/")
-                .permitAll()
-            )
-            .sessionManagement(session -> session
-                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-                .maximumSessions(1)
-                .maxSessionsPreventsLogin(false)
-            )
-            .csrf(csrf -> csrf.disable());
-            
-        return http.build();
+            .<span class="text-green-400">addFilterBefore</span>(
+                casTokenFilter(),
+                <span class="text-orange-300">UsernamePasswordAuthFilter</span>.<span class="text-blue-400">class</span>
+            );
+        <span class="text-violet-400">return</span> http.build();
     }
 }</code></pre>
         </div>
-    </section>
-
-    <!-- Models -->
-    <section class="mb-12">
-        <h2 class="text-2xl font-bold mb-4">5. Model Classes</h2>
-        
-        <div class="code-block mb-6">
-            <pre class="language-java"><code>// CasUser.java
-@@Data
-@@Builder
-@@NoArgsConstructor
-@@AllArgsConstructor
-public class CasUser {
-    private String username;
-    private String email;
-    private String role;
-    private String firstName;
-    private String lastName;
-    
-    public String getFullName() {
-        return firstName + " " + lastName;
-    }
-    
-    public boolean isAdmin() {
-        return "admin".equals(role);
-    }
-    
-    public boolean hasRole(String role) {
-        return this.role.equals(role);
-    }
-}
-
-// AuthResult.java
-@@Data
-@@NoArgsConstructor
-@@AllArgsConstructor
-public class AuthResult {
-    private String token;
-    private CasUser user;
-    private LocalDateTime expiresAt;
-}</code></pre>
-        </div>
-    </section>
-
-    <!-- Controller -->
-    <section class="mb-12">
-        <h2 class="text-2xl font-bold mb-4">6. Controller Examples</h2>
-        
-        <div class="code-block mb-6">
-            <pre class="language-java"><code>// HomeController.java
-@@Controller
-public class HomeController {
-    
-    private final CasClientService casClientService;
-    
-    public HomeController(CasClientService casClientService) {
-        this.casClientService = casClientService;
-    }
-    
-    @@GetMapping("/")
-    public String index(Model model, HttpSession session) {
-        CasUser user = (CasUser) session.getAttribute("casUser");
-        model.addAttribute("user", user);
-        return "index";
-    }
-    
-    @@GetMapping("/dashboard")
-    public String dashboard(Model model, HttpSession session) {
-        CasUser user = (CasUser) session.getAttribute("casUser");
-        if (user == null) {
-            return "redirect:/login";
-        }
-        model.addAttribute("user", user);
-        return "dashboard";
-    }
-    
-    @@PreAuthorize("hasRole('ADMIN')")
-    @@GetMapping("/admin")
-    public String admin(Model model, HttpSession session) {
-        CasUser user = (CasUser) session.getAttribute("casUser");
-        model.addAttribute("user", user);
-        return "admin";
-    }
-    
-    @@GetMapping("/login")
-    public String login(@@RequestParam(required = false) String returnUrl) {
-        if (returnUrl == null) {
-            returnUrl = "/dashboard";
-        }
-        String loginUrl = casClientService.getLoginUrl(returnUrl);
-        return "redirect:" + loginUrl;
-    }
-    
-    @@GetMapping("/cas/callback")
-    public String casCallback(
-        @@RequestParam String token,
-        @@RequestParam(required = false) String return_url,
-        HttpSession session
-    ) {
-        try {
-            CasUser user = casClientService.validateToken(token);
-            session.setAttribute("casUser", user);
-            session.setAttribute("casToken", token);
-            
-            return "redirect:" + (return_url != null ? return_url : "/dashboard");
-        } catch (Exception e) {
-            return "redirect:/login?error=authentication_failed";
-        }
-    }
-    
-    @@GetMapping("/logout")
-    public String logout(HttpSession session) {
-        session.invalidate();
-        return "redirect:/";
-    }
-}</code></pre>
-        </div>
-    </section>
-
-    <!-- Custom Annotations -->
-    <section class="mb-12">
-        <h2 class="text-2xl font-bold mb-4">7. Custom Authentication</h2>
-        
-        <div class="code-block mb-6">
-            <pre class="language-java"><code>// @@CasAuth annotation
-@@Target({ElementType.METHOD, ElementType.TYPE})
-@@Retention(RetentionPolicy.RUNTIME)
-public @@interface CasAuth {
-    String[] roles() default {};
-}
-
-// CasAuthAspect.java
-@@Aspect
-@@Component
-public class CasAuthAspect {
-    
-    @@Around("@@annotation(casAuth)")
-    public Object checkAuthentication(ProceedingJoinPoint joinPoint, CasAuth casAuth) throws Throwable {
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-        HttpSession session = request.getSession();
-        
-        CasUser user = (CasUser) session.getAttribute("casUser");
-        
-        if (user == null) {
-            // Redirect to login
-            HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getResponse();
-            response.sendRedirect("/login?returnUrl=" + request.getRequestURI());
-            return null;
-        }
-        
-        // Check roles if specified
-        String[] requiredRoles = casAuth.roles();
-        if (requiredRoles.length > 0) {
-            boolean hasRole = Arrays.stream(requiredRoles)
-                .anyMatch(role -> user.hasRole(role));
-            
-            if (!hasRole) {
-                throw new AccessDeniedException("Insufficient permissions");
-            }
-        }
-        
-        return joinPoint.proceed();
-    }
-}</code></pre>
-        </div>
-    </section>
-
-    <!-- Next Steps -->
-    <div class="bg-blue-50 rounded-lg p-6">
-        <h2 class="text-xl font-semibold mb-4">Next Steps</h2>
-        <ul class="space-y-2">
-            <li>• <a href="/docs/api" class="text-blue-600 hover:text-blue-800">Explore the API Reference</a></li>
-            <li>• <a href="/docs/examples" class="text-blue-600 hover:text-blue-800">View More Examples</a></li>
-            <li>• <a href="/" class="text-blue-600 hover:text-blue-800">Test with CAS Dashboard</a></li>
-        </ul>
     </div>
-</div>
+
+    <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-4">
+        <div class="flex items-start gap-2">
+            <i class="fas fa-check-circle text-emerald-500 mt-0.5"></i>
+            <div class="text-sm text-emerald-800"><strong>Done!</strong> Spring Security will intercept requests and validate CAS tokens via the custom filter.</div>
+        </div>
+    </div>
+</section>
+
+<section class="border-t border-slate-200 pt-10">
+    <h2 class="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-4">Next Steps</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <a href="{{ route('docs.api.overview') }}" class="group flex items-center gap-3 p-4 rounded-lg border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all"><i class="fas fa-code text-slate-400 text-sm"></i><span class="text-sm font-medium text-slate-700 group-hover:text-slate-900">API Reference</span></a>
+        <a href="{{ route('docs.security') }}" class="group flex items-center gap-3 p-4 rounded-lg border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all"><i class="fas fa-shield-alt text-slate-400 text-sm"></i><span class="text-sm font-medium text-slate-700 group-hover:text-slate-900">Security Guide</span></a>
+        <a href="{{ route('docs.deployment') }}" class="group flex items-center gap-3 p-4 rounded-lg border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all"><i class="fas fa-server text-slate-400 text-sm"></i><span class="text-sm font-medium text-slate-700 group-hover:text-slate-900">Deployment</span></a>
+    </div>
+</section>
 @endsection

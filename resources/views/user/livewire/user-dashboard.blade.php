@@ -1,4 +1,4 @@
-<div class="min-h-screen bg-gradient-to-br from-slate-50 via-gray-50 to-zinc-50">
+<div class="min-h-screen bg-gray-50">
     @if(session('success'))
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
             <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-xl mb-4" role="alert">
@@ -7,9 +7,9 @@
         </div>
     @endif
 
-    <div class="relative overflow-hidden bg-gradient-to-r from-slate-800 via-slate-700 to-slate-600 text-white border-b border-slate-200">
+    <div class="relative overflow-hidden bg-slate-700 text-white border-b border-slate-200">
         <div class="absolute inset-0 bg-black/10"></div>
-        <div class="absolute inset-0" style="background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0); background-size: 40px 40px;"></div>
+        <div class="absolute inset-0"></div>
 
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
             <div class="flex flex-col lg:flex-row items-center justify-between">
@@ -128,7 +128,7 @@
             </div>
         @else
             <div class="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
-                <div class="px-8 py-6 bg-gradient-to-r from-slate-50 to-zinc-50 border-b border-slate-200">
+                <div class="px-8 py-6 bg-slate-50 border-b border-slate-200">
                     <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between">
                         <div>
                             <h2 class="text-2xl font-bold text-gray-900 mb-2 flex items-center">
@@ -154,7 +154,7 @@
                                 <div class="p-6">
                                     <div class="flex items-start justify-between mb-6">
                                         <div class="flex items-center space-x-4">
-                                            <div class="w-14 h-14 {{ $system['is_linked'] ? 'bg-gradient-to-br from-blue-500 to-indigo-600' : 'bg-slate-100' }} rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-md group-hover:scale-110 transition-transform duration-300">
+                                            <div class="w-14 h-14 {{ $system['is_linked'] ? 'bg-blue-600' : 'bg-slate-100' }} rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-md group-hover:scale-110 transition-transform duration-300">
                                                 @if($system['is_linked'])
                                                     {{ strtoupper(substr($system['name'], 0, 2)) }}
                                                 @else
@@ -237,7 +237,7 @@
                                 </div>
                             </div>
                         @empty
-                            <div class="col-span-full bg-gradient-to-br from-gray-50 to-blue-50 rounded-3xl p-16 text-center">
+                            <div class="col-span-full bg-gray-50 rounded-3xl p-16 text-center">
                                 <div class="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-6">
                                     <x-icon name="desktop" class="w-12 h-12 text-gray-400" />
                                 </div>
@@ -256,7 +256,7 @@
             </div>
         @endif
 
-        <div class="mt-12 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-3xl p-8 border border-blue-100">
+        <div class="mt-12 bg-blue-50 rounded-3xl p-8 border border-blue-100">
             <div class="text-center">
                 <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                     <x-icon name="question" class="w-8 h-8 text-blue-600" />

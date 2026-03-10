@@ -33,8 +33,7 @@ Route::get('/api/user', [AuthController::class, 'user']);
 
 // SSO Routes
 Route::post('/api/sso/token', [AuthController::class, 'generateSSOToken'])->middleware('ip.whitelist');
-// Route::post('/api/sso/validate', [AuthController::class, 'validateSSOToken'])->middleware('ip.whitelist');
-Route::post('/api/validate-token', [AuthController::class, 'validateToken'])->middleware('ip.whitelist');
+Route::post('/api/validate-token', [AuthController::class, 'validateSsoToken'])->middleware('ip.whitelist');
 Route::get('/sso/login', [AuthController::class, 'ssoLogin'])->name('sso.login');
 Route::get('/auth/sso/callback', [AuthController::class, 'ssoCallback'])->name('sso.callback');
 Route::post('/api/sso/process', [AuthController::class, 'processSSOCallback']);
@@ -124,6 +123,14 @@ Route::get('/docs/security', [DocumentationController::class, 'security'])->name
 Route::get('/docs/deployment', [DocumentationController::class, 'deployment'])->name('docs.deployment');
 Route::get('/docs/troubleshooting', [DocumentationController::class, 'troubleshooting'])->name('docs.troubleshooting');
 Route::get('/docs/examples', [DocumentationController::class, 'examples'])->name('docs.examples');
+Route::get('/docs/quick-start', function() { return view('public.documentation.quick-start'); })->name('docs.quick-start');
+Route::get('/docs/admin-panel', function() { return view('public.documentation.admin-panel'); })->name('docs.admin-panel');
+Route::get('/docs/client-registration', function() { return view('public.documentation.client-registration'); })->name('docs.client-registration');
+Route::get('/docs/user-management', function() { return view('public.documentation.user-management'); })->name('docs.user-management');
+Route::get('/docs/two-factor-auth', function() { return view('public.documentation.two-factor-auth'); })->name('docs.two-factor-auth');
+Route::get('/docs/changelog', function() { return view('public.documentation.changelog'); })->name('docs.changelog');
+Route::get('/docs/webhooks', function() { return view('public.documentation.webhooks'); })->name('docs.webhooks');
+Route::get('/docs/sdks', function() { return view('public.documentation.sdks'); })->name('docs.sdks');
 
 Route::get('/docs/api/{endpoint}', [DocumentationController::class, 'apiEndpoint'])->name('docs.api');
 

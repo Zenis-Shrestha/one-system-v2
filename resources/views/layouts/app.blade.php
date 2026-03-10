@@ -24,7 +24,7 @@
         }
 
         .hero-section {
-            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #312e81 100%);
+            background: #1e293b;
             color: white;
             padding: 80px 0;
             position: relative;
@@ -49,8 +49,6 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0);
-            background-size: 40px 40px;
             z-index: 2;
         }
 

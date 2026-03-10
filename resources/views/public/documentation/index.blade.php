@@ -4,383 +4,258 @@
 @section('description', 'Complete integration guide for CAS Single Sign-On authentication system supporting Laravel, .NET, Node.js, Java, Python, and more.')
 
 @section('content')
-<!-- Hero Section -->
-<section class="bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white py-20 relative overflow-hidden">
-    <!-- Background Pattern -->
-    <div class="absolute inset-0 bg-black/20"></div>
-    <div class="absolute inset-0" style="background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0); background-size: 40px 40px;"></div>
-    
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-        <div class="max-w-4xl mx-auto">
-            <div class="inline-flex items-center justify-center w-20 h-20 bg-blue-500/20 rounded-full mb-8">
-                <i class="fas fa-shield-alt text-blue-300 text-3xl"></i>
-            </div>
-            <h1 class="text-5xl md:text-6xl font-bold mb-6 text-white">
-                CAS SSO Integration Guide
-            </h1>
-            <p class="text-xl md:text-2xl mb-10 text-slate-200 leading-relaxed">
-                Complete documentation for integrating your applications with our enterprise-grade Single Sign-On authentication system.
-            </p>
-            <div class="flex flex-wrap justify-center gap-4">
-                <a href="#platforms" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
-                    <i class="fas fa-rocket mr-2"></i>Get Started
-                </a>
-                <a href="{{ route('docs.api.overview') }}" class="bg-white/10 backdrop-blur-sm border border-white/30 text-white px-8 py-4 rounded-lg font-semibold hover:bg-white/20 transition-all duration-300">
-                    <i class="fas fa-code mr-2"></i>API Reference
-                </a>
-            </div>
+{{-- Hero —— lightweight header that sits naturally inside the sidebar layout --}}
+<section class="border-b border-slate-200 pb-10 mb-12">
+    <div class="max-w-3xl">
+        <p class="text-sm font-medium text-blue-600 tracking-wide uppercase mb-3">Documentation</p>
+        <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight leading-tight mb-4">
+            CAS SSO Integration Guide
+        </h1>
+        <p class="text-lg text-slate-500 leading-relaxed mb-8">
+            Everything you need to integrate your applications with our Central Authentication Service.
+            Choose your platform, follow the guide, and go live in minutes.
+        </p>
+        <div class="flex flex-wrap gap-3">
+            <a href="#platforms" class="inline-flex items-center px-5 py-2.5 bg-slate-900 text-white text-sm font-medium rounded-lg hover:bg-slate-800 transition-colors">
+                <i class="fas fa-rocket mr-2 text-xs"></i>Get Started
+            </a>
+            <a href="{{ route('docs.api.overview') }}" class="inline-flex items-center px-5 py-2.5 bg-white text-slate-700 text-sm font-medium rounded-lg border border-slate-300 hover:bg-slate-50 hover:border-slate-400 transition-colors">
+                <i class="fas fa-code mr-2 text-xs"></i>API Reference
+            </a>
         </div>
     </div>
 </section>
 
-<!-- Features Section -->
-<section class="py-20 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-            <h2 class="text-4xl font-bold text-slate-900 mb-6">Why Choose CAS SSO?</h2>
-            <p class="text-xl text-slate-600 max-w-3xl mx-auto">Enterprise-grade authentication with seamless integration across multiple platforms</p>
+{{-- Why CAS SSO —— three compact value props --}}
+<section class="mb-16">
+    <h2 class="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-6">Why CAS SSO</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="group p-5 rounded-xl border border-slate-200 hover:border-slate-300 transition-colors">
+            <div class="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center mb-4">
+                <i class="fas fa-lock text-blue-600 text-sm"></i>
+            </div>
+            <h3 class="text-sm font-semibold text-slate-900 mb-1.5">Secure Authentication</h3>
+            <p class="text-sm text-slate-500 leading-relaxed">JWT tokens with HMAC&#8209;SHA256 signatures and configurable expiration policies.</p>
         </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="group text-center p-8 bg-white border border-slate-200 rounded-2xl hover:border-blue-300 hover:shadow-xl transition-all duration-300">
-                <div class="bg-blue-600 w-16 h-16 rounded-xl flex items-center justify-center mx-auto mb-6 group-hover:bg-blue-700 transition-colors">
-                    <i class="fas fa-lock text-white text-2xl"></i>
-                </div>
-                <h3 class="text-xl font-bold text-slate-900 mb-3">Secure Authentication</h3>
-                <p class="text-slate-600 leading-relaxed">JWT tokens with HMAC-SHA256 signature validation and configurable expiration policies</p>
+        <div class="group p-5 rounded-xl border border-slate-200 hover:border-slate-300 transition-colors">
+            <div class="w-10 h-10 bg-emerald-50 rounded-lg flex items-center justify-center mb-4">
+                <i class="fas fa-cogs text-emerald-600 text-sm"></i>
             </div>
-            
-            <div class="group text-center p-8 bg-white border border-slate-200 rounded-2xl hover:border-green-300 hover:shadow-xl transition-all duration-300">
-                <div class="bg-green-600 w-16 h-16 rounded-xl flex items-center justify-center mx-auto mb-6 group-hover:bg-green-700 transition-colors">
-                    <i class="fas fa-cogs text-white text-2xl"></i>
-                </div>
-                <h3 class="text-xl font-bold text-slate-900 mb-3">Multi-Platform Support</h3>
-                <p class="text-slate-600 leading-relaxed">Native integration packages for Laravel, .NET, Node.js, Java, Python, and more</p>
+            <h3 class="text-sm font-semibold text-slate-900 mb-1.5">Multi-Platform</h3>
+            <p class="text-sm text-slate-500 leading-relaxed">Native packages for Laravel, .NET, Node.js, Java, Python, and vanilla JS.</p>
+        </div>
+        <div class="group p-5 rounded-xl border border-slate-200 hover:border-slate-300 transition-colors">
+            <div class="w-10 h-10 bg-violet-50 rounded-lg flex items-center justify-center mb-4">
+                <i class="fas fa-chart-line text-violet-600 text-sm"></i>
             </div>
-            
-            <div class="group text-center p-8 bg-white border border-slate-200 rounded-2xl hover:border-purple-300 hover:shadow-xl transition-all duration-300">
-                <div class="bg-purple-600 w-16 h-16 rounded-xl flex items-center justify-center mx-auto mb-6 group-hover:bg-purple-700 transition-colors">
-                    <i class="fas fa-chart-line text-white text-2xl"></i>
-                </div>
-                <h3 class="text-xl font-bold text-slate-900 mb-3">Comprehensive Logging</h3>
-                <p class="text-slate-600 leading-relaxed">Full audit trail with IP tracking, user agent logging, and real-time monitoring</p>
-            </div>
+            <h3 class="text-sm font-semibold text-slate-900 mb-1.5">Audit &amp; Monitoring</h3>
+            <p class="text-sm text-slate-500 leading-relaxed">Full audit trail with IP tracking, user agent logging, and real-time dashboards.</p>
         </div>
     </div>
 </section>
 
-<!-- System Architecture Section -->
-<section class="py-20 bg-slate-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-            <h2 class="text-4xl font-bold text-slate-900 mb-6">System Architecture</h2>
-            <p class="text-xl text-slate-600 max-w-3xl mx-auto">Understanding our modular, enterprise-grade CAS design</p>
+{{-- Architecture —— two side-by-side cards --}}
+<section class="mb-16">
+    <h2 class="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-6">Architecture</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <a href="{{ route('docs.architecture') }}" class="group block p-6 rounded-xl border border-slate-200 hover:border-blue-300 hover:bg-blue-50/30 transition-all">
+            <div class="flex items-center gap-3 mb-3">
+                <div class="w-9 h-9 bg-blue-100 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-sitemap text-blue-600 text-sm"></i>
+                </div>
+                <h3 class="text-base font-semibold text-slate-900">System Architecture</h3>
+            </div>
+            <p class="text-sm text-slate-500 leading-relaxed mb-3">Admin/User/Public separation, Livewire components, and the comprehensive security layer.</p>
+            <span class="text-sm font-medium text-blue-600 group-hover:text-blue-700 inline-flex items-center">
+                Read more <i class="fas fa-arrow-right ml-1.5 text-xs group-hover:translate-x-0.5 transition-transform"></i>
+            </span>
+        </a>
+        <a href="{{ route('docs.architecture') }}#database-schema" class="group block p-6 rounded-xl border border-slate-200 hover:border-emerald-300 hover:bg-emerald-50/30 transition-all">
+            <div class="flex items-center gap-3 mb-3">
+                <div class="w-9 h-9 bg-emerald-100 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-database text-emerald-600 text-sm"></i>
+                </div>
+                <h3 class="text-base font-semibold text-slate-900">Database Schema</h3>
+            </div>
+            <p class="text-sm text-slate-500 leading-relaxed mb-3">PostgreSQL multi-schema design with security isolation, access controls, and audit trails.</p>
+            <span class="text-sm font-medium text-emerald-600 group-hover:text-emerald-700 inline-flex items-center">
+                Read more <i class="fas fa-arrow-right ml-1.5 text-xs group-hover:translate-x-0.5 transition-transform"></i>
+            </span>
+        </a>
+    </div>
+</section>
+
+{{-- Platform Guides —— the main grid --}}
+<section id="platforms" class="mb-16">
+    <div class="flex items-end justify-between mb-6">
+        <div>
+            <h2 class="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-1">Integration Guides</h2>
+            <p class="text-sm text-slate-500">Choose your stack and follow the step-by-step guide.</p>
         </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            <div class="group bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-slate-200">
-                <div class="flex items-center mb-6">
-                    <div class="bg-blue-600 w-14 h-14 rounded-xl flex items-center justify-center mr-4 group-hover:bg-blue-700 transition-colors">
-                        <i class="fas fa-sitemap text-white text-2xl"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-slate-900">Complete Architecture Overview</h3>
-                </div>
-                <p class="text-slate-600 mb-8 leading-relaxed">
-                    Detailed breakdown of our Admin/User/Public separation, Livewire components, PostgreSQL schema design, and comprehensive security architecture.
-                </p>
-                <a href="{{ route('docs.architecture') }}" class="inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold text-lg group-hover:translate-x-1 transition-transform">
-                    View Architecture Guide <i class="fas fa-arrow-right ml-2"></i>
-                </a>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {{-- Laravel --}}
+        <a href="{{ route('docs.laravel') }}" class="group flex items-center gap-4 p-4 rounded-xl border border-slate-200 hover:border-red-200 hover:bg-red-50/30 transition-all">
+            <div class="w-11 h-11 rounded-lg bg-red-100 flex items-center justify-center flex-shrink-0">
+                <i class="fab fa-laravel text-red-600 text-lg"></i>
             </div>
-            
-            <div class="group bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-slate-200">
-                <div class="flex items-center mb-6">
-                    <div class="bg-green-600 w-14 h-14 rounded-xl flex items-center justify-center mr-4 group-hover:bg-green-700 transition-colors">
-                        <i class="fas fa-database text-white text-2xl"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-slate-900">Database Schema Design</h3>
+            <div class="min-w-0 flex-1">
+                <div class="flex items-center gap-2">
+                    <span class="text-sm font-semibold text-slate-900">Laravel</span>
+                    <span class="text-[10px] font-medium text-blue-700 bg-blue-100 px-1.5 py-0.5 rounded">Popular</span>
                 </div>
-                <p class="text-slate-600 mb-8 leading-relaxed">
-                    Enterprise-grade PostgreSQL multi-schema architecture with proper security isolation, access controls, and audit trails.
-                </p>
-                <a href="{{ route('docs.architecture') }}#database-schema" class="inline-flex items-center text-green-600 hover:text-green-800 font-semibold text-lg group-hover:translate-x-1 transition-transform">
-                    View Schema Details <i class="fas fa-arrow-right ml-2"></i>
-                </a>
+                <p class="text-xs text-slate-500 mt-0.5">Composer package &middot; 5 min</p>
             </div>
+            <i class="fas fa-chevron-right text-slate-300 text-xs group-hover:text-slate-500 transition-colors"></i>
+        </a>
+
+        {{-- .NET --}}
+        <a href="{{ route('docs.dotnet') }}" class="group flex items-center gap-4 p-4 rounded-xl border border-slate-200 hover:border-blue-200 hover:bg-blue-50/30 transition-all">
+            <div class="w-11 h-11 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0">
+                <i class="fab fa-microsoft text-blue-600 text-lg"></i>
+            </div>
+            <div class="min-w-0 flex-1">
+                <span class="text-sm font-semibold text-slate-900">.NET MVC</span>
+                <p class="text-xs text-slate-500 mt-0.5">C# &middot; NuGet &middot; 10 min</p>
+            </div>
+            <i class="fas fa-chevron-right text-slate-300 text-xs group-hover:text-slate-500 transition-colors"></i>
+        </a>
+
+        {{-- Node.js --}}
+        <a href="{{ route('docs.nodejs') }}" class="group flex items-center gap-4 p-4 rounded-xl border border-slate-200 hover:border-green-200 hover:bg-green-50/30 transition-all">
+            <div class="w-11 h-11 rounded-lg bg-green-100 flex items-center justify-center flex-shrink-0">
+                <i class="fab fa-node-js text-green-600 text-lg"></i>
+            </div>
+            <div class="min-w-0 flex-1">
+                <div class="flex items-center gap-2">
+                    <span class="text-sm font-semibold text-slate-900">Node.js</span>
+                    <span class="text-[10px] font-medium text-blue-700 bg-blue-100 px-1.5 py-0.5 rounded">Popular</span>
+                </div>
+                <p class="text-xs text-slate-500 mt-0.5">Express middleware &middot; 3 min</p>
+            </div>
+            <i class="fas fa-chevron-right text-slate-300 text-xs group-hover:text-slate-500 transition-colors"></i>
+        </a>
+
+        {{-- Java --}}
+        <a href="{{ route('docs.java') }}" class="group flex items-center gap-4 p-4 rounded-xl border border-slate-200 hover:border-orange-200 hover:bg-orange-50/30 transition-all">
+            <div class="w-11 h-11 rounded-lg bg-orange-100 flex items-center justify-center flex-shrink-0">
+                <i class="fab fa-java text-orange-600 text-lg"></i>
+            </div>
+            <div class="min-w-0 flex-1">
+                <span class="text-sm font-semibold text-slate-900">Java Spring</span>
+                <p class="text-xs text-slate-500 mt-0.5">Spring Security &middot; 8 min</p>
+            </div>
+            <i class="fas fa-chevron-right text-slate-300 text-xs group-hover:text-slate-500 transition-colors"></i>
+        </a>
+
+        {{-- Python --}}
+        <a href="{{ route('docs.python') }}" class="group flex items-center gap-4 p-4 rounded-xl border border-slate-200 hover:border-indigo-200 hover:bg-indigo-50/30 transition-all">
+            <div class="w-11 h-11 rounded-lg bg-indigo-100 flex items-center justify-center flex-shrink-0">
+                <i class="fab fa-python text-indigo-600 text-lg"></i>
+            </div>
+            <div class="min-w-0 flex-1">
+                <span class="text-sm font-semibold text-slate-900">Python Django</span>
+                <p class="text-xs text-slate-500 mt-0.5">Django middleware &middot; 7 min</p>
+            </div>
+            <i class="fas fa-chevron-right text-slate-300 text-xs group-hover:text-slate-500 transition-colors"></i>
+        </a>
+
+        {{-- JavaScript --}}
+        <a href="{{ route('docs.javascript') }}" class="group flex items-center gap-4 p-4 rounded-xl border border-slate-200 hover:border-yellow-200 hover:bg-yellow-50/30 transition-all">
+            <div class="w-11 h-11 rounded-lg bg-yellow-100 flex items-center justify-center flex-shrink-0">
+                <i class="fab fa-js text-yellow-600 text-lg"></i>
+            </div>
+            <div class="min-w-0 flex-1">
+                <span class="text-sm font-semibold text-slate-900">JavaScript</span>
+                <p class="text-xs text-slate-500 mt-0.5">Frontend / SPA &middot; 5 min</p>
+            </div>
+            <i class="fas fa-chevron-right text-slate-300 text-xs group-hover:text-slate-500 transition-colors"></i>
+        </a>
+    </div>
+</section>
+
+{{-- Quick Start —— three numbered steps, clean horizontal layout --}}
+<section class="mb-16">
+    <h2 class="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-6">Quick Start</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="relative pl-10">
+            <span class="absolute left-0 top-0 w-7 h-7 rounded-full bg-slate-900 text-white text-xs font-bold flex items-center justify-center">1</span>
+            <h3 class="text-sm font-semibold text-slate-900 mb-1">Register Your App</h3>
+            <p class="text-sm text-slate-500 leading-relaxed">Register with the CAS admin panel to receive your client ID and secret.</p>
+        </div>
+        <div class="relative pl-10">
+            <span class="absolute left-0 top-0 w-7 h-7 rounded-full bg-slate-900 text-white text-xs font-bold flex items-center justify-center">2</span>
+            <h3 class="text-sm font-semibold text-slate-900 mb-1">Install the Package</h3>
+            <p class="text-sm text-slate-500 leading-relaxed">Install the SDK for your platform via Composer, npm, pip, or NuGet.</p>
+        </div>
+        <div class="relative pl-10">
+            <span class="absolute left-0 top-0 w-7 h-7 rounded-full bg-slate-900 text-white text-xs font-bold flex items-center justify-center">3</span>
+            <h3 class="text-sm font-semibold text-slate-900 mb-1">Configure &amp; Test</h3>
+            <p class="text-sm text-slate-500 leading-relaxed">Set your environment variables, add the middleware, and verify the auth flow.</p>
         </div>
     </div>
 </section>
 
-<!-- Platform Integration Section -->
-<section id="platforms" class="py-20 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-            <h2 class="text-4xl font-bold text-slate-900 mb-6">Platform Integration Guides</h2>
-            <p class="text-xl text-slate-600 max-w-3xl mx-auto">Choose your technology stack and get started in minutes with our comprehensive integration packages</p>
+{{-- Code Example —— compact, well-formatted code block --}}
+<section class="mb-16">
+    <h2 class="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-6">Example &mdash; Laravel</h2>
+    <div class="rounded-xl border border-slate-200 overflow-hidden">
+        <div class="flex items-center justify-between px-4 py-2.5 bg-slate-50 border-b border-slate-200">
+            <div class="flex items-center gap-2">
+                <i class="fab fa-laravel text-red-500 text-sm"></i>
+                <span class="text-xs font-medium text-slate-600">routes/web.php</span>
+            </div>
+            <button onclick="copyCode()" id="copy-btn" class="text-xs text-slate-400 hover:text-slate-600 transition-colors flex items-center gap-1">
+                <i class="fas fa-copy"></i> Copy
+            </button>
         </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Laravel -->
-            <div class="group bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-slate-200 hover:border-red-300">
-                <div class="flex items-center mb-4">
-                    <div class="bg-red-600 w-12 h-12 rounded-xl flex items-center justify-center mr-4 group-hover:bg-red-700 transition-colors">
-                        <i class="fab fa-laravel text-white text-2xl"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-bold text-slate-900">Laravel</h3>
-                        <p class="text-slate-500 font-medium">PHP Framework</p>
-                    </div>
-                </div>
-                <p class="text-slate-600 mb-6 leading-relaxed">
-                    Complete Laravel integration with Composer package, middleware, and Eloquent models.
-                </p>
-                <div class="flex items-center justify-between">
-                    <span class="text-sm text-slate-500 font-medium">
-                        <i class="fas fa-clock mr-1"></i>5 min setup
-                    </span>
-                    <a href="{{ route('docs.laravel') }}" class="text-blue-600 hover:text-blue-800 font-semibold group-hover:translate-x-1 transition-transform">
-                        View Guide <i class="fas fa-arrow-right ml-1"></i>
-                    </a>
-                </div>
-            </div>
-            
-            <!-- .NET MVC -->
-            <div class="group bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-slate-200 hover:border-blue-300">
-                <div class="flex items-center mb-4">
-                    <div class="bg-blue-600 w-12 h-12 rounded-xl flex items-center justify-center mr-4 group-hover:bg-blue-700 transition-colors">
-                        <i class="fab fa-microsoft text-white text-2xl"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-bold text-slate-900">.NET MVC</h3>
-                        <p class="text-slate-500 font-medium">C# Framework</p>
-                    </div>
-                </div>
-                <p class="text-slate-600 mb-6 leading-relaxed">
-                    ASP.NET MVC integration with JWT authentication and role-based authorization.
-                </p>
-                <div class="flex items-center justify-between">
-                    <span class="text-sm text-slate-500 font-medium">
-                        <i class="fas fa-clock mr-1"></i>10 min setup
-                    </span>
-                    <a href="{{ route('docs.dotnet') }}" class="text-blue-600 hover:text-blue-800 font-semibold group-hover:translate-x-1 transition-transform">
-                        View Guide <i class="fas fa-arrow-right ml-1"></i>
-                    </a>
-                </div>
-            </div>
-            
-            <!-- Node.js -->
-            <div class="group bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-slate-200 hover:border-green-300">
-                <div class="flex items-center mb-4">
-                    <div class="bg-green-600 w-12 h-12 rounded-xl flex items-center justify-center mr-4 group-hover:bg-green-700 transition-colors">
-                        <i class="fab fa-node-js text-white text-2xl"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-bold text-slate-900">Node.js</h3>
-                        <p class="text-slate-500 font-medium">Express.js</p>
-                    </div>
-                </div>
-                <p class="text-slate-600 mb-6 leading-relaxed">
-                    Express.js middleware for JWT validation and session management.
-                </p>
-                <div class="flex items-center justify-between">
-                    <span class="text-sm text-slate-500 font-medium">
-                        <i class="fas fa-clock mr-1"></i>3 min setup
-                    </span>
-                    <a href="{{ route('docs.nodejs') }}" class="text-blue-600 hover:text-blue-800 font-semibold group-hover:translate-x-1 transition-transform">
-                        View Guide <i class="fas fa-arrow-right ml-1"></i>
-                    </a>
-                </div>
-            </div>
-            
-            <!-- Java Spring -->
-            <div class="group bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-slate-200 hover:border-orange-300">
-                <div class="flex items-center mb-4">
-                    <div class="bg-orange-600 w-12 h-12 rounded-xl flex items-center justify-center mr-4 group-hover:bg-orange-700 transition-colors">
-                        <i class="fab fa-java text-white text-2xl"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-bold text-slate-900">Java Spring</h3>
-                        <p class="text-slate-500 font-medium">Spring Boot</p>
-                    </div>
-                </div>
-                <p class="text-slate-600 mb-6 leading-relaxed">
-                    Spring Security configuration with JWT authentication and method-level security.
-                </p>
-                <div class="flex items-center justify-between">
-                    <span class="text-sm text-slate-500 font-medium">
-                        <i class="fas fa-clock mr-1"></i>8 min setup
-                    </span>
-                    <a href="{{ route('docs.java') }}" class="text-blue-600 hover:text-blue-800 font-semibold group-hover:translate-x-1 transition-transform">
-                        View Guide <i class="fas fa-arrow-right ml-1"></i>
-                    </a>
-                </div>
-            </div>
-            
-            <!-- Python Django -->
-            <div class="group bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-slate-200 hover:border-indigo-300">
-                <div class="flex items-center mb-4">
-                    <div class="bg-indigo-600 w-12 h-12 rounded-xl flex items-center justify-center mr-4 group-hover:bg-indigo-700 transition-colors">
-                        <i class="fab fa-python text-white text-2xl"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-bold text-slate-900">Python Django</h3>
-                        <p class="text-slate-500 font-medium">Django Framework</p>
-                    </div>
-                </div>
-                <p class="text-slate-600 mb-6 leading-relaxed">
-                    Django middleware for authentication with custom user models and decorators.
-                </p>
-                <div class="flex items-center justify-between">
-                    <span class="text-sm text-slate-500 font-medium">
-                        <i class="fas fa-clock mr-1"></i>7 min setup
-                    </span>
-                    <a href="{{ route('docs.python') }}" class="text-blue-600 hover:text-blue-800 font-semibold group-hover:translate-x-1 transition-transform">
-                        View Guide <i class="fas fa-arrow-right ml-1"></i>
-                    </a>
-                </div>
-            </div>
-            
-            <!-- JavaScript/HTML -->
-            <div class="group bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-slate-200 hover:border-yellow-300">
-                <div class="flex items-center mb-4">
-                    <div class="bg-yellow-600 w-12 h-12 rounded-xl flex items-center justify-center mr-4 group-hover:bg-yellow-700 transition-colors">
-                        <i class="fab fa-js text-white text-2xl"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-bold text-slate-900">JavaScript</h3>
-                        <p class="text-slate-500 font-medium">Frontend Integration</p>
-                    </div>
-                </div>
-                <p class="text-slate-600 mb-6 leading-relaxed">
-                    Pure JavaScript integration for SPAs and static websites with token management.
-                </p>
-                <div class="flex items-center justify-between">
-                    <span class="text-sm text-slate-500 font-medium">
-                        <i class="fas fa-clock mr-1"></i>5 min setup
-                    </span>
-                    <a href="{{ route('docs.javascript') }}" class="text-blue-600 hover:text-blue-800 font-semibold group-hover:translate-x-1 transition-transform">
-                        View Guide <i class="fas fa-arrow-right ml-1"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+        <div class="bg-slate-900 p-5 overflow-x-auto">
+            <pre id="code-block" class="text-sm leading-relaxed font-mono"><code><span class="text-slate-500">// Install the package</span>
+<span class="text-blue-400">composer require</span> <span class="text-amber-300">cas-system/laravel-client</span>
 
-<!-- Quick Start Section -->
-<section class="py-20 bg-slate-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-            <h2 class="text-4xl font-bold text-slate-900 mb-6">Quick Start</h2>
-            <p class="text-xl text-slate-600 max-w-3xl mx-auto">Get your application integrated in 3 simple steps with our streamlined setup process</p>
-        </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="group text-center">
-                <div class="bg-blue-600 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-blue-700 transition-colors shadow-lg">
-                    <span class="text-white text-3xl font-bold">1</span>
-                </div>
-                <h3 class="text-2xl font-bold text-slate-900 mb-4">Register Your App</h3>
-                <p class="text-slate-600 leading-relaxed">Register your application with the CAS server to get client credentials and access keys</p>
-            </div>
-            
-            <div class="group text-center">
-                <div class="bg-green-600 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-green-700 transition-colors shadow-lg">
-                    <span class="text-white text-3xl font-bold">2</span>
-                </div>
-                <h3 class="text-2xl font-bold text-slate-900 mb-4">Install Package</h3>
-                <p class="text-slate-600 leading-relaxed">Install the appropriate package or copy the integration code for your platform</p>
-            </div>
-            
-            <div class="group text-center">
-                <div class="bg-purple-600 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-purple-700 transition-colors shadow-lg">
-                    <span class="text-white text-3xl font-bold">3</span>
-                </div>
-                <h3 class="text-2xl font-bold text-slate-900 mb-4">Configure & Test</h3>
-                <p class="text-slate-600 leading-relaxed">Set up your environment variables and test the authentication flow</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Code Example Section -->
-<section class="py-20 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-            <h2 class="text-4xl font-bold text-slate-900 mb-6">See It In Action</h2>
-            <p class="text-xl text-slate-600 max-w-3xl mx-auto">Here's a quick example of how simple the integration is with our Laravel package</p>
-        </div>
-        
-        <div class="bg-slate-900 rounded-2xl shadow-2xl p-8 max-w-4xl mx-auto">
-            <div class="mb-8">
-                <div class="flex items-center mb-4">
-                    <div class="bg-red-600 w-10 h-10 rounded-lg flex items-center justify-center mr-4">
-                        <i class="fab fa-laravel text-white text-xl"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-white">Laravel Example</h3>
-                </div>
-                <p class="text-slate-300">Protect your routes with a simple middleware configuration</p>
-            </div>
-            
-            <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
-                <pre class="text-green-400 text-sm leading-relaxed"><code>// Install the package
-<span class="text-blue-400">composer require</span> <span class="text-yellow-300">cas-system/laravel-client</span>
-
-// In your routes/web.php
-<span class="text-purple-400">Route</span>::<span class="text-green-400">middleware</span>([<span class="text-yellow-300">'cas.auth'</span>])-><span class="text-green-400">group</span>(<span class="text-blue-400">function</span> () {
-    <span class="text-purple-400">Route</span>::<span class="text-green-400">get</span>(<span class="text-yellow-300">'/dashboard'</span>, [<span class="text-orange-400">DashboardController</span>::<span class="text-blue-400">class</span>, <span class="text-yellow-300">'index'</span>]);
-    <span class="text-purple-400">Route</span>::<span class="text-green-400">get</span>(<span class="text-yellow-300">'/profile'</span>, [<span class="text-orange-400">ProfileController</span>::<span class="text-blue-400">class</span>, <span class="text-yellow-300">'show'</span>]);
+<span class="text-slate-500">// Protect routes with CAS middleware</span>
+<span class="text-violet-400">Route</span>::<span class="text-green-400">middleware</span>([<span class="text-amber-300">'cas.auth'</span>])-><span class="text-green-400">group</span>(<span class="text-blue-400">function</span> () {
+    <span class="text-violet-400">Route</span>::<span class="text-green-400">get</span>(<span class="text-amber-300">'/dashboard'</span>, [<span class="text-orange-300">DashboardController</span>::<span class="text-blue-400">class</span>, <span class="text-amber-300">'index'</span>]);
+    <span class="text-violet-400">Route</span>::<span class="text-green-400">get</span>(<span class="text-amber-300">'/profile'</span>,   [<span class="text-orange-300">ProfileController</span>::<span class="text-blue-400">class</span>, <span class="text-amber-300">'show'</span>]);
 });
 
-// In your controller
-<span class="text-blue-400">public function</span> <span class="text-green-400">index</span>()
-{
-    <span class="text-red-300">$user</span> = <span class="text-green-400">session</span>(<span class="text-yellow-300">'cas_user'</span>);
-    <span class="text-blue-400">return</span> <span class="text-green-400">view</span>(<span class="text-yellow-300">'dashboard'</span>, <span class="text-green-400">compact</span>(<span class="text-yellow-300">'user'</span>));
-}</code></pre>
-            </div>
+<span class="text-slate-500">// Access the authenticated user</span>
+<span class="text-red-300">$user</span> = <span class="text-green-400">session</span>(<span class="text-amber-300">'cas_user'</span>);</code></pre>
         </div>
     </div>
 </section>
 
-<!-- CTA Section -->
-<section class="bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-700 text-white py-20 relative overflow-hidden">
-    <!-- Background Pattern -->
-    <div class="absolute inset-0 bg-black/10"></div>
-    <div class="absolute inset-0" style="background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.1) 1px, transparent 0); background-size: 30px 30px;"></div>
-    
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-        <h2 class="text-4xl md:text-5xl font-bold mb-6 text-white">Ready to Get Started?</h2>
-        <p class="text-xl md:text-2xl mb-12 text-blue-100 max-w-3xl mx-auto leading-relaxed">
-            Choose your platform and start integrating with CAS SSO today. Complete setup in minutes with our comprehensive guides.
-        </p>
-        <div class="flex flex-wrap justify-center gap-4">
-            <a href="{{ route('docs.laravel') }}" class="bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 border border-white/30 hover:border-white/50 transform hover:-translate-y-1">
-                <i class="fab fa-laravel mr-2"></i>Laravel Guide
-            </a>
-            <a href="{{ route('docs.dotnet') }}" class="bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 border border-white/30 hover:border-white/50 transform hover:-translate-y-1">
-                <i class="fab fa-microsoft mr-2"></i>.NET Guide
-            </a>
-            <a href="{{ route('docs.nodejs') }}" class="bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 border border-white/30 hover:border-white/50 transform hover:-translate-y-1">
-                <i class="fab fa-node-js mr-2"></i>Node.js Guide
-            </a>
-        </div>
-        
-        <!-- Additional Quick Links -->
-        <div class="mt-16 pt-8 border-t border-white/20">
-            <p class="text-blue-100 mb-6">Need something else?</p>
-            <div class="flex flex-wrap justify-center gap-6 text-sm">
-                <a href="{{ route('docs.api.overview') }}" class="text-white hover:text-blue-200 transition-colors">
-                    <i class="fas fa-code mr-1"></i>API Reference
-                </a>
-                <a href="{{ route('docs.examples') }}" class="text-white hover:text-blue-200 transition-colors">
-                    <i class="fas fa-play mr-1"></i>Code Examples
-                </a>
-                <a href="{{ route('docs.section', ['section' => 'authentication']) }}" class="text-white hover:text-blue-200 transition-colors">
-                    <i class="fas fa-shield-alt mr-1"></i>Security Guide
-                </a>
-            </div>
-        </div>
+{{-- Additional Resources —— simple link list --}}
+<section class="border-t border-slate-200 pt-10">
+    <h2 class="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-6">More Resources</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <a href="{{ route('docs.api.overview') }}" class="group flex items-center gap-3 p-4 rounded-lg border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all">
+            <i class="fas fa-code text-slate-400 text-sm"></i>
+            <span class="text-sm font-medium text-slate-700 group-hover:text-slate-900">API Reference</span>
+        </a>
+        <a href="{{ route('docs.examples') }}" class="group flex items-center gap-3 p-4 rounded-lg border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all">
+            <i class="fas fa-play text-slate-400 text-sm"></i>
+            <span class="text-sm font-medium text-slate-700 group-hover:text-slate-900">Code Examples</span>
+        </a>
+        <a href="{{ route('docs.security') }}" class="group flex items-center gap-3 p-4 rounded-lg border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all">
+            <i class="fas fa-shield-alt text-slate-400 text-sm"></i>
+            <span class="text-sm font-medium text-slate-700 group-hover:text-slate-900">Security Guide</span>
+        </a>
+        <a href="/docs/troubleshooting" class="group flex items-center gap-3 p-4 rounded-lg border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all">
+            <i class="fas fa-tools text-slate-400 text-sm"></i>
+            <span class="text-sm font-medium text-slate-700 group-hover:text-slate-900">Troubleshooting</span>
+        </a>
     </div>
 </section>
+
+<script>
+function copyCode() {
+    const code = document.getElementById('code-block').textContent;
+    navigator.clipboard.writeText(code);
+    const btn = document.getElementById('copy-btn');
+    btn.innerHTML = '<i class="fas fa-check"></i> Copied';
+    setTimeout(() => { btn.innerHTML = '<i class="fas fa-copy"></i> Copy'; }, 2000);
+}
+</script>
 @endsection

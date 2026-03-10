@@ -1,485 +1,234 @@
 @extends('public.documentation.layout')
 
-@section('title', $deploymentGuide['title'] . ' - CAS Documentation')
-@section('description', $deploymentGuide['description'])
+@section('title', 'Deployment Guide — CAS SSO')
+@section('description', 'Deploy CAS SSO to production with Docker, Kubernetes, or traditional hosting.')
 
 @section('content')
-<div class="max-w-4xl mx-auto">
-    <div class="mb-8">
-        <h1 class="text-3xl font-bold text-gray-900 mb-4">{{ $deploymentGuide['title'] }}</h1>
-        <p class="text-lg text-gray-600">{{ $deploymentGuide['description'] }}</p>
+<section class="border-b border-slate-200 pb-10 mb-12">
+    <div class="max-w-3xl">
+        <p class="text-sm font-medium text-blue-600 tracking-wide uppercase mb-3">Advanced Topics</p>
+        <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight leading-tight mb-4">Deployment Guide</h1>
+        <p class="text-lg text-slate-500 leading-relaxed">Production-ready deployment configurations for CAS SSO.</p>
     </div>
+</section>
 
-    <!-- Quick Navigation -->
-    <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
-        <h2 class="text-lg font-semibold text-blue-900 mb-4">Quick Navigation</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-            @foreach($deploymentGuide['sections'] as $key => $title)
-                <a href="#{{ $key }}" class="text-blue-700 hover:text-blue-900 hover:underline">
-                    <i class="fas fa-arrow-right mr-2"></i>{{ $title }}
-                </a>
-            @endforeach
-        </div>
-    </div>
-
-    <!-- System Requirements -->
-    <section id="requirements" class="mb-12">
-        <h2 class="text-2xl font-bold text-gray-900 mb-6">System Requirements</h2>
-        
-        <div class="bg-gray-50 border border-gray-200 rounded-lg p-6 mb-6">
-            <h3 class="text-lg font-semibold text-gray-900 mb-4">Minimum Requirements</h3>
-            <ul class="space-y-2 text-gray-700">
-                <li><i class="fas fa-server text-blue-600 mr-2"></i><strong>CPU:</strong> 2 vCPUs (4 vCPUs recommended)</li>
-                <li><i class="fas fa-memory text-blue-600 mr-2"></i><strong>RAM:</strong> 4GB (8GB recommended)</li>
-                <li><i class="fas fa-hdd text-blue-600 mr-2"></i><strong>Storage:</strong> 50GB SSD</li>
-                <li><i class="fas fa-network-wired text-blue-600 mr-2"></i><strong>Network:</strong> 1Gbps connection</li>
+{{-- Requirements --}}
+<section class="mb-12" id="requirements">
+    <h2 class="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-4">System Requirements</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="p-5 rounded-xl border border-slate-200">
+            <h3 class="text-sm font-semibold text-slate-900 mb-3">Server</h3>
+            <ul class="space-y-1.5 text-sm text-slate-600">
+                <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-500 text-xs"></i>PHP 8.3+ with Laravel 11</li>
+                <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-500 text-xs"></i>PostgreSQL 14+</li>
+                <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-500 text-xs"></i>Redis 7+ for cache</li>
+                <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-500 text-xs"></i>Nginx web server</li>
+                <li class="flex items-center gap-2"><i class="fas fa-check text-emerald-500 text-xs"></i>Node.js 20+ for asset compilation</li>
             </ul>
         </div>
-
-        <div class="bg-gray-50 border border-gray-200 rounded-lg p-6">
-            <h3 class="text-lg font-semibold text-gray-900 mb-4">Software Dependencies</h3>
-            <ul class="space-y-2 text-gray-700">
-                <li><i class="fab fa-php text-blue-600 mr-2"></i><strong>PHP:</strong> 8.2+ with extensions (pdo, pgsql, bcmath, redis)</li>
-                <li><i class="fas fa-database text-blue-600 mr-2"></i><strong>PostgreSQL:</strong> 14+ with SSL support</li>
-                <li><i class="fab fa-redis text-blue-600 mr-2"></i><strong>Redis:</strong> 6.0+ for caching and sessions</li>
-                <li><i class="fab fa-nginx text-blue-600 mr-2"></i><strong>Web Server:</strong> Nginx 1.20+ or Apache 2.4+</li>
-                <li><i class="fas fa-shield-alt text-blue-600 mr-2"></i><strong>SSL:</strong> Let's Encrypt or commercial certificate</li>
+        <div class="p-5 rounded-xl border border-slate-200">
+            <h3 class="text-sm font-semibold text-slate-900 mb-3">Minimum Resources</h3>
+            <ul class="space-y-1.5 text-sm text-slate-600">
+                <li class="flex items-center gap-2"><i class="fas fa-memory text-blue-500 text-xs"></i>2 GB RAM</li>
+                <li class="flex items-center gap-2"><i class="fas fa-microchip text-blue-500 text-xs"></i>2 vCPU cores</li>
+                <li class="flex items-center gap-2"><i class="fas fa-hdd text-blue-500 text-xs"></i>20 GB SSD storage</li>
+                <li class="flex items-center gap-2"><i class="fas fa-network-wired text-blue-500 text-xs"></i>SSL/TLS certificate</li>
             </ul>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Docker Deployment -->
-    <section id="docker" class="mb-12">
-        <h2 class="text-2xl font-bold text-gray-900 mb-6">Docker Deployment</h2>
-        
-        <div class="space-y-6">
-            <div>
-                <h3 class="text-lg font-semibold text-gray-900 mb-4">Production Docker Compose</h3>
-                <div class="code-block">
-                    <pre><code>version: '3.8'
-
-services:
-  cas-app:
-    image: cas-system:latest
-    container_name: cas-app
-    restart: unless-stopped
-    environment:
-      - APP_ENV=production
-      - APP_DEBUG=false
-      - APP_URL=https://cas.yourdomain.com
-      - DB_CONNECTION=cas_system
-      - PGHOST=cas-db
-      - PGPORT=5432
-      - PGDATABASE=cas_production
-      - REDIS_HOST=cas-redis
-      - REDIS_PORT=6379
-    volumes:
-      - ./storage:/var/www/html/storage
-      - ./logs:/var/www/html/storage/logs
-    networks:
-      - cas-network
-    depends_on:
-      - cas-db
-      - cas-redis
-
-  cas-db:
-    image: postgres:15-alpine
-    container_name: cas-db
-    restart: unless-stopped
-    environment:
-      - POSTGRES_DB=cas_production
-      - POSTGRES_USER=cas_user
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
-    volumes:
-      - cas_db_data:/var/lib/postgresql/data
-      - ./database/init:/docker-entrypoint-initdb.d
-    networks:
-      - cas-network
-    command: postgres -c ssl=on -c ssl_cert_file=/etc/ssl/certs/server.crt
-
-  cas-redis:
-    image: redis:7-alpine
-    container_name: cas-redis
-    restart: unless-stopped
-    command: redis-server --requirepass ${REDIS_PASSWORD}
-    volumes:
-      - cas_redis_data:/data
-    networks:
-      - cas-network
-
-  cas-nginx:
-    image: nginx:alpine
-    container_name: cas-nginx
-    restart: unless-stopped
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./nginx/production.conf:/etc/nginx/nginx.conf
-      - ./ssl:/etc/nginx/ssl
-      - cas_logs:/var/log/nginx
-    networks:
-      - cas-network
-    depends_on:
-      - cas-app
-
-volumes:
-  cas_db_data:
-  cas_redis_data:
-  cas_logs:
-
-networks:
-  cas-network:
-    driver: bridge</code></pre>
-                </div>
-            </div>
-
-            <div>
-                <h3 class="text-lg font-semibold text-gray-900 mb-4">Build Production Image</h3>
-                <div class="code-block">
-                    <pre><code># Build production image
-docker build -t cas-system:latest -f docker/production/Dockerfile .
-
-# Create production environment file
-cp .env.production.example .env.production
-
-# Edit production environment variables
-nano .env.production
-
-# Deploy with production compose
-docker-compose -f docker-compose.production.yml up -d</code></pre>
-                </div>
-            </div>
+{{-- Docker --}}
+<section class="mb-12" id="docker">
+    <h2 class="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-4">Docker Deployment</h2>
+    <p class="text-sm text-slate-600 mb-4">The project includes a multi-service Docker Compose configuration for development and a production overlay.</p>
+    <div class="rounded-xl border border-slate-200 overflow-hidden mb-6">
+        <div class="flex items-center px-4 py-2.5 bg-slate-50 border-b border-slate-200">
+            <i class="fab fa-docker text-blue-500 text-sm mr-2"></i>
+            <span class="text-xs font-medium text-slate-600">docker-compose.yml</span>
         </div>
-    </section>
+        <div class="bg-slate-900 p-5 overflow-x-auto">
+            <pre class="text-sm leading-relaxed font-mono text-slate-300"><code><span class="text-amber-300">version</span>: <span class="text-green-400">'3.8'</span>
+<span class="text-amber-300">services</span>:
+  <span class="text-amber-300">app</span>:
+    <span class="text-amber-300">build</span>:
+      <span class="text-amber-300">context</span>: <span class="text-green-400">./docker/nginx</span>
+    <span class="text-amber-300">ports</span>:
+      - <span class="text-green-400">"80:80"</span>
+    <span class="text-amber-300">depends_on</span>:
+      - <span class="text-green-400">php</span>
+      - <span class="text-green-400">redis</span>
 
-    <!-- Kubernetes Deployment -->
-    <section id="kubernetes" class="mb-12">
-        <h2 class="text-2xl font-bold text-gray-900 mb-6">Kubernetes Deployment</h2>
-        
-        <div class="space-y-6">
-            <div>
-                <h3 class="text-lg font-semibold text-gray-900 mb-4">Namespace and ConfigMap</h3>
-                <div class="code-block">
-                    <pre><code>apiVersion: v1
-kind: Namespace
-metadata:
-  name: cas-system
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: cas-config
-  namespace: cas-system
-data:
-  APP_ENV: "production"
-  APP_DEBUG: "false"
-  APP_URL: "https://cas.yourdomain.com"
-  DB_CONNECTION: "cas_system"
-  PGHOST=cas-postgresql"
-  PGPORT: "5432"
-  PGDATABASE: "cas_production"
-  REDIS_HOST: "cas-redis"
-  REDIS_PORT: "6379"</code></pre>
-                </div>
-            </div>
+  <span class="text-amber-300">php</span>:
+    <span class="text-amber-300">build</span>:
+      <span class="text-amber-300">context</span>: <span class="text-green-400">./docker/php</span>
+    <span class="text-amber-300">volumes</span>:
+      - <span class="text-green-400">.:/var/www/html:delegated</span>
+    <span class="text-amber-300">env_file</span>:
+      - <span class="text-green-400">.env</span>
 
-            <div>
-                <h3 class="text-lg font-semibold text-gray-900 mb-4">Application Deployment</h3>
-                <div class="code-block">
-                    <pre><code>apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: cas-app
-  namespace: cas-system
-spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: cas-app
-  template:
-    metadata:
-      labels:
-        app: cas-app
-    spec:
-      containers:
-      - name: cas-app
-        image: cas-system:latest
-        ports:
-        - containerPort: 8000
-        envFrom:
-        - configMapRef:
-            name: cas-config
-        - secretRef:
-            name: cas-secrets
-        resources:
-          requests:
-            memory: "512Mi"
-            cpu: "250m"
-          limits:
-            memory: "1Gi"
-            cpu: "500m"
-        readinessProbe:
-          httpGet:
-            path: /health
-            port: 8000
-          initialDelaySeconds: 30
-          periodSeconds: 10
-        livenessProbe:
-          httpGet:
-            path: /health
-            port: 8000
-          initialDelaySeconds: 60
-          periodSeconds: 30
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: cas-service
-  namespace: cas-system
-spec:
-  selector:
-    app: cas-app
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 8000
-  type: ClusterIP
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: cas-ingress
-  namespace: cas-system
-  annotations:
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
-    cert-manager.io/cluster-issuer: "letsencrypt-prod"
-spec:
-  ingressClassName: nginx
-  tls:
-  - hosts:
-    - auth.example.com
-    secretName: cas-tls-secret
-  rules:
-  - host: auth.example.com
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: cas-service
-            port:
-              number: 80</code></pre>
-                </div>
-            </div>
+  <span class="text-amber-300">redis</span>:
+    <span class="text-amber-300">image</span>: <span class="text-green-400">redis:7-alpine</span>
+    <span class="text-amber-300">command</span>: <span class="text-green-400">redis-server --appendonly yes --requirepass ${REDIS_PASSWORD}</span>
+
+<span class="text-amber-300">volumes</span>:
+  <span class="text-amber-300">redis_data</span>:</code></pre>
         </div>
-    </section>
+    </div>
 
-    <!-- Environment Configuration -->
-    <section id="environment" class="mb-12">
-        <h2 class="text-2xl font-bold text-gray-900 mb-6">Environment Configuration</h2>
-        
-        <div class="space-y-6">
-            <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
-                <div class="flex items-start">
-                    <i class="fas fa-exclamation-triangle text-yellow-600 mr-3 mt-1"></i>
-                    <div>
-                        <h3 class="text-lg font-semibold text-yellow-800 mb-2">Critical Security Settings</h3>
-                        <p class="text-yellow-700">These environment variables must be configured for production deployment:</p>
-                    </div>
-                </div>
-            </div>
-
-            <div>
-                <h3 class="text-lg font-semibold text-gray-900 mb-4">Required Environment Variables</h3>
-                <div class="code-block">
-                    <pre><code># Application Configuration
-APP_NAME="CAS Authentication System"
-APP_ENV=production
-APP_DEBUG=false
-APP_URL=https://cas.yourdomain.com
-
-# Database Configuration
-DB_CONNECTION=cas_system
-PGHOST=your-postgres-host
-PGPORT=5432
-PGDATABASE=cas_production
-PGUSER=cas_user
-PGPASSWORD=secure-database-password
-
-# JWT Secrets (Generate with: openssl rand -base64 32)
-JWT_SECRET=your-jwt-secret-key-32-chars-minimum
-CUSTOMER_PORTAL_JWT_SECRET=your-portal-jwt-secret
-
-# Session Security
-SESSION_DRIVER=redis
-SESSION_LIFETIME=120
-SESSION_ENCRYPT=true
-SESSION_SECURE_COOKIE=true
-
-# Cache Configuration
-CACHE_DRIVER=redis
-REDIS_HOST=your-redis-host
-REDIS_PASSWORD=secure-redis-password
-REDIS_PORT=6379
-
-# Mail Configuration
-MAIL_MAILER=smtp
-MAIL_HOST=your-smtp-host
-MAIL_PORT=587
-MAIL_USERNAME=your-smtp-username
-MAIL_PASSWORD=your-smtp-password
-MAIL_ENCRYPTION=tls
-
-# reCAPTCHA Configuration
-RECAPTCHAV3_SITEKEY=your-recaptcha-site-key
-RECAPTCHAV3_SECRET=your-recaptcha-secret-key</code></pre>
-                </div>
-            </div>
+    <div class="rounded-xl border border-slate-200 overflow-hidden mb-6">
+        <div class="flex items-center px-4 py-2.5 bg-slate-50 border-b border-slate-200">
+            <span class="text-xs font-medium text-slate-600">Terminal — Build & Run</span>
         </div>
-    </section>
+        <div class="bg-slate-900 p-5 overflow-x-auto">
+            <pre class="text-sm leading-relaxed font-mono text-slate-300"><code><span class="text-slate-500"># Build and start all services</span>
+docker-compose up -d --build
 
-    <!-- Production Security -->
-    <section id="security" class="mb-12">
-        <h2 class="text-2xl font-bold text-gray-900 mb-6">Production Security</h2>
-        
-        <div class="space-y-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-green-50 border border-green-200 rounded-lg p-6">
-                    <h3 class="text-lg font-semibold text-green-900 mb-4">
-                        <i class="fas fa-shield-alt mr-2"></i>SSL/TLS Configuration
-                    </h3>
-                    <ul class="space-y-2 text-green-800">
-                        <li><i class="fas fa-check mr-2"></i>Force HTTPS redirects</li>
-                        <li><i class="fas fa-check mr-2"></i>TLS 1.3 minimum</li>
-                        <li><i class="fas fa-check mr-2"></i>HSTS headers</li>
-                        <li><i class="fas fa-check mr-2"></i>Certificate auto-renewal</li>
-                    </ul>
-                </div>
+<span class="text-slate-500"># Run migrations and seed the database</span>
+docker-compose exec php php artisan migrate --seed
 
-                <div class="bg-blue-50 border border-blue-200 rounded-lg p-6">
-                    <h3 class="text-lg font-semibold text-blue-900 mb-4">
-                        <i class="fas fa-database mr-2"></i>Database Security
-                    </h3>
-                    <ul class="space-y-2 text-blue-800">
-                        <li><i class="fas fa-check mr-2"></i>SSL connections only</li>
-                        <li><i class="fas fa-check mr-2"></i>Role-based access</li>
-                        <li><i class="fas fa-check mr-2"></i>Encrypted backups</li>
-                        <li><i class="fas fa-check mr-2"></i>Connection pooling</li>
-                    </ul>
-                </div>
-            </div>
+<span class="text-slate-500"># Generate application key</span>
+docker-compose exec php php artisan key:generate
 
-            <div>
-                <h3 class="text-lg font-semibold text-gray-900 mb-4">Security Checklist</h3>
-                <div class="space-y-3">
-                    <div class="flex items-center">
-                        <input type="checkbox" class="mr-3" disabled>
-                        <span class="text-gray-700">Change all default passwords and secrets</span>
-                    </div>
-                    <div class="flex items-center">
-                        <input type="checkbox" class="mr-3" disabled>
-                        <span class="text-gray-700">Configure firewall rules (ports 80, 443 only)</span>
-                    </div>
-                    <div class="flex items-center">
-                        <input type="checkbox" class="mr-3" disabled>
-                        <span class="text-gray-700">Enable fail2ban for brute force protection</span>
-                    </div>
-                    <div class="flex items-center">
-                        <input type="checkbox" class="mr-3" disabled>
-                        <span class="text-gray-700">Set up SSL certificate auto-renewal</span>
-                    </div>
-                    <div class="flex items-center">
-                        <input type="checkbox" class="mr-3" disabled>
-                        <span class="text-gray-700">Configure backup and monitoring</span>
-                    </div>
-                    <div class="flex items-center">
-                        <input type="checkbox" class="mr-3" disabled>
-                        <span class="text-gray-700">Review and configure IP whitelist</span>
-                    </div>
-                </div>
-            </div>
+<span class="text-slate-500"># Build frontend assets</span>
+docker-compose run --rm node npm install && npm run build</code></pre>
         </div>
-    </section>
+    </div>
 
-    <!-- Monitoring & Maintenance -->
-    <section id="monitoring" class="mb-12">
-        <h2 class="text-2xl font-bold text-gray-900 mb-6">Monitoring & Maintenance</h2>
-        
-        <div class="space-y-6">
-            <div>
-                <h3 class="text-lg font-semibold text-gray-900 mb-4">Health Check Endpoints</h3>
-                <div class="code-block">
-                    <pre><code># Application health check
-GET /health
-
-# Database connectivity check
-GET /health/database
-
-# Redis connectivity check  
-GET /health/redis
-
-# Full system status
-GET /health/full</code></pre>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-gray-50 border border-gray-200 rounded-lg p-6">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-4">
-                        <i class="fas fa-chart-line mr-2"></i>Key Metrics to Monitor
-                    </h3>
-                    <ul class="space-y-2 text-gray-700">
-                        <li><i class="fas fa-dot-circle text-blue-600 mr-2"></i>Response time (&lt; 200ms)</li>
-                        <li><i class="fas fa-dot-circle text-blue-600 mr-2"></i>Error rate (&lt; 1%)</li>
-                        <li><i class="fas fa-dot-circle text-blue-600 mr-2"></i>Authentication success rate</li>
-                        <li><i class="fas fa-dot-circle text-blue-600 mr-2"></i>Database connection pool</li>
-                        <li><i class="fas fa-dot-circle text-blue-600 mr-2"></i>Memory and CPU usage</li>
-                    </ul>
-                </div>
-
-                <div class="bg-gray-50 border border-gray-200 rounded-lg p-6">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-4">
-                        <i class="fas fa-tools mr-2"></i>Maintenance Tasks
-                    </h3>
-                    <ul class="space-y-2 text-gray-700">
-                        <li><i class="fas fa-dot-circle text-green-600 mr-2"></i>Daily: Log review and cleanup</li>
-                        <li><i class="fas fa-dot-circle text-green-600 mr-2"></i>Weekly: Database backup verification</li>
-                        <li><i class="fas fa-dot-circle text-green-600 mr-2"></i>Monthly: Security patch updates</li>
-                        <li><i class="fas fa-dot-circle text-green-600 mr-2"></i>Quarterly: SSL certificate renewal</li>
-                        <li><i class="fas fa-dot-circle text-green-600 mr-2"></i>Yearly: Security audit</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Support and Troubleshooting -->
-    <div class="bg-gray-50 border border-gray-200 rounded-lg p-6">
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">
-            <i class="fas fa-life-ring mr-2"></i>Support and Troubleshooting
-        </h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-                <h4 class="font-semibold text-gray-800 mb-2">Common Issues</h4>
-                <ul class="space-y-1 text-sm text-gray-600">
-                    <li><a href="#" class="hover:text-blue-600">Database connection errors</a></li>
-                    <li><a href="#" class="hover:text-blue-600">SSL certificate issues</a></li>
-                    <li><a href="#" class="hover:text-blue-600">Performance optimization</a></li>
-                    <li><a href="#" class="hover:text-blue-600">Authentication failures</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="font-semibold text-gray-800 mb-2">Log Locations</h4>
-                <ul class="space-y-1 text-sm text-gray-600 font-mono">
-                    <li>Application: <code>/var/www/html/storage/logs/</code></li>
-                    <li>Nginx: <code>/var/log/nginx/</code></li>
-                    <li>PostgreSQL: <code>/var/log/postgresql/</code></li>
-                    <li>System: <code>/var/log/syslog</code></li>
-                </ul>
+    <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-6">
+        <div class="flex items-start gap-2">
+            <i class="fas fa-info-circle text-blue-500 mt-0.5"></i>
+            <div class="text-sm text-blue-800">
+                <strong>Production Overlay</strong> — Use <code class="text-xs bg-blue-100 px-1 py-0.5 rounded font-mono">docker-production.yml</code> for production which adds Prometheus monitoring, Grafana dashboards, Fluentd logging, and queue workers with resource limits.
             </div>
         </div>
     </div>
-</div>
+</section>
+
+{{-- Kubernetes --}}
+<section class="mb-12" id="kubernetes">
+    <h2 class="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-4">Kubernetes Deployment</h2>
+    <p class="text-sm text-slate-600 mb-4">Deploy CAS SSO on Kubernetes using the standalone Dockerfile. The Dockerfile bundles PHP-FPM, Nginx, and Supervisor into a single image.</p>
+    <div class="rounded-xl border border-slate-200 overflow-hidden mb-6">
+        <div class="flex items-center px-4 py-2.5 bg-slate-50 border-b border-slate-200">
+            <span class="text-xs font-medium text-slate-600">k8s/deployment.yaml</span>
+        </div>
+        <div class="bg-slate-900 p-5 overflow-x-auto">
+            <pre class="text-sm leading-relaxed font-mono text-slate-300"><code><span class="text-amber-300">apiVersion</span>: apps/v1
+<span class="text-amber-300">kind</span>: Deployment
+<span class="text-amber-300">metadata</span>:
+  <span class="text-amber-300">name</span>: cas-sso
+<span class="text-amber-300">spec</span>:
+  <span class="text-amber-300">replicas</span>: <span class="text-blue-400">2</span>
+  <span class="text-amber-300">selector</span>:
+    <span class="text-amber-300">matchLabels</span>:
+      <span class="text-amber-300">app</span>: cas-sso
+  <span class="text-amber-300">template</span>:
+    <span class="text-amber-300">metadata</span>:
+      <span class="text-amber-300">labels</span>:
+        <span class="text-amber-300">app</span>: cas-sso
+    <span class="text-amber-300">spec</span>:
+      <span class="text-amber-300">containers</span>:
+        - <span class="text-amber-300">name</span>: cas-sso
+          <span class="text-amber-300">image</span>: <span class="text-green-400">your-registry/cas-sso:latest</span>
+          <span class="text-amber-300">ports</span>:
+            - <span class="text-amber-300">containerPort</span>: <span class="text-blue-400">80</span>
+          <span class="text-amber-300">envFrom</span>:
+            - <span class="text-amber-300">secretRef</span>:
+                <span class="text-amber-300">name</span>: cas-sso-secrets
+          <span class="text-amber-300">resources</span>:
+            <span class="text-amber-300">requests</span>:
+              <span class="text-amber-300">cpu</span>: <span class="text-green-400">"500m"</span>
+              <span class="text-amber-300">memory</span>: <span class="text-green-400">"512Mi"</span>
+            <span class="text-amber-300">limits</span>:
+              <span class="text-amber-300">cpu</span>: <span class="text-green-400">"1000m"</span>
+              <span class="text-amber-300">memory</span>: <span class="text-green-400">"1Gi"</span>
+          <span class="text-amber-300">livenessProbe</span>:
+            <span class="text-amber-300">httpGet</span>:
+              <span class="text-amber-300">path</span>: /health
+              <span class="text-amber-300">port</span>: <span class="text-blue-400">80</span>
+            <span class="text-amber-300">initialDelaySeconds</span>: <span class="text-blue-400">10</span>
+            <span class="text-amber-300">periodSeconds</span>: <span class="text-blue-400">30</span></code></pre>
+        </div>
+    </div>
+
+    <div class="rounded-xl border border-slate-200 overflow-hidden">
+        <div class="flex items-center px-4 py-2.5 bg-slate-50 border-b border-slate-200">
+            <span class="text-xs font-medium text-slate-600">Terminal — Build & Deploy</span>
+        </div>
+        <div class="bg-slate-900 p-5 overflow-x-auto">
+            <pre class="text-sm leading-relaxed font-mono text-slate-300"><code><span class="text-slate-500"># Build the production image (uses root Dockerfile)</span>
+docker build -t your-registry/cas-sso:latest .
+
+<span class="text-slate-500"># Push to registry</span>
+docker push your-registry/cas-sso:latest
+
+<span class="text-slate-500"># Deploy to cluster</span>
+kubectl apply -f k8s/deployment.yaml</code></pre>
+        </div>
+    </div>
+</section>
+
+{{-- Environment --}}
+<section class="mb-12" id="environment">
+    <h2 class="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-4">Environment Configuration</h2>
+    <div class="rounded-xl border border-slate-200 overflow-hidden">
+        <div class="flex items-center px-4 py-2.5 bg-slate-50 border-b border-slate-200">
+            <span class="text-xs font-medium text-slate-600">.env (production)</span>
+        </div>
+        <div class="bg-slate-900 p-5 overflow-x-auto">
+            <pre class="text-sm leading-relaxed font-mono text-slate-300"><code><span class="text-amber-300">APP_NAME</span>=<span class="text-green-400">"One System"</span>
+<span class="text-amber-300">APP_ENV</span>=<span class="text-green-400">production</span>
+<span class="text-amber-300">APP_DEBUG</span>=<span class="text-green-400">false</span>
+<span class="text-amber-300">APP_URL</span>=<span class="text-green-400">https://cas.yourdomain.com</span>
+
+<span class="text-amber-300">DB_CONNECTION</span>=<span class="text-green-400">pgsql</span>
+<span class="text-amber-300">DB_HOST</span>=<span class="text-green-400">your_db_host</span>
+<span class="text-amber-300">DB_DATABASE</span>=<span class="text-green-400">cas_system</span>
+<span class="text-amber-300">DB_USERNAME</span>=<span class="text-green-400">cas_user</span>
+<span class="text-amber-300">DB_PASSWORD</span>=<span class="text-green-400">your_secure_password</span>
+
+<span class="text-amber-300">SESSION_DRIVER</span>=<span class="text-green-400">database</span>
+<span class="text-amber-300">CACHE_STORE</span>=<span class="text-green-400">database</span>
+<span class="text-amber-300">QUEUE_CONNECTION</span>=<span class="text-green-400">database</span>
+
+<span class="text-amber-300">REDIS_HOST</span>=<span class="text-green-400">your_redis_host</span>
+<span class="text-amber-300">REDIS_PASSWORD</span>=<span class="text-green-400">your_redis_password</span>
+
+<span class="text-amber-300">RECAPTCHA_SITE_KEY</span>=<span class="text-green-400">your_recaptcha_site_key</span>
+<span class="text-amber-300">RECAPTCHA_SECRET_KEY</span>=<span class="text-green-400">your_recaptcha_secret</span></code></pre>
+        </div>
+    </div>
+</section>
+
+{{-- Production Checklist --}}
+<section class="border-t border-slate-200 pt-10">
+    <h2 class="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-4">Production Checklist</h2>
+    <div class="space-y-2">
+        <div class="flex items-center gap-3 p-3 rounded-lg border border-slate-200 text-sm">
+            <i class="fas fa-check-square text-emerald-500"></i><span class="text-slate-700">Set <code class="text-xs bg-slate-100 px-1 py-0.5 rounded font-mono">APP_DEBUG=false</code></span>
+        </div>
+        <div class="flex items-center gap-3 p-3 rounded-lg border border-slate-200 text-sm">
+            <i class="fas fa-check-square text-emerald-500"></i><span class="text-slate-700">Configure SSL/TLS with valid certificate</span>
+        </div>
+        <div class="flex items-center gap-3 p-3 rounded-lg border border-slate-200 text-sm">
+            <i class="fas fa-check-square text-emerald-500"></i><span class="text-slate-700">Set strong database and Redis passwords</span>
+        </div>
+        <div class="flex items-center gap-3 p-3 rounded-lg border border-slate-200 text-sm">
+            <i class="fas fa-check-square text-emerald-500"></i><span class="text-slate-700">Run <code class="text-xs bg-slate-100 px-1 py-0.5 rounded font-mono">php artisan config:cache</code> and <code class="text-xs bg-slate-100 px-1 py-0.5 rounded font-mono">php artisan route:cache</code></span>
+        </div>
+        <div class="flex items-center gap-3 p-3 rounded-lg border border-slate-200 text-sm">
+            <i class="fas fa-check-square text-emerald-500"></i><span class="text-slate-700">Configure reCAPTCHA keys for production domain</span>
+        </div>
+        <div class="flex items-center gap-3 p-3 rounded-lg border border-slate-200 text-sm">
+            <i class="fas fa-check-square text-emerald-500"></i><span class="text-slate-700">Set up automated database backups</span>
+        </div>
+        <div class="flex items-center gap-3 p-3 rounded-lg border border-slate-200 text-sm">
+            <i class="fas fa-check-square text-emerald-500"></i><span class="text-slate-700">Enable application-level logging with daily rotation</span>
+        </div>
+        <div class="flex items-center gap-3 p-3 rounded-lg border border-slate-200 text-sm">
+            <i class="fas fa-check-square text-emerald-500"></i><span class="text-slate-700">Configure IP whitelist for all client systems</span>
+        </div>
+    </div>
+</section>
 @endsection

@@ -1,5 +1,5 @@
-<div class="min-h-screen bg-gradient-to-br from-slate-50 via-gray-50 to-zinc-50">
-    <div class="bg-gradient-to-r from-slate-800 via-slate-700 to-slate-600 shadow-xl border-b border-slate-200">
+<div class="min-h-screen bg-gray-50">
+    <div class="bg-slate-700 shadow-xl border-b border-slate-200">
         <div class="max-w-6xl mx-auto px-4 py-6">
             <div class="flex justify-between items-center">
                 <div class="flex items-center space-x-4">
@@ -119,7 +119,7 @@
 
                 @elseif($activeTab === 'security')
                     <div class="space-y-8">
-                        <div class="bg-gradient-to-r from-orange-50 to-red-50 rounded-xl p-6 border border-orange-200">
+                        <div class="bg-orange-50 rounded-xl p-6 border border-orange-200">
                             <div class="flex items-center justify-between mb-6">
                                 <div class="flex items-center space-x-3">
                                     <div class="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">
@@ -216,7 +216,7 @@
                             @endif
                         </div>
 
-                        <div class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-6 border border-green-200">
+                        <div class="bg-green-50 rounded-xl p-6 border border-green-200">
                             <div class="flex items-center justify-between mb-6">
                                 <div class="flex items-center space-x-3">
                                     <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
@@ -352,7 +352,7 @@
                                         <div class="p-6">
                                             <div class="flex items-start justify-between mb-4">
                                                 <div class="flex items-start space-x-3">
-                                                    <div class="w-12 h-12 bg-gradient-to-br from-slate-500 to-slate-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                                                    <div class="w-12 h-12 bg-slate-500 rounded-xl flex items-center justify-center flex-shrink-0">
                                                         <span class="text-white font-bold text-lg">{{ strtoupper(substr($system['name'], 0, 2)) }}</span>
                                                     </div>
                                                     <div class="flex-1 min-w-0">

@@ -9,7 +9,6 @@ use App\Models\User;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 class SsoService
 {
@@ -187,11 +186,6 @@ class SsoService
     public function validateToken($token, $clientId, $clientSecret, $request)
     {
         $clientIp = $this->getClientIp($request);
-        
-        Log::info('SsoService: validateToken called', [
-            'client_id' => $clientId,
-            'client_ip' => $clientIp
-        ]);
 
         $clientSystem = ClientSystem::where('client_id', $clientId)
             ->where('client_secret', $clientSecret)
@@ -199,78 +193,55 @@ class SsoService
             ->first();
 
         if (!$clientSystem) {
-             Log::error('SsoService: Invalid client credentials', ['client_id' => $clientId]);
-             throw new \Exception('Invalid client credentials', 401);
+            throw new \Exception('Invalid client credentials', 401);
         }
 
         if (!$this->verifyClientSystemIp($clientSystem, $clientIp)) {
-             Log::error('SsoService: IP verification failed', [
-                 'client_ip' => $clientIp,
-                 'allowed_domain' => $clientSystem->domain
-             ]);
-             throw new \Exception('IP verification failed', 403);
+            throw new \Exception('IP verification failed', 403);
         }
 
         $clientSystem->update(['last_accessed' => now()]);
 
         try {
-            Log::info('SsoService: Decoding JWT...');
             $decoded = JWT::decode($token, new Key($this->jwtSecret, 'HS256'));
-            Log::info('SsoService: JWT decoded successfully');
         } catch (\Exception $e) {
-             Log::error('SsoService: JWT decode failed', ['error' => $e->getMessage()]);
-             throw new \Exception('Invalid token', 401);
+            throw new \Exception('Invalid token', 401);
         }
 
-        Log::info('SsoService: Looking up SsoToken in DB...');
         $ssoToken = SsoToken::where('token_hash', hash('sha256', $token))
             ->active()
-            // ->with(['user', 'clientSystem']) // We might revert to payload data if masquerading
             ->with(['clientSystem'])
             ->first();
 
         if (!$ssoToken) {
-             Log::error('SsoService: Token not found or expired', ['token_hash' => hash('sha256', $token)]);
-             throw new \Exception('Invalid or expired token', 401);
+            throw new \Exception('Invalid or expired token', 401);
         }
 
         if ($ssoToken->is_used) {
-             Log::error('SsoService: Token already used', ['token_hash' => hash('sha256', $token)]);
-             throw new \Exception('Token has already been used', 401);
+            throw new \Exception('Token has already been used', 401);
         }
-        
-        Log::info('SsoService: SsoToken found', ['id' => $ssoToken->id]);
 
         if ($ssoToken->client_system_id != $clientSystem->id) {
-             Log::error('SsoService: Token client mismatch', [
-                 'token_client_id' => $ssoToken->client_system_id,
-                 'request_client_id' => $clientSystem->id
-             ]);
-             throw new \Exception('Token not valid for this client system', 401);
+            throw new \Exception('Token not valid for this client system', 401);
         }
 
-        // Determine effective user from Payload (relies on 'payload' cast to array)
         $payload = is_string($ssoToken->payload) ? json_decode($ssoToken->payload, true) : $ssoToken->payload;
         
         if (isset($payload['is_linked_account']) && $payload['is_linked_account']) {
-            // Construct user object from payload
             $userData = [
-                'id' => $payload['userId'], // This might be original ID
+                'id' => $payload['userId'],
                 'username' => $payload['username'],
                 'email' => $payload['email'],
                 'is_linked' => true
             ];
         } else {
-            // Standard flow: use relational user
-            $user = $ssoToken->user; // Load relationship manually if not eager loaded above
+            $user = $ssoToken->user;
             if (!$user) {
-                // Fallback to finding user by ID if relation fails but ID exists
                 $user = User::find($ssoToken->user_id);
             }
             
             if (!$user) {
-                 Log::error('SsoService: User not found for token');
-                 throw new \Exception('User not found', 401);
+                throw new \Exception('User not found', 401);
             }
             
             $userData = [
@@ -279,10 +250,8 @@ class SsoService
                 'email' => $user->email,
             ];
         }
-        
-        Log::info('SsoService: Validation successful, returning user', ['username' => $userData['username']]);
 
-        // Mark token as used to prevent replay attacks
+
         $ssoToken->update(['is_used' => true]);
 
         return [
@@ -369,14 +338,9 @@ class SsoService
             $parsedUrl = parse_url($clientSystem->domain);
             $registeredHost = $parsedUrl['host'] ?? $clientSystem->domain;
 
-            // Optimization: trust local/private IPs in debug mode
             if (config('app.debug') && $this->isLocalOrPrivateIp($clientIp)) {
                 return true;
             }
-
-             // Quick check: if the IP matches exactly
-             // Note: In real production we might want to cache DNS lookups
-             // We will try DNS resolution but wrapped safely
             $registeredIps = $this->resolveHostToIps($registeredHost);
             if (in_array($clientIp, $registeredIps)) {
                 return true;
@@ -404,12 +368,10 @@ class SsoService
     {
         try {
             $ips = [];
-            // Basic lookup
             $ipv4 = gethostbyname($hostname);
             if ($ipv4 !== $hostname && filter_var($ipv4, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
                 $ips[] = $ipv4;
             }
-            // More comprehensive lookup
             $records = dns_get_record($hostname, DNS_A | DNS_AAAA);
             if ($records) {
                 foreach ($records as $record) {

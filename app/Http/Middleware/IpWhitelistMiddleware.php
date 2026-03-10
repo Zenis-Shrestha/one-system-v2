@@ -16,7 +16,6 @@ class IpWhitelistMiddleware
     {
         $clientIp = $this->getClientIp($request);
 
-
         if (!$this->isIpWhitelisted($clientIp)) {
             DB::table('audit_logs')->insert([
                 'user_id' => null,
@@ -91,13 +90,6 @@ class IpWhitelistMiddleware
 
             foreach ($whitelistEntries as $entry) {
                 if ($this->matchesIpRule($ip, $entry->ip_address, $entry->subnet_mask)) {
-                    // Log successful IP match
-                    Log::info('IP Whitelist Match', [
-                        'ip' => $ip,
-                        'rule' => $entry->ip_address . ($entry->subnet_mask ? '/' . $entry->subnet_mask : ''),
-                        'description' => $entry->description
-                    ]);
-
                     return true;
                 }
             }

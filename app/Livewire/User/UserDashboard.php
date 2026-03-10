@@ -5,7 +5,6 @@ namespace App\Livewire\User;
 use App\Services\ClientCredentialValidator;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use App\Models\User;
 use App\Models\ClientSystem;
 use App\Models\UserClientSystem;
@@ -138,8 +137,6 @@ class UserDashboard extends Component
             return;
         }
 
-        Log::info('UserDashboard: loginToSystem called', ['clientSystemId' => $clientSystemId]);
-
         $this->processing = true;
 
         $userId = session('user_id');
@@ -184,7 +181,6 @@ class UserDashboard extends Component
                     'username' => $userLink->linked_username,
                     'email' => $userLink->linked_username,
                 ];
-                Log::info('UserDashboard: Using linked identity', ['linked_username' => $userLink->linked_username]);
             }
             
             $result = $ssoService->generateWebSsoToken($user, $clientSystem->client_id, request(), $linkedUser);
@@ -195,10 +191,7 @@ class UserDashboard extends Component
                 return;
             }
 
-            // Use the secure redirect URL from the service (no sensitive user_id in params)
             $tokenUrl = $result['redirect_url'];
-            
-            // SsoService handles SsoToken and AuditLog creation
 
             $userLink = UserClientSystem::find($userLink->id);
             $userLink->update(['last_used' => now()]);
@@ -285,105 +278,6 @@ class UserDashboard extends Component
         }
 
         $this->openLinkModal($clientSystemId);
-    }
-
-    public function loginToClientSystem_DISABLED($clientSystemId)
-    {
-        $userId = session('user_id');
-
-        try {
-            $userLink = UserClientSystem::where('user_id', $userId)
-                ->where('client_system_id', $clientSystemId)
-                ->where('is_active', true)
-                ->first();
-
-            if (!$userLink) {
-                $this->showMessage('You must link your username first', 'error');
-                return;
-            }
-
-            $clientSystem = ClientSystem::where('id', $clientSystemId)
-                ->where('is_active', true)
-                ->first();
-
-            if ($clientSystem) {
-                $clientSystem->refresh();
-            }
-
-            if (!$clientSystem) {
-                $this->showMessage('Client system not found or inactive', 'error');
-                return;
-            }
-
-            $token = bin2hex(random_bytes(32));
-            $tokenHash = hash('sha256', $token);
-            $expiresAt = now()->addMinutes(5);
-
-            $payload = [
-                'user_id' => $userId,
-                'username' => $userLink->linked_username,
-                'client_system_id' => $clientSystemId,
-                'client_id' => $clientSystem->client_id,
-                'issued_at' => now()->timestamp,
-                'expires_at' => $expiresAt->timestamp,
-                'login_type' => 'dashboard_sso'
-            ];
-
-            $user = User::find($userId);
-            $userRole = $user ? $user->role : 'user';
-
-            SsoToken::create([
-                'token' => $token,
-                'user_id' => $userId,
-                'client_system_id' => $clientSystemId,
-                'user_role' => $userRole,
-                'token_hash' => $tokenHash,
-                'payload' => $payload,
-                'expires_at' => $expiresAt,
-                'is_active' => true,
-                'is_used' => false,
-                'user_agent' => request()->userAgent(),
-                'ip_address' => request()->ip(),
-            ]);
-
-            $linkModel = UserClientSystem::find($userLink->id);
-            $linkModel->update(['last_used' => now()]);
-
-            AuditLog::create([
-                'user_id' => $userId,
-                'event_type' => 'sso_login',
-                'action' => 'dashboard_login',
-                'description' => "User logged into client system: {$clientSystem->name}",
-                'details' => [
-                    'linked_username' => $userLink->linked_username,
-                    'token_expires_at' => $expiresAt,
-                    'login_method' => 'dashboard_sso',
-                    'client_system_id' => $clientSystemId
-                ],
-                'success' => true,
-                'ip_address' => request()->ip(),
-                'user_agent' => request()->userAgent(),
-            ]);
-
-            $redirectUrl = $clientSystem->callback_url . '?token=' . $token . '&username=' . urlencode($userLink->linked_username);
-
-            if (empty($clientSystem->callback_url)) {
-                $this->showMessage('Client system callback URL not configured', 'error');
-                return;
-            }
-
-            $this->refreshData = microtime(true);
-            $this->dispatch('$refresh');
-
-            $this->showMessage('Login successful! Redirecting to ' . $clientSystem->name, 'success');
-
-            Log::info('Dispatching redirect event', ['url' => $redirectUrl]);
-            $this->dispatch('redirect-to-client', ['url' => $redirectUrl]);
-
-        } catch (\Exception $e) {
-            $this->showMessage('Login failed: ' . $e->getMessage(), 'error');
-            Log::error('Dashboard SSO Login Error: ' . $e->getMessage());
-        }
     }
 
     public function unlinkClientSystem($clientSystemId)

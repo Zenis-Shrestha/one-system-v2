@@ -15,6 +15,9 @@
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
     <!-- Scripts and Styles -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     
@@ -202,7 +205,31 @@
             </a>
         </div>
 
-        <!-- Programming Languages -->
+        <!-- How To Use -->
+        <div class="sidebar-section">
+            <div class="sidebar-title">How To Use</div>
+            <a href="{{ route('docs.quick-start') }}" class="sidebar-link {{ request()->routeIs('docs.quick-start') ? 'active' : '' }}">
+                <i class="fas fa-rocket sidebar-icon"></i>
+                Quick Start
+                <span class="language-badge new">New</span>
+            </a>
+            <a href="{{ route('docs.admin-panel') }}" class="sidebar-link {{ request()->routeIs('docs.admin-panel') ? 'active' : '' }}">
+                <i class="fas fa-tachometer-alt sidebar-icon"></i>
+                Admin Panel
+            </a>
+            <a href="{{ route('docs.client-registration') }}" class="sidebar-link {{ request()->routeIs('docs.client-registration') ? 'active' : '' }}">
+                <i class="fas fa-plus-circle sidebar-icon"></i>
+                Client Registration
+            </a>
+            <a href="{{ route('docs.user-management') }}" class="sidebar-link {{ request()->routeIs('docs.user-management') ? 'active' : '' }}">
+                <i class="fas fa-users-cog sidebar-icon"></i>
+                User Management
+            </a>
+            <a href="{{ route('docs.two-factor-auth') }}" class="sidebar-link {{ request()->routeIs('docs.two-factor-auth') ? 'active' : '' }}">
+                <i class="fas fa-shield-alt sidebar-icon"></i>
+                2FA Setup
+            </a>
+        </div>
         <div class="sidebar-section">
             <div class="sidebar-title">Programming Languages</div>
             
@@ -252,18 +279,33 @@
                 <i class="fas fa-sitemap sidebar-icon"></i>
                 System Architecture
             </a>
-            <a href="/docs/authentication" class="sidebar-link">
+            <a href="/docs/authentication" class="sidebar-link {{ request()->is('docs/authentication') ? 'active' : '' }}">
                 <i class="fas fa-key sidebar-icon"></i>
                 Authentication Flows
             </a>
-            <a href="/docs/deployment" class="sidebar-link">
+            <a href="{{ route('docs.deployment') }}" class="sidebar-link {{ request()->routeIs('docs.deployment') ? 'active' : '' }}">
                 <i class="fas fa-server sidebar-icon"></i>
                 Deployment Guide
             </a>
-            <a href="/docs/troubleshooting" class="sidebar-link">
+            <a href="{{ route('docs.troubleshooting') }}" class="sidebar-link {{ request()->routeIs('docs.troubleshooting') ? 'active' : '' }}">
                 <i class="fas fa-tools sidebar-icon"></i>
                 Troubleshooting
             </a>
+        </div>
+
+        <!-- Technical Reference -->
+        <div class="sidebar-section">
+            <div class="sidebar-title">Technical Reference</div>
+            <a href="{{ route('docs.webhooks') }}" class="sidebar-link {{ request()->routeIs('docs.webhooks') ? 'active' : '' }}">
+                <i class="fas fa-bolt sidebar-icon"></i>
+                Webhooks
+                <span class="language-badge new">New</span>
+            </a>
+            <a href="{{ route('docs.sdks') }}" class="sidebar-link {{ request()->routeIs('docs.sdks') ? 'active' : '' }}">
+                <i class="fas fa-cube sidebar-icon"></i>
+                SDKs &amp; Packages
+            </a>
+
         </div>
 
         <!-- Resources -->

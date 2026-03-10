@@ -4,7 +4,7 @@
         <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" wire:click="closeLinkModal"></div>
 
         <div class="inline-block align-bottom bg-white rounded-2xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-            <div class="bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-4">
+            <div class="bg-blue-600 px-6 py-4">
                 <div class="flex items-center justify-between">
                     <h3 class="text-lg font-semibold text-white flex items-center">
                         <x-icon name="key" class="w-5 h-5 mr-3" />
@@ -95,7 +95,7 @@
                     <button type="submit"
                             wire:loading.attr="disabled"
                             wire:target="saveCredentials"
-                            class="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold rounded-xl transition-all duration-200 flex items-center justify-center disabled:opacity-50">
+                            class="w-full sm:w-auto px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-all duration-200 flex items-center justify-center disabled:opacity-50">
 
                         <div wire:loading.remove wire:target="saveCredentials" class="flex items-center">
                             <x-icon name="save" class="w-4 h-4 mr-2" />

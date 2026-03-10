@@ -1,531 +1,139 @@
 @extends('public.documentation.layout')
 
-@section('title', '.NET MVC CAS SSO Integration Guide - Updated Architecture')
-@section('description', 'Complete guide for integrating .NET MVC applications with our modernized CAS Single Sign-On system featuring Admin/User/Public separation.')
+@section('title', '.NET MVC Integration — CAS SSO')
+@section('description', 'Complete guide for integrating ASP.NET MVC applications with CAS Single Sign-On authentication.')
 
 @section('content')
-<div class="max-w-4xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-    <!-- Header -->
-    <div class="mb-8">
-        <div class="flex items-center mb-4">
-            <div class="bg-blue-100 w-12 h-12 rounded-lg flex items-center justify-center mr-4">
-                <i class="fab fa-microsoft text-blue-600 text-2xl"></i>
+<section class="border-b border-slate-200 pb-10 mb-12">
+    <div class="max-w-3xl">
+        <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                <i class="fab fa-microsoft text-blue-600 text-lg"></i>
             </div>
             <div>
-                <h1 class="text-3xl font-bold text-gray-900">{{ $dotnetGuide['title'] }}</h1>
-                <p class="text-gray-600 mt-1">{{ $dotnetGuide['description'] }}</p>
+                <p class="text-sm font-medium text-blue-600 tracking-wide uppercase">Integration Guide</p>
+                <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight leading-tight">.NET MVC C#</h1>
             </div>
         </div>
-        
-        <div class="flex items-center space-x-4 text-sm text-gray-600">
-            <span><i class="fas fa-clock mr-1"></i>Setup time: 10 minutes</span>
-            <span><i class="fas fa-code mr-1"></i>Difficulty: Intermediate</span>
+        <p class="text-lg text-slate-500 leading-relaxed mb-4">{{ $dotnetGuide['description'] }}</p>
+        <div class="flex flex-wrap gap-4 text-xs text-slate-500">
+            <span><i class="fas fa-clock mr-1"></i>10 min setup</span>
+            <span><i class="fas fa-signal mr-1"></i>Intermediate</span>
             <span><i class="fas fa-tag mr-1"></i>.NET 6+</span>
         </div>
     </div>
+</section>
 
-    <!-- Installation -->
-    <section class="mb-12">
-        <h2 class="text-2xl font-bold mb-4">1. Project Setup</h2>
-        
-        <h3 class="text-xl font-semibold mb-3">NuGet Packages</h3>
-        <div class="code-block mb-6">
-            <pre class="language-xml"><code>&lt;PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.0.0" /&gt;
-&lt;PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.0" /&gt;
-&lt;PackageReference Include="Newtonsoft.Json" Version="13.0.3" /&gt;</code></pre>
+<nav class="mb-12 p-5 rounded-xl border border-slate-200 bg-slate-50/50">
+    <h2 class="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-3">On This Page</h2>
+    <ol class="space-y-1.5 text-sm">
+        <li><a href="#installation" class="text-blue-600 hover:text-blue-800">1. NuGet Installation</a></li>
+        <li><a href="#configuration" class="text-blue-600 hover:text-blue-800">2. Configuration</a></li>
+        <li><a href="#service" class="text-blue-600 hover:text-blue-800">3. CAS Service</a></li>
+        <li><a href="#controller" class="text-blue-600 hover:text-blue-800">4. Controller &amp; Middleware</a></li>
+    </ol>
+</nav>
+
+<section id="installation" class="mb-12">
+    <h2 class="text-xl font-bold text-slate-900 mb-4">1. NuGet Installation</h2>
+    <div class="rounded-xl border border-slate-200 overflow-hidden">
+        <div class="flex items-center px-4 py-2.5 bg-slate-50 border-b border-slate-200"><span class="text-xs font-medium text-slate-600">Package Manager Console</span></div>
+        <div class="bg-slate-900 p-5 overflow-x-auto">
+            <pre class="text-sm leading-relaxed font-mono text-slate-300"><code>dotnet add package CasSystem.Client
+dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer</code></pre>
         </div>
+    </div>
+</section>
 
-        <h3 class="text-xl font-semibold mb-3">Package Manager Console</h3>
-        <div class="code-block mb-6">
-            <pre class="language-bash"><code>Install-Package System.IdentityModel.Tokens.Jwt
-Install-Package Microsoft.AspNetCore.Authentication.JwtBearer
-Install-Package Newtonsoft.Json</code></pre>
-        </div>
-    </section>
-
-    <!-- Configuration -->
-    <section class="mb-12">
-        <h2 class="text-2xl font-bold mb-4">2. Configuration</h2>
-        
-        <h3 class="text-xl font-semibold mb-3">appsettings.json</h3>
-        <div class="code-block mb-6">
-            <pre class="language-json"><code>{
-  "CasSettings": {
-    "ServerUrl": "http://localhost:5000",
-    "ClientId": "your_client_id",
-    "ClientUsername": "your_client_username",
-    "ClientPassword": "your_client_password",
-    "SignatureSecret": "your_signature_secret",
-    "CallbackUrl": "http://yourapp.com/cas/callback",
-    "TokenExpiration": 120
-  },
-  "Logging": {
-    "LogLevel": {
-      "Default": "Information",
-      "Microsoft.AspNetCore": "Warning"
-    }
+<section id="configuration" class="mb-12">
+    <h2 class="text-xl font-bold text-slate-900 mb-4">2. Configuration</h2>
+    <div class="rounded-xl border border-slate-200 overflow-hidden mb-6">
+        <div class="flex items-center px-4 py-2.5 bg-slate-50 border-b border-slate-200"><span class="text-xs font-medium text-slate-600">appsettings.json</span></div>
+        <div class="bg-slate-900 p-5 overflow-x-auto">
+            <pre class="text-sm leading-relaxed font-mono text-slate-300"><code>{
+  "<span class="text-amber-300">CasSSO</span>": {
+    "<span class="text-amber-300">ServerUrl</span>": "<span class="text-green-400">https://cas-server.com</span>",
+    "<span class="text-amber-300">ClientId</span>": "<span class="text-green-400">your_client_id</span>",
+    "<span class="text-amber-300">ClientSecret</span>": "<span class="text-green-400">your_client_secret</span>",
+    "<span class="text-amber-300">CallbackUrl</span>": "<span class="text-green-400">https://your-app.com/cas/callback</span>"
   }
 }</code></pre>
         </div>
-
-        <h3 class="text-xl font-semibold mb-3">Configuration Model</h3>
-        <div class="code-block mb-6">
-            <pre class="language-csharp"><code>// Models/CasSettings.cs
-public class CasSettings
-{
-    public string ServerUrl { get; set; }
-    public string ClientId { get; set; }
-    public string ClientUsername { get; set; }
-    public string ClientPassword { get; set; }
-    public string SignatureSecret { get; set; }
-    public string CallbackUrl { get; set; }
-    public int TokenExpiration { get; set; } = 120;
-}</code></pre>
-        </div>
-    </section>
-
-    <!-- CAS Client Service -->
-    <section class="mb-12">
-        <h2 class="text-2xl font-bold mb-4">3. CAS Client Service</h2>
-        
-        <div class="code-block mb-6">
-            <pre class="language-csharp"><code>// Services/CasClient.cs
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json;
-
-public class CasClient
-{
-    private readonly CasSettings _settings;
-    private readonly HttpClient _httpClient;
-    private readonly ILogger&lt;CasClient&gt; _logger;
-
-    public CasClient(CasSettings settings, HttpClient httpClient, ILogger&lt;CasClient&gt; logger)
-    {
-        _settings = settings;
-        _httpClient = httpClient;
-        _logger = logger;
-    }
-
-    public string GetLoginUrl(string returnUrl)
-    {
-        var loginUrl = $"{_settings.ServerUrl}/auth/login";
-        var callbackUrl = $"{_settings.CallbackUrl}?return_url={Uri.EscapeDataString(returnUrl)}";
-        
-        return $"{loginUrl}?callback_url={Uri.EscapeDataString(callbackUrl)}";
-    }
-
-    public async Task&lt;CasUser&gt; ValidateTokenAsync(string token)
-    {
-        try
-        {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_settings.SignatureSecret);
-            
-            var validationParameters = new TokenValidationParameters
-            {
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(key),
-                ValidateIssuer = false,
-                ValidateAudience = false,
-                ValidateLifetime = true,
-                ClockSkew = TimeSpan.Zero
-            };
-
-            var principal = tokenHandler.ValidateToken(token, validationParameters, out var validatedToken);
-            
-            // Extract user information from claims
-            var user = new CasUser
-            {
-                Username = principal.FindFirst(ClaimTypes.Name)?.Value,
-                Email = principal.FindFirst(ClaimTypes.Email)?.Value,
-                Role = principal.FindFirst(ClaimTypes.Role)?.Value,
-                FirstName = principal.FindFirst("first_name")?.Value,
-                LastName = principal.FindFirst("last_name")?.Value
-            };
-
-            return user;
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Token validation failed");
-            throw new UnauthorizedAccessException("Invalid token");
-        }
-    }
-
-    public async Task&lt;AuthResult&gt; AuthenticateAsync(string username, string password)
-    {
-        var loginData = new
-        {
-            username,
-            password,
-            client_id = _settings.ClientId,
-            client_username = _settings.ClientUsername,
-            client_password = _settings.ClientPassword
-        };
-
-        var json = JsonConvert.SerializeObject(loginData);
-        var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-        var response = await _httpClient.PostAsync($"{_settings.ServerUrl}/api/sso/token", content);
-        
-        if (response.IsSuccessStatusCode)
-        {
-            var responseContent = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject&lt;AuthResult&gt;(responseContent);
-            return result;
-        }
-        
-        throw new UnauthorizedAccessException("Authentication failed");
-    }
-}</code></pre>
-        </div>
-    </section>
-
-    <!-- Models -->
-    <section class="mb-12">
-        <h2 class="text-2xl font-bold mb-4">4. Models</h2>
-        
-        <div class="code-block mb-6">
-            <pre class="language-csharp"><code>// Models/CasUser.cs
-public class CasUser
-{
-    public string Username { get; set; }
-    public string Email { get; set; }
-    public string Role { get; set; }
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-    
-    public string FullName => $"{FirstName} {LastName}";
-    
-    public bool IsAdmin => Role == "admin";
-    
-    public bool HasRole(string role) => Role == role;
-}
-
-// Models/AuthResult.cs
-public class AuthResult
-{
-    public string Token { get; set; }
-    public CasUser User { get; set; }
-    public DateTime ExpiresAt { get; set; }
-}</code></pre>
-        </div>
-    </section>
-
-    <!-- Authentication Attribute -->
-    <section class="mb-12">
-        <h2 class="text-2xl font-bold mb-4">5. Authentication Attribute</h2>
-        
-        <div class="code-block mb-6">
-            <pre class="language-csharp"><code>// Attributes/CasAuthAttribute.cs
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
-
-public class CasAuthAttribute : ActionFilterAttribute
-{
-    public override void OnActionExecuting(ActionExecutingContext context)
-    {
-        var casUser = context.HttpContext.Session.GetString("CasUser");
-        var casToken = context.HttpContext.Session.GetString("CasToken");
-        
-        if (string.IsNullOrEmpty(casUser) || string.IsNullOrEmpty(casToken))
-        {
-            var returnUrl = context.HttpContext.Request.Path + context.HttpContext.Request.QueryString;
-            var casClient = context.HttpContext.RequestServices.GetService&lt;CasClient&gt;();
-            var loginUrl = casClient.GetLoginUrl(returnUrl);
-            
-            context.Result = new RedirectResult(loginUrl);
-            return;
-        }
-        
-        // Validate token if needed
-        var user = Newtonsoft.Json.JsonConvert.DeserializeObject&lt;CasUser&gt;(casUser);
-        context.HttpContext.Items["CasUser"] = user;
-        
-        base.OnActionExecuting(context);
-    }
-}
-
-// Attributes/CasRoleAttribute.cs
-public class CasRoleAttribute : CasAuthAttribute
-{
-    private readonly string[] _roles;
-    
-    public CasRoleAttribute(params string[] roles)
-    {
-        _roles = roles;
-    }
-    
-    public override void OnActionExecuting(ActionExecutingContext context)
-    {
-        base.OnActionExecuting(context);
-        
-        if (context.Result != null) return; // Already redirected
-        
-        var user = context.HttpContext.Items["CasUser"] as CasUser;
-        
-        if (user == null || !_roles.Contains(user.Role))
-        {
-            context.Result = new ForbidResult();
-        }
-    }
-}</code></pre>
-        </div>
-    </section>
-
-    <!-- Controller Examples -->
-    <section class="mb-12">
-        <h2 class="text-2xl font-bold mb-4">6. Controller Examples</h2>
-        
-        <h3 class="text-xl font-semibold mb-3">Home Controller</h3>
-        <div class="code-block mb-6">
-            <pre class="language-csharp"><code>// Controllers/HomeController.cs
-using Microsoft.AspNetCore.Mvc;
-
-public class HomeController : Controller
-{
-    private readonly CasClient _casClient;
-    
-    public HomeController(CasClient casClient)
-    {
-        _casClient = casClient;
-    }
-    
-    [CasAuth]
-    public IActionResult Index()
-    {
-        var user = HttpContext.Items["CasUser"] as CasUser;
-        return View(user);
-    }
-    
-    [CasRole("admin")]
-    public IActionResult Admin()
-    {
-        var user = HttpContext.Items["CasUser"] as CasUser;
-        return View(user);
-    }
-    
-    public IActionResult Login(string returnUrl = "/")
-    {
-        var loginUrl = _casClient.GetLoginUrl(returnUrl);
-        return Redirect(loginUrl);
-    }
-    
-    public async Task&lt;IActionResult&gt; CasCallback(string token, string return_url = "/")
-    {
-        try
-        {
-            var user = await _casClient.ValidateTokenAsync(token);
-            
-            HttpContext.Session.SetString("CasUser", JsonConvert.SerializeObject(user));
-            HttpContext.Session.SetString("CasToken", token);
-            
-            return Redirect(return_url);
-        }
-        catch
-        {
-            return RedirectToAction("Login");
-        }
-    }
-    
-    public IActionResult Logout()
-    {
-        HttpContext.Session.Clear();
-        return RedirectToAction("Index");
-    }
-}</code></pre>
-        </div>
-    </section>
-
-    <!-- Startup Configuration -->
-    <section class="mb-12">
-        <h2 class="text-2xl font-bold mb-4">7. Startup Configuration</h2>
-        
-        <div class="code-block mb-6">
-            <pre class="language-csharp"><code>// Program.cs (.NET 6+)
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-
-var builder = WebApplication.CreateBuilder(args);
-
-// Add services
-builder.Services.AddControllersWithViews();
-
-// Configure CAS settings
-var casSettings = new CasSettings();
-builder.Configuration.GetSection("CasSettings").Bind(casSettings);
-builder.Services.AddSingleton(casSettings);
-
-// Add HTTP client
-builder.Services.AddHttpClient&lt;CasClient&gt;();
-
-// Add session
-builder.Services.AddSession(options =>
-{
-    options.IdleTimeout = TimeSpan.FromMinutes(120);
-    options.Cookie.HttpOnly = true;
-    options.Cookie.IsEssential = true;
-});
-
-// Add JWT authentication (optional, for API endpoints)
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(casSettings.SignatureSecret)),
-            ValidateIssuer = false,
-            ValidateAudience = false,
-            ValidateLifetime = true,
-            ClockSkew = TimeSpan.Zero
-        };
-    });
-
-var app = builder.Build();
-
-// Configure pipeline
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Home/Error");
-    app.UseHsts();
-}
-
-app.UseHttpsRedirection();
-app.UseStaticFiles();
-app.UseRouting();
-
-app.UseSession();
-app.UseAuthentication();
-app.UseAuthorization();
-
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
-
-app.Run();</code></pre>
-        </div>
-    </section>
-
-    <!-- Views -->
-    <section class="mb-12">
-        <h2 class="text-2xl font-bold mb-4">8. View Examples</h2>
-        
-        <h3 class="text-xl font-semibold mb-3">Dashboard View</h3>
-        <div class="code-block mb-6">
-            <pre class="language-html"><code>@@* Views/Home/Index.cshtml *@@
-@@model CasUser
-
-@@{
-    ViewData["Title"] = "Dashboard";
-}
-
-&lt;div class="container"&gt;
-    &lt;div class="row"&gt;
-        &lt;div class="col-md-12"&gt;
-            &lt;h1&gt;Welcome, @@Model.FullName!&lt;/h1&gt;
-            
-            &lt;div class="card"&gt;
-                &lt;div class="card-header"&gt;
-                    &lt;h3&gt;User Information&lt;/h3&gt;
-                &lt;/div&gt;
-                &lt;div class="card-body"&gt;
-                    &lt;p&gt;&lt;strong&gt;Username:&lt;/strong&gt; @@Model.Username&lt;/p&gt;
-                    &lt;p&gt;&lt;strong&gt;Email:&lt;/strong&gt; @@Model.Email&lt;/p&gt;
-                    &lt;p&gt;&lt;strong&gt;Role:&lt;/strong&gt; @@Model.Role&lt;/p&gt;
-                    &lt;p&gt;&lt;strong&gt;First Name:&lt;/strong&gt; @@Model.FirstName&lt;/p&gt;
-                    &lt;p&gt;&lt;strong&gt;Last Name:&lt;/strong&gt; @@Model.LastName&lt;/p&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-            
-            &lt;div class="mt-4"&gt;
-                @@if (Model.IsAdmin)
-                {
-                    &lt;a href="@@Url.Action("Admin")" class="btn btn-primary"&gt;Admin Panel&lt;/a&gt;
-                }
-                &lt;a href="@@Url.Action("Logout")" class="btn btn-secondary"&gt;Logout&lt;/a&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/div&gt;</code></pre>
-        </div>
-
-        <h3 class="text-xl font-semibold mb-3">Layout with Authentication</h3>
-        <div class="code-block mb-6">
-            <pre class="language-html"><code>@@* Views/Shared/_Layout.cshtml *@@
-&lt;!DOCTYPE html&gt;
-&lt;html lang="en"&gt;
-&lt;head&gt;
-    &lt;meta charset="utf-8" /&gt;
-    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;
-    &lt;title&gt;@@ViewData["Title"] - CAS Demo&lt;/title&gt;
-    &lt;link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" /&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;header&gt;
-        &lt;nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"&gt;
-            &lt;div class="container-fluid"&gt;
-                &lt;a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"&gt;CAS Demo&lt;/a&gt;
-                &lt;button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"&gt;
-                    &lt;span class="navbar-toggler-icon"&gt;&lt;/span&gt;
-                &lt;/button&gt;
-                &lt;div class="navbar-collapse collapse d-sm-inline-flex justify-content-between"&gt;
-                    &lt;ul class="navbar-nav flex-grow-1"&gt;
-                        &lt;li class="nav-item"&gt;
-                            &lt;a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index"&gt;Home&lt;/a&gt;
-                        &lt;/li&gt;
-                    &lt;/ul&gt;
-                    &lt;ul class="navbar-nav"&gt;
-                        @@{
-                            var casUser = Context.Session.GetString("CasUser");
-                            if (!string.IsNullOrEmpty(casUser))
-                            {
-                                var user = Newtonsoft.Json.JsonConvert.DeserializeObject&lt;CasUser&gt;(casUser);
-                                &lt;li class="nav-item"&gt;
-                                    &lt;span class="nav-link"&gt;Welcome, @@user.FirstName!&lt;/span&gt;
-                                &lt;/li&gt;
-                                &lt;li class="nav-item"&gt;
-                                    &lt;a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout"&gt;Logout&lt;/a&gt;
-                                &lt;/li&gt;
-                            }
-                            else
-                            {
-                                &lt;li class="nav-item"&gt;
-                                    &lt;a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Login"&gt;Login&lt;/a&gt;
-                                &lt;/li&gt;
-                            }
-                        }
-                    &lt;/ul&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-        &lt;/nav&gt;
-    &lt;/header&gt;
-    
-    &lt;div class="container"&gt;
-        &lt;main role="main" class="pb-3"&gt;
-            @@RenderBody()
-        &lt;/main&gt;
-    &lt;/div&gt;
-    
-    &lt;script src="~/lib/jquery/dist/jquery.min.js"&gt;&lt;/script&gt;
-    &lt;script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"&gt;&lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;</code></pre>
-        </div>
-    </section>
-
-    <!-- Next Steps -->
-    <div class="bg-blue-50 rounded-lg p-6">
-        <h2 class="text-xl font-semibold mb-4">Next Steps</h2>
-        <ul class="space-y-2">
-            <li>• <a href="/docs/api" class="text-blue-600 hover:text-blue-800">Explore the API Reference</a></li>
-            <li>• <a href="/docs/examples" class="text-blue-600 hover:text-blue-800">View More Examples</a></li>
-            <li>• <a href="/" class="text-blue-600 hover:text-blue-800">Test with CAS Dashboard</a></li>
-        </ul>
     </div>
-</div>
+</section>
+
+<section id="service" class="mb-12">
+    <h2 class="text-xl font-bold text-slate-900 mb-4">3. CAS Service</h2>
+    <div class="rounded-xl border border-slate-200 overflow-hidden">
+        <div class="flex items-center px-4 py-2.5 bg-slate-50 border-b border-slate-200"><span class="text-xs font-medium text-slate-600">Services/CasAuthService.cs</span></div>
+        <div class="bg-slate-900 p-5 overflow-x-auto">
+            <pre class="text-sm leading-relaxed font-mono text-slate-300"><code><span class="text-violet-400">public class</span> <span class="text-orange-300">CasAuthService</span>
+{
+    <span class="text-violet-400">private readonly</span> <span class="text-orange-300">HttpClient</span> _client;
+    <span class="text-violet-400">private readonly</span> <span class="text-orange-300">CasSettings</span> _settings;
+
+    <span class="text-violet-400">public async</span> Task&lt;<span class="text-orange-300">TokenResponse</span>&gt; <span class="text-green-400">ValidateToken</span>(<span class="text-violet-400">string</span> token)
+    {
+        <span class="text-violet-400">var</span> payload = <span class="text-violet-400">new</span> {
+            token,
+            client_id     = _settings.ClientId,
+            client_secret = _settings.ClientSecret
+        };
+
+        <span class="text-violet-400">var</span> response = <span class="text-violet-400">await</span> _client.<span class="text-green-400">PostAsJsonAsync</span>(
+            <span class="text-amber-300">$"{_settings.ServerUrl}/api/validate-token"</span>, payload
+        );
+
+        <span class="text-violet-400">return await</span> response.Content
+            .<span class="text-green-400">ReadFromJsonAsync</span>&lt;<span class="text-orange-300">TokenResponse</span>&gt;();
+    }
+}</code></pre>
+        </div>
+    </div>
+</section>
+
+<section id="controller" class="mb-12">
+    <h2 class="text-xl font-bold text-slate-900 mb-4">4. Controller &amp; Middleware</h2>
+    <div class="rounded-xl border border-slate-200 overflow-hidden mb-6">
+        <div class="flex items-center px-4 py-2.5 bg-slate-50 border-b border-slate-200"><span class="text-xs font-medium text-slate-600">Program.cs</span></div>
+        <div class="bg-slate-900 p-5 overflow-x-auto">
+            <pre class="text-sm leading-relaxed font-mono text-slate-300"><code>builder.Services.<span class="text-green-400">AddSingleton</span>&lt;<span class="text-orange-300">CasAuthService</span>&gt;();
+builder.Services.<span class="text-green-400">AddAuthentication</span>(<span class="text-amber-300">"CasSSO"</span>)
+    .<span class="text-green-400">AddScheme</span>&lt;<span class="text-orange-300">CasAuthHandler</span>, <span class="text-orange-300">CasAuthOptions</span>&gt;(<span class="text-amber-300">"CasSSO"</span>, <span class="text-blue-400">null</span>);
+
+app.<span class="text-green-400">UseAuthentication</span>();
+app.<span class="text-green-400">UseAuthorization</span>();</code></pre>
+        </div>
+    </div>
+
+    <div class="rounded-xl border border-slate-200 overflow-hidden">
+        <div class="flex items-center px-4 py-2.5 bg-slate-50 border-b border-slate-200"><span class="text-xs font-medium text-slate-600">Controllers/DashboardController.cs</span></div>
+        <div class="bg-slate-900 p-5 overflow-x-auto">
+            <pre class="text-sm leading-relaxed font-mono text-slate-300"><code>[<span class="text-orange-300">Authorize</span>]
+<span class="text-violet-400">public class</span> <span class="text-orange-300">DashboardController</span> : <span class="text-orange-300">Controller</span>
+{
+    <span class="text-violet-400">public</span> <span class="text-orange-300">IActionResult</span> <span class="text-green-400">Index</span>()
+    {
+        <span class="text-violet-400">var</span> user = HttpContext.Items[<span class="text-amber-300">"CasUser"</span>];
+        <span class="text-violet-400">return</span> <span class="text-green-400">View</span>(user);
+    }
+}</code></pre>
+        </div>
+    </div>
+</section>
+
+<section class="border-t border-slate-200 pt-10">
+    <h2 class="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-4">Next Steps</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <a href="{{ route('docs.api.overview') }}" class="group flex items-center gap-3 p-4 rounded-lg border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all">
+            <i class="fas fa-code text-slate-400 text-sm"></i><span class="text-sm font-medium text-slate-700 group-hover:text-slate-900">API Reference</span>
+        </a>
+        <a href="{{ route('docs.security') }}" class="group flex items-center gap-3 p-4 rounded-lg border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all">
+            <i class="fas fa-shield-alt text-slate-400 text-sm"></i><span class="text-sm font-medium text-slate-700 group-hover:text-slate-900">Security Guide</span>
+        </a>
+        <a href="{{ route('docs.deployment') }}" class="group flex items-center gap-3 p-4 rounded-lg border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all">
+            <i class="fas fa-server text-slate-400 text-sm"></i><span class="text-sm font-medium text-slate-700 group-hover:text-slate-900">Deployment</span>
+        </a>
+    </div>
+</section>
 @endsection

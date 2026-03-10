@@ -106,12 +106,10 @@ class AuthController extends Controller
                 ]);
             }
 
-            // Check if there is a pending SSO request
             if (session()->has('sso_client_id')) {
                 $clientId = session()->pull('sso_client_id');
-                // Re-authenticate user in Auth facade just in case (though logFailure might have cleared it or it wasn't set)
                 if (!Auth::check()) {
-                   Auth::login($user);
+                    Auth::login($user);
                 }
                 
                 $ssoResult = $this->ssoService->generateWebSsoToken($user, $clientId, $request);
@@ -126,7 +124,6 @@ class AuthController extends Controller
             return $this->redirectToDashboard();
         }
 
-        // Failed
         if ($request->expectsJson() || $request->is('api/*')) {
             return response()->json(['error' => 'Invalid credentials'], 401);
         }
@@ -221,8 +218,6 @@ class AuthController extends Controller
      */
     public function validateSsoToken(Request $request)
     {
-        \Illuminate\Support\Facades\Log::info('AuthController: validateSsoToken hit', $request->all());
-
         $request->validate([
             'token' => 'required|string',
             'client_id' => 'required|string',
@@ -233,7 +228,6 @@ class AuthController extends Controller
             $result = $this->ssoService->validateToken($request->token, $request->client_id, $request->client_secret, $request);
             return response()->json($result);
         } catch (\Exception $e) {
-            \Illuminate\Support\Facades\Log::error('AuthController: Validation failed', ['error' => $e->getMessage()]);
             return response()->json(['error' => $e->getMessage()], $e->getCode() ?: 401);
         }
     }
@@ -263,7 +257,6 @@ class AuthController extends Controller
 
         session(['user_id' => $user->id, 'username' => $user->username]);
 
-        // Audit log in controller for now as it uses controller-specific context or we could move it to service but it requires passing ssoToken
         AuditLog::create([
             'user_id' => $user->id,
             'client_system_id' => $ssoToken->client_system_id,
@@ -307,7 +300,6 @@ class AuthController extends Controller
             return redirect()->route('login')->withErrors(['error' => $result['message']]);
         }
 
-        // Not authenticated, store client_id and show login
         session(['sso_client_id' => $clientId]);
         return redirect()->route('login');
     }

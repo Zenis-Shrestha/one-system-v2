@@ -28,17 +28,16 @@
         }
 
         .sidebar-nav a.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #4f46e5;
             color: white;
         }
 
-        .gradient-bg {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .nav-bg {
+            background: #4f46e5;
         }
 
         .hero-pattern {
-            background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0);
-            background-size: 20px 20px;
+            background: transparent;
         }
 
         .nav-item:hover {
@@ -75,7 +74,7 @@
     </style>
 </head>
 <body class="bg-gray-50 font-sans scroll-smooth">
-    <nav class="gradient-bg text-white shadow-xl sticky top-0 z-50">
+    <nav class="nav-bg text-white shadow-xl sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex items-center">

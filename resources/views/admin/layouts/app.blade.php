@@ -5,24 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'CAS Admin Panel')</title>
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     @livewireStyles
 
     <style>
+        *, *::before, *::after { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+
         .loading-pulse {
             animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
 
         @keyframes pulse {
-            0%, 100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: .5;
-            }
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
         }
 
         .loading-overlay {
@@ -30,23 +30,7 @@
         }
     </style>
 
-    <script>
-        (function() {
-            'use strict';
 
-            const originalError = console.error;
-            console.error = function(...args) {
-                const message = args.join(' ');
-                if (message.includes('share-modal.js') ||
-                    message.includes('tui-image-editor') ||
-                    message.includes('chrome.storage') ||
-                    message.includes('chrome.runtime')) {
-                    return;
-                }
-                originalError.apply(console, args);
-            };
-        })();
-    </script>
 </head>
 <body class="bg-gray-50 min-h-screen">
     <nav class="bg-blue-800 shadow-lg">
@@ -227,19 +211,11 @@
                 hidePageLoading();
             });
 
-            console.log('Laravel CAS loading system initialized');
-
             window.addEventListener('error', function(e) {
                 if (e.filename && (e.filename.includes('share-modal.js') ||
                     e.filename.includes('extension'))) {
                     e.preventDefault();
                     return false;
-                }
-            });
-
-            document.addEventListener('click', function(e) {
-                if (e.target.hasAttribute('wire:click') || e.target.closest('[wire\\:click]')) {
-                    console.log('Wire:click detected on:', e.target);
                 }
             });
         });
