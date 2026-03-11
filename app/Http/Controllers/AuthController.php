@@ -78,6 +78,8 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
+        session()->forget(['2fa_required', 'temp_user_id', 'temp_username', 'temp_role']);
+
         $request->validate([
            'login' => 'required',
            'password' => 'required'

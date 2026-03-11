@@ -14,8 +14,8 @@ return new class extends Migration
     {
         Schema::create('cas_user.sso_tokens', function (Blueprint $table) {
             $table->id();
-            $table->string('token')->unique();
-            $table->string('token_hash')->nullable()->index();
+            $table->text('token');
+            $table->text('token_hash')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('client_system_id');
             $table->string('user_role');
