@@ -14,6 +14,18 @@ class IpWhitelistMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
+        // Skip IP whitelist check for admin panel and auth routes
+        // This prevents admins from locking themselves out
+        $path = $request->path();
+        if (str_starts_with($path, 'admin') ||
+            str_starts_with($path, 'auth') ||
+            str_starts_with($path, 'docs') ||
+            str_starts_with($path, 'downloads') ||
+            $path === '/' ||
+            $path === 'health/database') {
+            return $next($request);
+        }
+
         $clientIp = $this->getClientIp($request);
 
         if (!$this->isIpWhitelisted($clientIp)) {
@@ -79,7 +91,9 @@ class IpWhitelistMiddleware
     }
 
     /**
-     * Check if IP is whitelisted
+     * Check if IP is whitelisted.
+     * If the whitelist is empty, all IPs are allowed (whitelist is optional).
+     * If entries exist, only whitelisted IPs are allowed.
      */
     private function isIpWhitelisted(string $ip): bool
     {
@@ -88,6 +102,12 @@ class IpWhitelistMiddleware
                 ->where('status', 'active')
                 ->get();
 
+            // If whitelist is empty, allow all traffic (whitelist is optional)
+            if ($whitelistEntries->isEmpty()) {
+                return true;
+            }
+
+            // Whitelist has entries — enforce it
             foreach ($whitelistEntries as $entry) {
                 if ($this->matchesIpRule($ip, $entry->ip_address, $entry->subnet_mask)) {
                     return true;
@@ -102,7 +122,8 @@ class IpWhitelistMiddleware
                 'error' => $e->getMessage()
             ]);
 
-            return false;
+            // Fail open — allow traffic if DB check fails (availability > security lockout)
+            return true;
         }
     }
 
