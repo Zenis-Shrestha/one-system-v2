@@ -29,7 +29,7 @@
     <h2 class="text-xl font-bold text-slate-900 mb-4">1. Accessing the Admin Panel</h2>
     <p class="text-sm text-slate-600 mb-4">Login with an admin account at:</p>
     <div class="rounded-xl border border-slate-200 overflow-hidden mb-4">
-        <div class="bg-slate-900 p-5"><pre class="text-sm font-mono text-slate-300"><code>https://your-cas-server.com/auth/login</code></pre></div>
+        <div class="bg-slate-900 p-5"><pre class="text-sm font-mono text-slate-300"><code>https://cas.muninfosys.com/auth/login</code></pre></div>
     </div>
     <p class="text-sm text-slate-600">After login, admin users are automatically redirected to <code class="text-xs bg-slate-100 px-1 py-0.5 rounded font-mono">/admin/dashboard</code>. Regular users go to the user portal instead.</p>
     <div class="mt-4 bg-blue-50 border border-blue-200 rounded-xl p-4">

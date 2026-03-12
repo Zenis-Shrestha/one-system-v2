@@ -89,7 +89,7 @@
             <span class="text-xs font-medium text-slate-600">/api/register</span>
         </div>
         <div class="bg-slate-900 p-5 overflow-x-auto">
-            <pre class="text-sm font-mono text-slate-300 leading-relaxed"><code>curl -X POST https://cas-server.com/api/register \
+            <pre class="text-sm font-mono text-slate-300 leading-relaxed"><code>curl -X POST https://cas.muninfosys.com/api/register \
   -H "Content-Type: application/json" \
   -d '{
     "name": "John Doe",

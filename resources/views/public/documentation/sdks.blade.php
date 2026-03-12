@@ -150,7 +150,7 @@
                 <span class="ml-auto text-xs font-medium bg-slate-100 text-slate-600 px-2 py-0.5 rounded">v2.0.0</span>
             </div>
             <div class="rounded-lg bg-slate-900 p-3 mb-3">
-                <code class="text-xs text-slate-300 font-mono">&lt;script src="https://cdn.cas-system.com/js/v2.js"&gt;&lt;/script&gt;</code>
+                <code class="text-xs text-slate-300 font-mono">&lt;script src="https://cdn.cas.muninfosys.com/js/v2.js"&gt;&lt;/script&gt;</code>
             </div>
             <div class="flex items-center gap-3 text-xs text-slate-500">
                 <span>Browser / SPA</span>

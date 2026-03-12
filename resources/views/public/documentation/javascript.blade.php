@@ -38,7 +38,7 @@
     <div class="rounded-xl border border-slate-200 overflow-hidden">
         <div class="flex items-center px-4 py-2.5 bg-slate-50 border-b border-slate-200"><span class="text-xs font-medium text-slate-600">auth.js</span></div>
         <div class="bg-slate-900 p-5 overflow-x-auto">
-            <pre class="text-sm font-mono text-slate-300"><code><span class="text-violet-400">const</span> CAS_URL = <span class="text-amber-300">'https://your-cas-server.com'</span>;
+            <pre class="text-sm font-mono text-slate-300"><code><span class="text-violet-400">const</span> CAS_URL = <span class="text-amber-300">'https://cas.muninfosys.com'</span>;
 <span class="text-violet-400">const</span> CLIENT_ID = <span class="text-amber-300">'your_client_id'</span>;
 
 <span class="text-slate-500">// Redirect user to CAS login page</span>
@@ -81,7 +81,7 @@
         <div class="flex items-start gap-2">
             <i class="fas fa-exclamation-triangle text-amber-500 mt-0.5"></i>
             <div class="text-sm text-amber-800">
-                <strong>Important:</strong> Token validation must happen on your <strong>backend server</strong> (not in the browser) because it requires your <code class="text-xs bg-amber-100 px-1 py-0.5 rounded font-mono">client_secret</code>. Your backend calls <code class="text-xs bg-amber-100 px-1 py-0.5 rounded font-mono">POST /api/validate-token</code> on the CAS server.
+                <strong>Important:</strong> Token validation must happen on your <strong>backend server</strong> (not in the browser) because it requires your <code class="text-xs bg-amber-100 px-1 py-0.5 rounded font-mono">client_secret</code>. Your backend calls <code class="text-xs bg-amber-100 px-1 py-0.5 rounded font-mono">POST /api/sso/validate</code> on the CAS server.
             </div>
         </div>
     </div>

@@ -78,7 +78,7 @@
                     <li>Verify the <code class="text-xs bg-slate-100 px-1 py-0.5 rounded font-mono">CAS_SERVER_URL</code> environment variable</li>
                     <li>Check firewall rules — port 8000 (or your configured port) must be open</li>
                     <li>If using Docker, ensure containers are on the same network</li>
-                    <li>Test connectivity: <code class="text-xs bg-slate-100 px-1 py-0.5 rounded font-mono">curl https://cas-server.com/api/health</code></li>
+                    <li>Test connectivity: <code class="text-xs bg-slate-100 px-1 py-0.5 rounded font-mono">curl https://cas.muninfosys.com/api/health</code></li>
                 </ul>
             </div>
         </details>
@@ -142,7 +142,7 @@
     <div class="rounded-xl border border-slate-200 overflow-hidden">
         <div class="bg-slate-900 p-5 overflow-x-auto">
             <pre class="text-sm leading-relaxed font-mono text-slate-300"><code><span class="text-slate-500"># Check CAS server health</span>
-curl https://cas-server.com/api/health
+curl https://cas.muninfosys.com/api/health
 
 <span class="text-slate-500"># View Laravel logs</span>
 tail -f storage/logs/laravel.log

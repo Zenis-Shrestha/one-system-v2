@@ -49,7 +49,7 @@
     <div class="rounded-xl border border-slate-200 overflow-hidden mb-6">
         <div class="flex items-center px-4 py-2.5 bg-slate-50 border-b border-slate-200"><span class="text-xs font-medium text-slate-600">.env</span></div>
         <div class="bg-slate-900 p-5 overflow-x-auto">
-            <pre class="text-sm leading-relaxed font-mono text-slate-300"><code><span class="text-amber-300">CAS_SERVER_URL</span>=<span class="text-green-400">https://cas-server.com</span>
+            <pre class="text-sm leading-relaxed font-mono text-slate-300"><code><span class="text-amber-300">CAS_SERVER_URL</span>=<span class="text-green-400">https://cas.muninfosys.com</span>
 <span class="text-amber-300">CAS_CLIENT_ID</span>=<span class="text-green-400">your_client_id</span>
 <span class="text-amber-300">CAS_CLIENT_SECRET</span>=<span class="text-green-400">your_client_secret</span>
 <span class="text-amber-300">CAS_CALLBACK_URL</span>=<span class="text-green-400">https://your-app.com/cas/callback</span></code></pre>
@@ -85,7 +85,7 @@
 
   <span class="text-violet-400">try</span> {
     <span class="text-violet-400">const</span> { data } = <span class="text-violet-400">await</span> axios.<span class="text-green-400">post</span>(
-      <span class="text-amber-300">`${config.serverUrl}/api/validate-token`</span>,
+      <span class="text-amber-300">`${config.serverUrl}/api/sso/validate`</span>,
       { token, client_id: config.clientId, client_secret: config.clientSecret }
     );
 

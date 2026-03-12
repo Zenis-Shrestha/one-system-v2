@@ -82,7 +82,7 @@ class CasAuthMiddleware:
             return JsonResponse({'error': 'Token required'}, status=401)
 
         resp = requests.post(
-            f"{self.config['SERVER_URL']}/api/validate-token",
+            f"{self.config['SERVER_URL']}/api/sso/validate",
             json={
                 'token': token,
                 'client_id': self.config['CLIENT_ID'],

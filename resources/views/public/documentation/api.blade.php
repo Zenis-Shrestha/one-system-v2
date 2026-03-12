@@ -22,7 +22,7 @@
     <h2 class="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-4">Base URL &amp; Security</h2>
     <div class="rounded-xl border border-slate-200 overflow-hidden mb-6">
         <div class="bg-slate-900 p-5 overflow-x-auto">
-            <pre class="text-sm leading-relaxed font-mono text-slate-300"><code>https://your-cas-server.com/api</code></pre>
+            <pre class="text-sm leading-relaxed font-mono text-slate-300"><code>https://cas.muninfosys.com/api</code></pre>
         </div>
     </div>
     <div class="bg-amber-50 border border-amber-200 rounded-xl p-4">
@@ -82,13 +82,16 @@
     </div>
 </section>
 
-{{-- POST /api/validate-token --}}
+{{-- POST /api/sso/validate --}}
 <section class="mb-12" id="sso-validate">
     <div class="flex items-center gap-3 mb-4">
         <span class="inline-flex items-center px-2.5 py-1 bg-emerald-100 text-emerald-700 text-xs font-bold rounded">POST</span>
-        <code class="text-base font-mono font-semibold text-slate-900">/api/validate-token</code>
+        <code class="text-base font-mono font-semibold text-slate-900">/api/sso/validate</code>
     </div>
-    <p class="text-sm text-slate-500 mb-6">Validate an SSO token and retrieve user information. Tokens are single-use — once validated, they cannot be reused. This endpoint is also protected by IP whitelisting.</p>
+    <p class="text-sm text-slate-500 mb-3">Validate an SSO token and retrieve user information. Tokens are single-use — once validated, they cannot be reused.</p>
+    <div class="rounded-lg bg-blue-50 border border-blue-200 p-3 mb-6">
+        <span class="text-sm text-blue-800"><strong>Note:</strong> A legacy endpoint <code class="text-xs bg-blue-100 px-1 py-0.5 rounded font-mono">/api/validate-token</code> also exists with IP whitelisting enabled. We recommend using <code class="text-xs bg-blue-100 px-1 py-0.5 rounded font-mono">/api/sso/validate</code> for new integrations.</span>
+    </div>
 
     <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-3">Request Body</h3>
     <div class="rounded-xl border border-slate-200 overflow-hidden mb-6">
@@ -146,7 +149,7 @@
             <pre class="text-sm leading-relaxed font-mono text-slate-300"><code><span class="text-slate-500">// After successful login, user is redirected to:</span>
 https://your-app.com/cas/callback?token=eyJhbGciOiJIUzI1NiIs...
 
-<span class="text-slate-500">// Your callback should validate the token via POST /api/validate-token</span></code></pre>
+<span class="text-slate-500">// Your callback should validate the token via POST /api/sso/validate</span></code></pre>
         </div>
     </div>
 </section>
