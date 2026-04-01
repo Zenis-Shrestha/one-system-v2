@@ -21,7 +21,7 @@ class CasClient:
     CAS SSO Client for Python applications.
 
     Args:
-        server_url: CAS server URL (e.g., https://cas.muninfosys.com)
+        server_url: CAS server URL (e.g., https://your-cas-server.com)
         client_id: Registered client ID
         client_secret: Registered client secret
         callback_url: OAuth callback URL

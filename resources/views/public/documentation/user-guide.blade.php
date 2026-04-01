@@ -136,7 +136,7 @@
             </div>
             <div class="border-l-4 border-blue-400 pl-4">
                 <h4 class="font-medium text-gray-900">Need help?</h4>
-                <p class="text-gray-600 text-sm">Reach out to your system administrator or contact the CAS development team at <strong>support@muninfosys.com</strong>.</p>
+                <p class="text-gray-600 text-sm">Reach out to your system administrator or contact the CAS development team at <a href="https://innovativesolution.com.np/" target="_blank" class="font-semibold text-blue-600 hover:text-blue-800">innovativesolution.com.np</a>.</p>
             </div>
         </div>
     </div>

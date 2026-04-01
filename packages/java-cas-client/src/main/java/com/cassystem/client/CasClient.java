@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
  * CAS SSO Client for Java applications.
  *
  * <pre>
- * CasConfig config = new CasConfig("https://cas.muninfosys.com", "client_id", "client_secret");
+ * CasConfig config = new CasConfig("https://your-cas-server.com", "client_id", "client_secret");
  * CasClient cas = new CasClient(config);
  *
  * // Generate login URL

@@ -18,7 +18,7 @@ A lightweight JavaScript SDK for browser-based CAS SSO integration. No build too
 ### Script Tag (CDN)
 
 ```html
-<script src="https://cas.muninfosys.com/assets/js/cas-client.js"></script>
+<script src="https://your-cas-server.com/assets/js/cas-client.js"></script>
 ```
 
 ### npm
@@ -32,10 +32,10 @@ npm install @cas-system/js-client
 ### 1. Initialize
 
 ```html
-<script src="https://cas.muninfosys.com/assets/js/cas-client.js"></script>
+<script src="https://your-cas-server.com/assets/js/cas-client.js"></script>
 <script>
   var cas = new CasClient({
-    serverUrl: 'https://cas.muninfosys.com',
+    serverUrl: 'https://your-cas-server.com',
     clientId: 'your_client_id',
     callbackUrl: 'https://your-app.com/cas/callback',
     backendValidateUrl: '/api/auth/validate',  // Your backend endpoint

@@ -12,7 +12,7 @@ namespace CasSystem.Client;
 /// CAS SSO Client for .NET applications.
 /// </summary>
 /// <example>
-/// var config = new CasConfig { ServerUrl = "https://cas.muninfosys.com", ClientId = "id", ClientSecret = "secret" };
+/// var config = new CasConfig { ServerUrl = "https://your-cas-server.com", ClientId = "id", ClientSecret = "secret" };
 /// var cas = new CasClient(config);
 /// var user = await cas.ValidateTokenAsync(token);
 /// </example>

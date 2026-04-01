@@ -16,7 +16,7 @@ import java.util.Map;
  * &#64;Bean
  * public FilterRegistrationBean&lt;CasAuthFilter&gt; casFilter() {
  *     FilterRegistrationBean&lt;CasAuthFilter&gt; reg = new FilterRegistrationBean&lt;&gt;();
- *     CasConfig config = new CasConfig("https://cas.muninfosys.com", "id", "secret");
+ *     CasConfig config = new CasConfig("https://your-cas-server.com", "id", "secret");
  *     reg.setFilter(new CasAuthFilter(new CasClient(config)));
  *     reg.addUrlPatterns("/dashboard/*", "/admin/*");
  *     return reg;

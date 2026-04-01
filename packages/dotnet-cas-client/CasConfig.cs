@@ -5,7 +5,7 @@ namespace CasSystem.Client;
 /// </summary>
 public class CasConfig
 {
-    /// <summary>CAS server URL (e.g., https://cas.muninfosys.com)</summary>
+    /// <summary>CAS server URL (e.g., https://your-cas-server.com)</summary>
     public string ServerUrl { get; set; } = "";
 
     /// <summary>Registered client ID</summary>

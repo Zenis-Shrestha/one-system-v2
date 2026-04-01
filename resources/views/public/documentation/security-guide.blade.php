@@ -198,7 +198,7 @@ sudo ufw enable</pre>
             <li><strong>Revoke</strong> all active sessions by clearing the session store</li>
             <li><strong>Enable IP whitelist</strong> to restrict access to known IPs only</li>
             <li><strong>Force password resets</strong> for all affected user accounts</li>
-            <li><strong>Contact the development team</strong> at <strong>support@muninfosys.com</strong> for assistance</li>
+            <li><strong>Contact the development team</strong> at <a href="https://innovativesolution.com.np/" target="_blank" class="font-semibold text-blue-600 hover:text-blue-800">innovativesolution.com.np</a> for assistance</li>
         </ol>
     </div>
 

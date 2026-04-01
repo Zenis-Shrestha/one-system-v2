@@ -37,7 +37,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Register CAS client
 builder.Services.AddCasClient(new CasConfig
 {
-    ServerUrl = "https://cas.muninfosys.com",
+    ServerUrl = "https://your-cas-server.com",
     ClientId = "your_client_id",
     ClientSecret = "your_client_secret",
     CallbackUrl = "https://your-app.com/cas/callback",
@@ -66,7 +66,7 @@ using CasSystem.Client;
 
 var config = new CasConfig
 {
-    ServerUrl = "https://cas.muninfosys.com",
+    ServerUrl = "https://your-cas-server.com",
     ClientId = "your_client_id",
     ClientSecret = "your_client_secret",
 };

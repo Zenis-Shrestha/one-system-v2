@@ -78,7 +78,7 @@
                     <li>Verify the <code class="text-xs bg-slate-100 px-1 py-0.5 rounded font-mono">CAS_SERVER_URL</code> environment variable</li>
                     <li>Check firewall rules — port 8000 (or your configured port) must be open</li>
                     <li>If using Docker, ensure containers are on the same network</li>
-                    <li>Test connectivity: <code class="text-xs bg-slate-100 px-1 py-0.5 rounded font-mono">curl https://cas.muninfosys.com/api/health</code></li>
+                    <li>Test connectivity: <code class="text-xs bg-slate-100 px-1 py-0.5 rounded font-mono">curl https://your-cas-server.com/api/health</code></li>
                 </ul>
             </div>
         </details>
@@ -142,7 +142,7 @@
     <div class="rounded-xl border border-slate-200 overflow-hidden">
         <div class="bg-slate-900 p-5 overflow-x-auto">
             <pre class="text-sm leading-relaxed font-mono text-slate-300"><code><span class="text-slate-500"># Check CAS server health</span>
-curl https://cas.muninfosys.com/api/health
+curl https://your-cas-server.com/api/health
 
 <span class="text-slate-500"># View Laravel logs</span>
 tail -f storage/logs/laravel.log
@@ -153,6 +153,45 @@ php artisan cache:clear && php artisan config:clear
 <span class="text-slate-500"># Test database connection</span>
 php artisan db:show</code></pre>
         </div>
+    </div>
+</section>
+
+{{-- Contact & Support --}}
+<section class="border-t border-slate-200 pt-10">
+    <h2 class="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-4">Contact & Support</h2>
+    <p class="text-sm text-slate-600 mb-6">If the above solutions don't resolve your issue, reach out to the CAS development team.</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
+        <div class="p-5 rounded-xl border border-slate-200">
+            <div class="flex items-center gap-3 mb-3">
+                <div class="w-9 h-9 bg-blue-50 rounded-lg flex items-center justify-center"><i class="fas fa-envelope text-blue-600 text-sm"></i></div>
+                <h3 class="text-sm font-semibold text-slate-900">Email Support</h3>
+            </div>
+            <p class="text-sm text-slate-600 mb-2">For technical issues, integration help, or bug reports:</p>
+            <a href="https://innovativesolution.com.np/" target="_blank" class="text-sm font-semibold text-blue-600 hover:text-blue-800">innovativesolution.com.np</a>
+            <p class="text-xs text-slate-500 mt-2">Expected response time: <strong>within 24 hours</strong> on business days.</p>
+        </div>
+        <div class="p-5 rounded-xl border border-slate-200">
+            <div class="flex items-center gap-3 mb-3">
+                <div class="w-9 h-9 bg-emerald-50 rounded-lg flex items-center justify-center"><i class="fas fa-building text-emerald-600 text-sm"></i></div>
+                <h3 class="text-sm font-semibold text-slate-900">Development Team</h3>
+            </div>
+            <p class="text-sm text-slate-600 mb-2">CAS is developed and maintained by:</p>
+            <p class="text-sm font-semibold text-slate-900">Innovative Solution Pvt. Ltd.</p>
+            <p class="text-xs text-slate-500 mt-1">Lalitpur, Nepal</p>
+        </div>
+    </div>
+
+    <div class="p-5 rounded-xl border border-slate-200 bg-slate-50/50">
+        <h3 class="text-sm font-semibold text-slate-900 mb-3"><i class="fas fa-bug text-amber-500 mr-2"></i>How to Report an Issue</h3>
+        <p class="text-xs text-slate-600 mb-3">When reporting an issue, please include the following details for faster resolution:</p>
+        <ol class="space-y-2 text-xs text-slate-600">
+            <li class="flex items-start gap-2"><span class="font-bold text-slate-900">1.</span> <strong>Description</strong> — What happened vs. what you expected</li>
+            <li class="flex items-start gap-2"><span class="font-bold text-slate-900">2.</span> <strong>Steps to reproduce</strong> — How to trigger the issue</li>
+            <li class="flex items-start gap-2"><span class="font-bold text-slate-900">3.</span> <strong>Error messages</strong> — Full error text or HTTP status codes</li>
+            <li class="flex items-start gap-2"><span class="font-bold text-slate-900">4.</span> <strong>Environment</strong> — Language/framework, SDK version, CAS server version</li>
+            <li class="flex items-start gap-2"><span class="font-bold text-slate-900">5.</span> <strong>Logs</strong> — Relevant entries from <code class="bg-slate-100 px-1 rounded">storage/logs/laravel.log</code> (server) or your application logs (client)</li>
+        </ol>
     </div>
 </section>
 @endsection

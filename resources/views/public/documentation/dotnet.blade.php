@@ -52,7 +52,7 @@ dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer</code></pre>
         <div class="bg-slate-900 p-5 overflow-x-auto">
             <pre class="text-sm leading-relaxed font-mono text-slate-300"><code>{
   "<span class="text-amber-300">CasSSO</span>": {
-    "<span class="text-amber-300">ServerUrl</span>": "<span class="text-green-400">https://cas.muninfosys.com</span>",
+    "<span class="text-amber-300">ServerUrl</span>": "<span class="text-green-400">https://your-cas-server.com</span>",
     "<span class="text-amber-300">ClientId</span>": "<span class="text-green-400">your_client_id</span>",
     "<span class="text-amber-300">ClientSecret</span>": "<span class="text-green-400">your_client_secret</span>",
     "<span class="text-amber-300">CallbackUrl</span>": "<span class="text-green-400">https://your-app.com/cas/callback</span>"

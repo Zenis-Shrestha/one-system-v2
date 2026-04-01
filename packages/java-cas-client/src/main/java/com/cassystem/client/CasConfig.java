@@ -16,7 +16,7 @@ public class CasConfig {
     /**
      * Create a new CAS configuration.
      *
-     * @param serverUrl    CAS server URL (e.g., https://cas.muninfosys.com)
+     * @param serverUrl    CAS server URL (e.g., https://your-cas-server.com)
      * @param clientId     Registered client ID
      * @param clientSecret Registered client secret
      */

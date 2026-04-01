@@ -22,7 +22,7 @@
     <h2 class="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-4">Base URL &amp; Security</h2>
     <div class="rounded-xl border border-slate-200 overflow-hidden mb-6">
         <div class="bg-slate-900 p-5 overflow-x-auto">
-            <pre class="text-sm leading-relaxed font-mono text-slate-300"><code>https://cas.muninfosys.com/api</code></pre>
+            <pre class="text-sm leading-relaxed font-mono text-slate-300"><code>https://your-cas-server.com/api</code></pre>
         </div>
     </div>
     <div class="bg-amber-50 border border-amber-200 rounded-xl p-4">

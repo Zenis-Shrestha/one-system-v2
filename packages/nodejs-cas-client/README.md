@@ -25,7 +25,7 @@ npm install @cas-system/node-client
 const CasClient = require('@cas-system/node-client');
 
 const cas = new CasClient({
-  serverUrl: 'https://cas.muninfosys.com',
+  serverUrl: 'https://your-cas-server.com',
   clientId: 'your_client_id',
   clientSecret: 'your_client_secret',
   callbackUrl: 'https://your-app.com/cas/callback',
@@ -110,7 +110,7 @@ if (tokenData) {
 ### Environment Variables
 
 ```env
-CAS_SERVER_URL=https://cas.muninfosys.com
+CAS_SERVER_URL=https://your-cas-server.com
 CAS_CLIENT_ID=your_client_id
 CAS_CLIENT_SECRET=your_client_secret
 CAS_CALLBACK_URL=https://your-app.com/cas/callback

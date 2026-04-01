@@ -108,7 +108,7 @@
     <div class="rounded-xl border border-slate-200 overflow-hidden">
         <div class="flex items-center px-4 py-2.5 bg-slate-50 border-b border-slate-200"><span class="text-xs font-medium text-slate-600">.env (client application)</span></div>
         <div class="bg-slate-900 p-5 overflow-x-auto">
-            <pre class="text-sm font-mono text-slate-300 leading-relaxed"><code>CAS_SERVER_URL=https://cas.muninfosys.com
+            <pre class="text-sm font-mono text-slate-300 leading-relaxed"><code>CAS_SERVER_URL=https://your-cas-server.com
 CAS_CLIENT_ID=generated_client_id
 CAS_CLIENT_SECRET=generated_client_secret
 CAS_CLIENT_USERNAME=generated_username
@@ -123,7 +123,7 @@ CAS_CALLBACK_URL=https://your-app.com/cas/callback</code></pre>
     <p class="text-sm text-slate-600 mb-4">Verify your client can communicate with CAS:</p>
     <div class="rounded-xl border border-slate-200 overflow-hidden mb-4">
         <div class="bg-slate-900 p-5 overflow-x-auto">
-            <pre class="text-sm font-mono text-slate-300 leading-relaxed"><code>curl -X POST https://cas.muninfosys.com/api/sso/token \
+            <pre class="text-sm font-mono text-slate-300 leading-relaxed"><code>curl -X POST https://your-cas-server.com/api/sso/token \
   -H "Content-Type: application/json" \
   -d '{"email":"test@example.com","password":"password","client_id":"YOUR_ID","client_secret":"YOUR_SECRET"}'</code></pre>
         </div>

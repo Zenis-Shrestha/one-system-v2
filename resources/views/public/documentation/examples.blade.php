@@ -52,7 +52,7 @@
         </div>
         <div class="bg-slate-900 p-5 overflow-x-auto">
             <pre class="text-sm leading-relaxed font-mono text-slate-300"><code><span class="text-slate-500"># 1. Generate an SSO token</span>
-<span class="text-green-400">curl</span> -X POST https://cas.muninfosys.com/api/sso/token \
+<span class="text-green-400">curl</span> -X POST https://your-cas-server.com/api/sso/token \
   -H <span class="text-amber-300">"Content-Type: application/json"</span> \
   -d <span class="text-amber-300">'{
     "email": "john@example.com",
@@ -62,7 +62,7 @@
   }'</span>
 
 <span class="text-slate-500"># 2. Validate the token</span>
-<span class="text-green-400">curl</span> -X POST https://cas.muninfosys.com/api/sso/validate \
+<span class="text-green-400">curl</span> -X POST https://your-cas-server.com/api/sso/validate \
   -H <span class="text-amber-300">"Content-Type: application/json"</span> \
   -d <span class="text-amber-300">'{"token": "eyJhbGci..."}'</span></code></pre>
         </div>
@@ -79,7 +79,7 @@
         </div>
         <div class="bg-slate-900 p-5 overflow-x-auto">
             <pre class="text-sm leading-relaxed font-mono text-slate-300"><code><span class="text-violet-400">async function</span> <span class="text-green-400">generateToken</span>(email, password) {
-  <span class="text-violet-400">const</span> res = <span class="text-violet-400">await</span> <span class="text-green-400">fetch</span>(<span class="text-amber-300">'https://cas.muninfosys.com/api/sso/token'</span>, {
+  <span class="text-violet-400">const</span> res = <span class="text-violet-400">await</span> <span class="text-green-400">fetch</span>(<span class="text-amber-300">'https://your-cas-server.com/api/sso/token'</span>, {
     method: <span class="text-amber-300">'POST'</span>,
     headers: { <span class="text-amber-300">'Content-Type'</span>: <span class="text-amber-300">'application/json'</span> },
     body: <span class="text-green-400">JSON.stringify</span>({ email, password,
@@ -91,7 +91,7 @@
 }
 
 <span class="text-violet-400">async function</span> <span class="text-green-400">validateToken</span>(token) {
-  <span class="text-violet-400">const</span> res = <span class="text-violet-400">await</span> <span class="text-green-400">fetch</span>(<span class="text-amber-300">'https://cas.muninfosys.com/api/sso/validate'</span>, {
+  <span class="text-violet-400">const</span> res = <span class="text-violet-400">await</span> <span class="text-green-400">fetch</span>(<span class="text-amber-300">'https://your-cas-server.com/api/sso/validate'</span>, {
     method: <span class="text-amber-300">'POST'</span>,
     headers: { <span class="text-amber-300">'Content-Type'</span>: <span class="text-amber-300">'application/json'</span> },
     body: <span class="text-green-400">JSON.stringify</span>({ token })
@@ -112,7 +112,7 @@
         </div>
         <div class="bg-slate-900 p-5 overflow-x-auto">
             <pre class="text-sm leading-relaxed font-mono text-slate-300"><code><span class="text-violet-400">function</span> <span class="text-green-400">generateSSOToken</span>(<span class="text-red-300">$email</span>, <span class="text-red-300">$password</span>) {
-    <span class="text-red-300">$ch</span> = <span class="text-green-400">curl_init</span>(<span class="text-amber-300">'https://cas.muninfosys.com/api/sso/token'</span>);
+    <span class="text-red-300">$ch</span> = <span class="text-green-400">curl_init</span>(<span class="text-amber-300">'https://your-cas-server.com/api/sso/token'</span>);
     <span class="text-green-400">curl_setopt_array</span>(<span class="text-red-300">$ch</span>, [
         CURLOPT_RETURNTRANSFER => <span class="text-blue-400">true</span>,
         CURLOPT_POST           => <span class="text-blue-400">true</span>,
@@ -145,7 +145,7 @@
 
 <span class="text-violet-400">def</span> <span class="text-green-400">generate_token</span>(email, password):
     response = requests.<span class="text-green-400">post</span>(
-        <span class="text-amber-300">'https://cas.muninfosys.com/api/sso/token'</span>,
+        <span class="text-amber-300">'https://your-cas-server.com/api/sso/token'</span>,
         json={
             <span class="text-amber-300">'email'</span>: email,
             <span class="text-amber-300">'password'</span>: password,

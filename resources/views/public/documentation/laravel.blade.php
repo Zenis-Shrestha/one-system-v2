@@ -64,7 +64,7 @@
             <span class="text-xs font-medium text-slate-600">.env</span>
         </div>
         <div class="bg-slate-900 p-5 overflow-x-auto">
-            <pre class="text-sm leading-relaxed font-mono text-slate-300"><code><span class="text-amber-300">CAS_SERVER_URL</span>=<span class="text-green-400">https://cas.muninfosys.com</span>
+            <pre class="text-sm leading-relaxed font-mono text-slate-300"><code><span class="text-amber-300">CAS_SERVER_URL</span>=<span class="text-green-400">https://your-cas-server.com</span>
 <span class="text-amber-300">CAS_CLIENT_ID</span>=<span class="text-green-400">your_client_id</span>
 <span class="text-amber-300">CAS_CLIENT_SECRET</span>=<span class="text-green-400">your_client_secret</span>
 <span class="text-amber-300">CAS_CALLBACK_URL</span>=<span class="text-green-400">https://your-app.com/cas/callback</span></code></pre>

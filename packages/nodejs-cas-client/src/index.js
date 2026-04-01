@@ -9,7 +9,7 @@ const axios = require('axios');
 class CasClient {
   /**
    * @param {Object} config
-   * @param {string} config.serverUrl - CAS server URL (e.g. https://cas.muninfosys.com)
+   * @param {string} config.serverUrl - CAS server URL (e.g. https://your-cas-server.com)
    * @param {string} config.clientId - Registered client ID
    * @param {string} config.clientSecret - Registered client secret
    * @param {string} config.callbackUrl - OAuth callback URL

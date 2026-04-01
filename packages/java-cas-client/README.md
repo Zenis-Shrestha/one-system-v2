@@ -38,7 +38,7 @@ import com.cassystem.client.CasClient;
 import com.cassystem.client.CasConfig;
 
 CasConfig config = new CasConfig(
-    "https://cas.muninfosys.com",
+    "https://your-cas-server.com",
     "your_client_id",
     "your_client_secret"
 ).callbackUrl("https://your-app.com/cas/callback");

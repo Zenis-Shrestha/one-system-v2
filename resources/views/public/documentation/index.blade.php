@@ -226,25 +226,94 @@
     </div>
 </section>
 
-{{-- Additional Resources —— simple link list --}}
-<section class="border-t border-slate-200 pt-10">
-    <h2 class="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-6">More Resources</h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <a href="{{ route('docs.api.overview') }}" class="group flex items-center gap-3 p-4 rounded-lg border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all">
-            <i class="fas fa-code text-slate-400 text-sm"></i>
-            <span class="text-sm font-medium text-slate-700 group-hover:text-slate-900">API Reference</span>
+{{-- Complete Documentation Map —— links to all 11 sections --}}
+<section class="border-t border-slate-200 pt-10 mb-16">
+    <h2 class="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-2">Complete Documentation</h2>
+    <p class="text-sm text-slate-500 mb-6">Navigate to any section of the CAS SSO documentation.</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <a href="{{ route('docs') }}" class="group flex items-center gap-3 p-4 rounded-xl border border-blue-200 bg-blue-50/50 transition-all">
+            <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0"><span class="text-xs font-bold text-blue-700">1</span></div>
+            <div>
+                <span class="text-sm font-semibold text-slate-900">Overview</span>
+                <p class="text-xs text-slate-500">System concept & navigation</p>
+            </div>
         </a>
-        <a href="{{ route('docs.examples') }}" class="group flex items-center gap-3 p-4 rounded-lg border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all">
-            <i class="fas fa-play text-slate-400 text-sm"></i>
-            <span class="text-sm font-medium text-slate-700 group-hover:text-slate-900">Code Examples</span>
+        <a href="{{ route('docs.architecture') }}" class="group flex items-center gap-3 p-4 rounded-xl border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all">
+            <div class="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0"><span class="text-xs font-bold text-slate-600">2</span></div>
+            <div>
+                <span class="text-sm font-semibold text-slate-900">Architecture</span>
+                <p class="text-xs text-slate-500">System design & code structure</p>
+            </div>
         </a>
-        <a href="{{ route('docs.security') }}" class="group flex items-center gap-3 p-4 rounded-lg border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all">
-            <i class="fas fa-shield-alt text-slate-400 text-sm"></i>
-            <span class="text-sm font-medium text-slate-700 group-hover:text-slate-900">Security Guide</span>
+        <a href="{{ route('docs.security') }}" class="group flex items-center gap-3 p-4 rounded-xl border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all">
+            <div class="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0"><span class="text-xs font-bold text-slate-600">3</span></div>
+            <div>
+                <span class="text-sm font-semibold text-slate-900">Security Features</span>
+                <p class="text-xs text-slate-500">Implemented security layers</p>
+            </div>
         </a>
-        <a href="/docs/troubleshooting" class="group flex items-center gap-3 p-4 rounded-lg border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all">
-            <i class="fas fa-tools text-slate-400 text-sm"></i>
-            <span class="text-sm font-medium text-slate-700 group-hover:text-slate-900">Troubleshooting</span>
+        <a href="{{ route('docs.quick-start') }}" class="group flex items-center gap-3 p-4 rounded-xl border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all">
+            <div class="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0"><span class="text-xs font-bold text-slate-600">4</span></div>
+            <div>
+                <span class="text-sm font-semibold text-slate-900">Deploy Locally</span>
+                <p class="text-xs text-slate-500">Development environment setup</p>
+            </div>
+        </a>
+        <a href="{{ route('docs.deployment') }}" class="group flex items-center gap-3 p-4 rounded-xl border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all">
+            <div class="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0"><span class="text-xs font-bold text-slate-600">5</span></div>
+            <div>
+                <span class="text-sm font-semibold text-slate-900">Deploy to Linux</span>
+                <p class="text-xs text-slate-500">Production deployment guide</p>
+            </div>
+        </a>
+        <a href="{{ route('docs.sdks') }}" class="group flex items-center gap-3 p-4 rounded-xl border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all">
+            <div class="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0"><span class="text-xs font-bold text-slate-600">6</span></div>
+            <div>
+                <span class="text-sm font-semibold text-slate-900">Integration Guides</span>
+                <p class="text-xs text-slate-500">SDK packages for all languages</p>
+            </div>
+        </a>
+        <a href="{{ route('docs.admin-panel') }}" class="group flex items-center gap-3 p-4 rounded-xl border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all">
+            <div class="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0"><span class="text-xs font-bold text-slate-600">7</span></div>
+            <div>
+                <span class="text-sm font-semibold text-slate-900">Admin Guide</span>
+                <p class="text-xs text-slate-500">Setup, monitoring & management</p>
+            </div>
+        </a>
+        <a href="{{ route('docs.user-guide') }}" class="group flex items-center gap-3 p-4 rounded-xl border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all">
+            <div class="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0"><span class="text-xs font-bold text-slate-600">8</span></div>
+            <div>
+                <span class="text-sm font-semibold text-slate-900">User Guide</span>
+                <p class="text-xs text-slate-500">End-user login & dashboard</p>
+            </div>
+        </a>
+        <a href="{{ route('docs.security-guide') }}" class="group flex items-center gap-3 p-4 rounded-xl border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all">
+            <div class="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0"><span class="text-xs font-bold text-slate-600">9</span></div>
+            <div>
+                <span class="text-sm font-semibold text-slate-900">Security Guide</span>
+                <p class="text-xs text-slate-500">App & server hardening</p>
+            </div>
+        </a>
+        <a href="{{ route('docs.troubleshooting') }}" class="group flex items-center gap-3 p-4 rounded-xl border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all">
+            <div class="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0"><span class="text-xs font-bold text-slate-600">10</span></div>
+            <div>
+                <span class="text-sm font-semibold text-slate-900">Troubleshooting</span>
+                <p class="text-xs text-slate-500">Common issues & solutions</p>
+            </div>
+        </a>
+        <a href="{{ route('docs.examples') }}" class="group flex items-center gap-3 p-4 rounded-xl border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all">
+            <div class="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0"><span class="text-xs font-bold text-slate-600">11</span></div>
+            <div>
+                <span class="text-sm font-semibold text-slate-900">Code Examples</span>
+                <p class="text-xs text-slate-500">Copy-paste integration code</p>
+            </div>
+        </a>
+        <a href="{{ route('docs.api.overview') }}" class="group flex items-center gap-3 p-4 rounded-xl border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all">
+            <div class="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center flex-shrink-0"><i class="fas fa-code text-slate-500 text-xs"></i></div>
+            <div>
+                <span class="text-sm font-semibold text-slate-900">API Reference</span>
+                <p class="text-xs text-slate-500">Endpoint documentation</p>
+            </div>
         </a>
     </div>
 </section>

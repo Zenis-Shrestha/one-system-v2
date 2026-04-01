@@ -31,7 +31,7 @@ pip install cas-client[flask]
 from cas_client import CasClient
 
 cas = CasClient(
-    server_url='https://cas.muninfosys.com',
+    server_url='https://your-cas-server.com',
     client_id='your_client_id',
     client_secret='your_client_secret',
     callback_url='https://your-app.com/cas/callback',
@@ -73,7 +73,7 @@ from cas_client import CasClient
 from cas_client.middleware import flask_cas_required, flask_role_required
 
 cas = CasClient(
-    server_url='https://cas.muninfosys.com',
+    server_url='https://your-cas-server.com',
     client_id='your_client_id',
     client_secret='your_client_secret',
 )
