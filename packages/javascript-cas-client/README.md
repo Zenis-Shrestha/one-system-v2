@@ -24,7 +24,7 @@ A lightweight JavaScript SDK for browser-based CAS SSO integration. No build too
 ### npm
 
 ```bash
-npm install @cas-system/js-client
+npm install @insol-dev/js-cas-client
 ```
 
 ## Quick Start

@@ -11,7 +11,7 @@ class SsoSettingsComponent extends Component
 {
     public $processing = false;
     public $token_expiry_minutes = 60;
-    public $token_issuer = 'CAS-System';
+    public $token_issuer = 'Innovative-Solution';
     public $token_audience = 'client-systems';
     public $max_concurrent_tokens = 5;
     public $enable_token_refresh = true;
@@ -44,7 +44,7 @@ class SsoSettingsComponent extends Component
             SsoSetting::initializeDefaults();
 
             $this->token_expiry_minutes = (int) SsoSetting::getValue('token_expiry_minutes', 60);
-            $this->token_issuer = (string) SsoSetting::getValue('token_issuer', 'CAS-System');
+            $this->token_issuer = (string) SsoSetting::getValue('token_issuer', 'Innovative-Solution');
             $this->token_audience = (string) SsoSetting::getValue('token_audience', 'client-systems');
             $this->max_concurrent_tokens = (int) SsoSetting::getValue('max_concurrent_tokens', 5);
             $this->enable_token_refresh = (bool) SsoSetting::getValue('enable_token_refresh', true);
@@ -62,7 +62,7 @@ class SsoSettingsComponent extends Component
     private function setDefaultValues()
     {
         $this->token_expiry_minutes = 60;
-        $this->token_issuer = 'CAS-System';
+        $this->token_issuer = 'Innovative-Solution';
         $this->token_audience = 'client-systems';
         $this->max_concurrent_tokens = 5;
         $this->enable_token_refresh = true;

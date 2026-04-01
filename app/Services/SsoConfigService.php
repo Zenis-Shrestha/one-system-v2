@@ -18,7 +18,7 @@ class SsoConfigService
             if (!$settings) {
                 return (object) [
                     'token_expiry_minutes' => 60,
-                    'token_issuer' => 'CAS-System',
+                    'token_issuer' => 'Innovative-Solution',
                     'token_audience' => 'client-systems',
                     'max_concurrent_tokens' => 5,
                     'enable_token_refresh' => true,

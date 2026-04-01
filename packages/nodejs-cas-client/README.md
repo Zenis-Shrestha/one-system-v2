@@ -14,7 +14,7 @@ A Node.js package for seamless integration with CAS (Central Authentication Serv
 ## Installation
 
 ```bash
-npm install @cas-system/node-client
+npm install @insol-dev/node-cas-client
 ```
 
 ## Quick Start
@@ -22,7 +22,7 @@ npm install @cas-system/node-client
 ### 1. Initialize the Client
 
 ```javascript
-const CasClient = require('@cas-system/node-client');
+const CasClient = require('@insol-dev/node-cas-client');
 
 const cas = new CasClient({
   serverUrl: 'https://your-cas-server.com',
@@ -41,8 +41,8 @@ const cas = new CasClient({
 ```javascript
 const express = require('express');
 const session = require('express-session');
-const CasClient = require('@cas-system/node-client');
-const { casAuth, casRole } = require('@cas-system/node-client/middleware');
+const CasClient = require('@insol-dev/node-cas-client');
+const { casAuth, casRole } = require('@insol-dev/node-cas-client/middleware');
 
 const app = express();
 app.use(session({ secret: 'session-secret', resave: false, saveUninitialized: false }));

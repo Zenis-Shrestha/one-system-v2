@@ -147,7 +147,7 @@ class SecuritySettingsComponent extends Component
 
         $user = User::find($userId);
         $companyName = 'CAS System';
-        $companyEmail = $user ? $user->email : 'admin@cas-system.local';
+        $companyEmail = $user ? $user->email : 'admin@innovativesolution.com.np';
 
         $this->qr_code_url = $google2fa->getQRCodeUrl(
             $companyName,

@@ -1,5 +1,5 @@
 {
-  "name": "@cas-system/js-client",
+  "name": "@insol-dev/js-cas-client",
   "version": "2.0.0",
   "description": "Browser JavaScript SDK for CAS (Central Authentication Service) SSO integration",
   "main": "src/cas-client.js",
@@ -12,6 +12,6 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/cas-system/js-client"
+    "url": "https://github.com/insol-dev/js-client"
   }
 }

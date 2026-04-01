@@ -41,7 +41,7 @@ class SsoSetting extends Model
     {
         return [
             'token_expiry_minutes' => ['value' => 60, 'type' => 'integer', 'description' => 'Token expiry time in minutes'],
-            'token_issuer' => ['value' => 'CAS-System', 'type' => 'string', 'description' => 'JWT token issuer'],
+            'token_issuer' => ['value' => 'Innovative-Solution', 'type' => 'string', 'description' => 'JWT token issuer'],
             'token_audience' => ['value' => 'client-systems', 'type' => 'string', 'description' => 'JWT token audience'],
             'max_concurrent_tokens' => ['value' => 5, 'type' => 'integer', 'description' => 'Maximum concurrent tokens per user'],
             'enable_token_refresh' => ['value' => true, 'type' => 'boolean', 'description' => 'Enable token refresh'],

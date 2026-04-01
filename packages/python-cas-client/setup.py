@@ -7,8 +7,8 @@ setup(
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
     author='CAS System',
-    author_email='support@cas-system.com',
-    url='https://github.com/cas-system/python-client',
+    author_email='support@innovativesolution.com.np',
+    url='https://github.com/insol-dev/python-client',
     packages=find_packages(),
     python_requires='>=3.8',
     install_requires=[

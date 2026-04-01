@@ -1,5 +1,5 @@
 {
-  "name": "@cas-system/node-client",
+  "name": "@insol-dev/node-cas-client",
   "version": "2.0.0",
   "description": "Node.js client for CAS (Central Authentication Service) SSO integration",
   "main": "src/index.js",
@@ -20,6 +20,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/cas-system/node-client"
+    "url": "https://github.com/insol-dev/node-client"
   }
 }

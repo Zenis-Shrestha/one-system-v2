@@ -75,7 +75,7 @@ class SlowQueriesCommand extends Command
             $testQueries = [
                 'User lookup by email' => [
                     'sql' => "SELECT * FROM cas_user.users WHERE email = ?",
-                    'params' => ['admin@cas-system.com']
+                    'params' => ['admin@innovativesolution.com.np']
                 ],
                 'Client system lookup' => [
                     'sql' => "SELECT * FROM cas_admin.client_systems WHERE is_active = ?",

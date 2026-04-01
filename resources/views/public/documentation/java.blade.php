@@ -40,7 +40,7 @@
         <div class="flex items-center px-4 py-2.5 bg-slate-50 border-b border-slate-200"><span class="text-xs font-medium text-slate-600">pom.xml</span></div>
         <div class="bg-slate-900 p-5 overflow-x-auto">
             <pre class="text-sm leading-relaxed font-mono text-slate-300"><code>&lt;<span class="text-red-300">dependency</span>&gt;
-    &lt;<span class="text-amber-300">groupId</span>&gt;com.cas-system&lt;/<span class="text-amber-300">groupId</span>&gt;
+    &lt;<span class="text-amber-300">groupId</span>&gt;np.com.innovativesolution&lt;/<span class="text-amber-300">groupId</span>&gt;
     &lt;<span class="text-amber-300">artifactId</span>&gt;java-client&lt;/<span class="text-amber-300">artifactId</span>&gt;
     &lt;<span class="text-amber-300">version</span>&gt;2.0.0&lt;/<span class="text-amber-300">version</span>&gt;
 &lt;/<span class="text-red-300">dependency</span>&gt;</code></pre>

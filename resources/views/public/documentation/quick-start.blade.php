@@ -40,8 +40,8 @@
         <div class="flex items-center px-4 py-2.5 bg-slate-50 border-b border-slate-200"><span class="text-xs font-medium text-slate-600">Terminal</span></div>
         <div class="bg-slate-900 p-5 overflow-x-auto">
             <pre class="text-sm leading-relaxed font-mono text-slate-300"><code><span class="text-slate-500"># Clone the repository</span>
-git clone https://github.com/your-org/cas-system.git
-cd cas-system
+git clone https://github.com/your-org/insol-dev.git
+cd insol-dev
 
 <span class="text-slate-500"># Install PHP dependencies</span>
 composer install

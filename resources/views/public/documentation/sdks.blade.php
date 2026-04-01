@@ -51,12 +51,12 @@
                 </div>
                 <div>
                     <h3 class="text-sm font-semibold text-slate-900">Node.js SDK</h3>
-                    <p class="text-xs text-slate-400">@cas-system/node-client</p>
+                    <p class="text-xs text-slate-400">@insol-dev/node-cas-client</p>
                 </div>
                 <span class="ml-auto text-xs font-medium bg-slate-100 text-slate-600 px-2 py-0.5 rounded">v2.0.3</span>
             </div>
             <div class="rounded-lg bg-slate-900 p-3 mb-3">
-                <code class="text-xs text-slate-300 font-mono">npm install @cas-system/node-client</code>
+                <code class="text-xs text-slate-300 font-mono">npm install @insol-dev/node-cas-client</code>
             </div>
             <div class="flex items-center gap-3 text-xs text-slate-500">
                 <span>Node 18+</span>
@@ -129,12 +129,12 @@
                 </div>
                 <div>
                     <h3 class="text-sm font-semibold text-slate-900">Java SDK</h3>
-                    <p class="text-xs text-slate-400">com.cas-system:java-client</p>
+                    <p class="text-xs text-slate-400">np.com.innovativesolution:cas-client</p>
                 </div>
                 <span class="ml-auto text-xs font-medium bg-slate-100 text-slate-600 px-2 py-0.5 rounded">v2.0.0</span>
             </div>
             <div class="rounded-lg bg-slate-900 p-3 mb-3">
-                <code class="text-xs text-slate-300 font-mono">&lt;dependency&gt;com.cas-system:java-client:2.0.0&lt;/dependency&gt;</code>
+                <code class="text-xs text-slate-300 font-mono">&lt;dependency&gt;np.com.innovativesolution:cas-client:2.0.0&lt;/dependency&gt;</code>
             </div>
             <div class="flex items-center gap-3 text-xs text-slate-500">
                 <span>Java 17+</span>
@@ -155,7 +155,7 @@
                 </div>
                 <div>
                     <h3 class="text-sm font-semibold text-slate-900">JavaScript SDK</h3>
-                    <p class="text-xs text-slate-400">@cas-system/js-client</p>
+                    <p class="text-xs text-slate-400">@insol-dev/js-cas-client</p>
                 </div>
                 <span class="ml-auto text-xs font-medium bg-slate-100 text-slate-600 px-2 py-0.5 rounded">v2.0.0</span>
             </div>

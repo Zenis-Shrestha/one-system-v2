@@ -8,7 +8,7 @@
     <Authors>CAS System</Authors>
     <Description>.NET client for CAS (Central Authentication Service) SSO integration</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/cas-system/dotnet-client</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/insol-dev/dotnet-client</PackageProjectUrl>
     <PackageTags>cas;sso;authentication;jwt;single-sign-on</PackageTags>
   </PropertyGroup>
   <ItemGroup>

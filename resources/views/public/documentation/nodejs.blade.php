@@ -39,7 +39,7 @@
     <div class="rounded-xl border border-slate-200 overflow-hidden">
         <div class="flex items-center px-4 py-2.5 bg-slate-50 border-b border-slate-200"><span class="text-xs font-medium text-slate-600">Terminal</span></div>
         <div class="bg-slate-900 p-5 overflow-x-auto">
-            <pre class="text-sm leading-relaxed font-mono text-slate-300"><code>npm install @cas-system/node-client jsonwebtoken axios</code></pre>
+            <pre class="text-sm leading-relaxed font-mono text-slate-300"><code>npm install @insol-dev/node-cas-client jsonwebtoken axios</code></pre>
         </div>
     </div>
 </section>

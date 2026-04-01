@@ -1,6 +1,6 @@
 /**
  * Express middleware for CAS authentication
- * @module @cas-system/node-client/middleware
+ * @module @insol-dev/node-cas-client/middleware
  */
 
 /**
@@ -14,7 +14,7 @@
  * @returns {Function} Express middleware
  *
  * @example
- * const { casAuth } = require('@cas-system/node-client/middleware');
+ * const { casAuth } = require('@insol-dev/node-cas-client/middleware');
  * app.use('/dashboard', casAuth(casClient));
  */
 function casAuth(casClient, options = {}) {

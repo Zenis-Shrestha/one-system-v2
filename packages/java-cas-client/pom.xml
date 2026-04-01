@@ -11,7 +11,7 @@
 
     <name>CAS SSO Client</name>
     <description>Java client for CAS (Central Authentication Service) SSO integration</description>
-    <url>https://github.com/cas-system/java-client</url>
+    <url>https://github.com/insol-dev/java-client</url>
 
     <licenses>
         <license>
