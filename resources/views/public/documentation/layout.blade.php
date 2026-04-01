@@ -183,134 +183,118 @@
             </a>
         </div>
 
-        <!-- Getting Started -->
+        <!-- 1. Overview -->
         <div class="sidebar-section">
-            <div class="sidebar-title">Getting Started</div>
+            <div class="sidebar-title">Documentation</div>
             <a href="{{ route('docs') }}" class="sidebar-link {{ request()->routeIs('docs') ? 'active' : '' }}">
                 <i class="fas fa-home sidebar-icon"></i>
-                Overview
+                1. Overview
             </a>
+
+            <!-- 2. Architecture -->
+            <a href="{{ route('docs.architecture') }}" class="sidebar-link {{ request()->routeIs('docs.architecture') ? 'active' : '' }}">
+                <i class="fas fa-sitemap sidebar-icon"></i>
+                2. Architecture
+            </a>
+
+            <!-- 3. Security Features -->
             <a href="{{ route('docs.security') }}" class="sidebar-link {{ request()->routeIs('docs.security') ? 'active' : '' }}">
                 <i class="fas fa-shield-alt sidebar-icon"></i>
-                Security Features
-                <span class="language-badge new">Enhanced</span>
+                3. Security Features
             </a>
-            <a href="{{ route('docs.api.overview') }}" class="sidebar-link {{ request()->routeIs('docs.api.overview') ? 'active' : '' }}">
-                <i class="fas fa-code sidebar-icon"></i>
-                API Reference
+
+            <!-- 4. Deploy Locally (Development) -->
+            <a href="{{ route('docs.quick-start') }}" class="sidebar-link {{ request()->routeIs('docs.quick-start') ? 'active' : '' }}">
+                <i class="fas fa-rocket sidebar-icon"></i>
+                4. Deploy Locally (Dev)
             </a>
-            <a href="{{ route('docs.examples') }}" class="sidebar-link {{ request()->routeIs('docs.examples') ? 'active' : '' }}">
-                <i class="fas fa-book-open sidebar-icon"></i>
-                Examples
+
+            <!-- 5. Deploying to Linux OS (Production) -->
+            <a href="{{ route('docs.deployment') }}" class="sidebar-link {{ request()->routeIs('docs.deployment') ? 'active' : '' }}">
+                <i class="fas fa-server sidebar-icon"></i>
+                5. Deploy to Linux (Prod)
             </a>
         </div>
 
-        <!-- How To Use -->
+        <!-- 6. Integration Guides -->
         <div class="sidebar-section">
-            <div class="sidebar-title">How To Use</div>
-            <a href="{{ route('docs.quick-start') }}" class="sidebar-link {{ request()->routeIs('docs.quick-start') ? 'active' : '' }}">
-                <i class="fas fa-rocket sidebar-icon"></i>
-                Quick Start
-                <span class="language-badge new">New</span>
+            <div class="sidebar-title">6. Integration Guides</div>
+            <a href="{{ route('docs.sdks') }}" class="sidebar-link {{ request()->routeIs('docs.sdks') ? 'active' : '' }}">
+                <i class="fas fa-cube sidebar-icon"></i>
+                SDKs & Packages
             </a>
-            <a href="{{ route('docs.admin-panel') }}" class="sidebar-link {{ request()->routeIs('docs.admin-panel') ? 'active' : '' }}">
-                <i class="fas fa-tachometer-alt sidebar-icon"></i>
-                Admin Panel
-            </a>
-            <a href="{{ route('docs.client-registration') }}" class="sidebar-link {{ request()->routeIs('docs.client-registration') ? 'active' : '' }}">
-                <i class="fas fa-plus-circle sidebar-icon"></i>
-                Client Registration
-            </a>
-            <a href="{{ route('docs.user-management') }}" class="sidebar-link {{ request()->routeIs('docs.user-management') ? 'active' : '' }}">
-                <i class="fas fa-users-cog sidebar-icon"></i>
-                User Management
-            </a>
-            <a href="{{ route('docs.two-factor-auth') }}" class="sidebar-link {{ request()->routeIs('docs.two-factor-auth') ? 'active' : '' }}">
-                <i class="fas fa-shield-alt sidebar-icon"></i>
-                2FA Setup
-            </a>
-        </div>
-        <div class="sidebar-section">
-            <div class="sidebar-title">Programming Languages</div>
-            
-            <!-- Laravel -->
             <a href="{{ route('docs.laravel') }}" class="sidebar-link {{ request()->routeIs('docs.laravel') ? 'active' : '' }}">
                 <i class="fab fa-laravel sidebar-icon text-red-500"></i>
                 Laravel
                 <span class="language-badge popular">Popular</span>
             </a>
-            
-            <!-- Node.js -->
             <a href="{{ route('docs.nodejs') }}" class="sidebar-link {{ request()->routeIs('docs.nodejs') ? 'active' : '' }}">
                 <i class="fab fa-node-js sidebar-icon text-green-500"></i>
                 Node.js
-                <span class="language-badge popular">Popular</span>
             </a>
-            
-            <!-- JavaScript -->
             <a href="{{ route('docs.javascript') }}" class="sidebar-link {{ request()->routeIs('docs.javascript') ? 'active' : '' }}">
                 <i class="fab fa-js-square sidebar-icon text-yellow-500"></i>
                 JavaScript
             </a>
-            
-            <!-- Python -->
             <a href="{{ route('docs.python') }}" class="sidebar-link {{ request()->routeIs('docs.python') ? 'active' : '' }}">
                 <i class="fab fa-python sidebar-icon text-blue-500"></i>
                 Python
             </a>
-            
-            <!-- Java -->
             <a href="{{ route('docs.java') }}" class="sidebar-link {{ request()->routeIs('docs.java') ? 'active' : '' }}">
                 <i class="fab fa-java sidebar-icon text-orange-500"></i>
                 Java
             </a>
-            
-            <!-- .NET -->
             <a href="{{ route('docs.dotnet') }}" class="sidebar-link {{ request()->routeIs('docs.dotnet') ? 'active' : '' }}">
                 <i class="fab fa-microsoft sidebar-icon text-blue-600"></i>
                 .NET / C#
             </a>
+            <a href="{{ route('docs.api.overview') }}" class="sidebar-link {{ request()->routeIs('docs.api.overview') ? 'active' : '' }}">
+                <i class="fas fa-code sidebar-icon"></i>
+                API Reference
+            </a>
         </div>
 
-        <!-- Advanced Topics -->
+        <!-- 7-8. User Guides -->
         <div class="sidebar-section">
-            <div class="sidebar-title">Advanced Topics</div>
-            <a href="{{ route('docs.architecture') }}" class="sidebar-link {{ request()->routeIs('docs.architecture') ? 'active' : '' }}">
-                <i class="fas fa-sitemap sidebar-icon"></i>
-                System Architecture
+            <div class="sidebar-title">User Guides</div>
+            <a href="{{ route('docs.admin-panel') }}" class="sidebar-link {{ request()->routeIs('docs.admin-panel') ? 'active' : '' }}">
+                <i class="fas fa-tachometer-alt sidebar-icon"></i>
+                7. Admin Guide
             </a>
-            <a href="/docs/authentication" class="sidebar-link {{ request()->is('docs/authentication') ? 'active' : '' }}">
-                <i class="fas fa-key sidebar-icon"></i>
-                Authentication Flows
+            <a href="{{ route('docs.user-guide') }}" class="sidebar-link {{ request()->routeIs('docs.user-guide') ? 'active' : '' }}">
+                <i class="fas fa-user sidebar-icon"></i>
+                8. User Guide
             </a>
-            <a href="{{ route('docs.deployment') }}" class="sidebar-link {{ request()->routeIs('docs.deployment') ? 'active' : '' }}">
-                <i class="fas fa-server sidebar-icon"></i>
-                Deployment Guide
+        </div>
+
+        <!-- 9-11. Security, Troubleshooting, Code Examples -->
+        <div class="sidebar-section">
+            <div class="sidebar-title">Reference</div>
+            <a href="{{ route('docs.security-guide') }}" class="sidebar-link {{ request()->routeIs('docs.security-guide') ? 'active' : '' }}">
+                <i class="fas fa-lock sidebar-icon"></i>
+                9. Security Guide
             </a>
             <a href="{{ route('docs.troubleshooting') }}" class="sidebar-link {{ request()->routeIs('docs.troubleshooting') ? 'active' : '' }}">
                 <i class="fas fa-tools sidebar-icon"></i>
-                Troubleshooting
+                10. Troubleshooting
             </a>
-        </div>
-
-        <!-- Technical Reference -->
-        <div class="sidebar-section">
-            <div class="sidebar-title">Technical Reference</div>
-            <a href="{{ route('docs.webhooks') }}" class="sidebar-link {{ request()->routeIs('docs.webhooks') ? 'active' : '' }}">
-                <i class="fas fa-bolt sidebar-icon"></i>
-                Webhooks
-                <span class="language-badge new">New</span>
+            <a href="{{ route('docs.examples') }}" class="sidebar-link {{ request()->routeIs('docs.examples') ? 'active' : '' }}">
+                <i class="fas fa-book-open sidebar-icon"></i>
+                11. Code Examples
             </a>
-            <a href="{{ route('docs.sdks') }}" class="sidebar-link {{ request()->routeIs('docs.sdks') ? 'active' : '' }}">
-                <i class="fas fa-cube sidebar-icon"></i>
-                SDKs &amp; Packages
-            </a>
-
         </div>
 
         <!-- Resources -->
         <div class="sidebar-section">
             <div class="sidebar-title">Resources</div>
+            <a href="{{ route('docs.webhooks') }}" class="sidebar-link {{ request()->routeIs('docs.webhooks') ? 'active' : '' }}">
+                <i class="fas fa-bolt sidebar-icon"></i>
+                Webhooks
+            </a>
+            <a href="{{ route('docs.changelog') }}" class="sidebar-link {{ request()->routeIs('docs.changelog') ? 'active' : '' }}">
+                <i class="fas fa-history sidebar-icon"></i>
+                Changelog
+            </a>
             <a href="/downloads/laravel-cas-client-package.zip" class="sidebar-link">
                 <i class="fas fa-download sidebar-icon"></i>
                 Download Packages

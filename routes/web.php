@@ -129,6 +129,8 @@ Route::get('/docs/two-factor-auth', function() { return view('public.documentati
 Route::get('/docs/changelog', function() { return view('public.documentation.changelog'); })->name('docs.changelog');
 Route::get('/docs/webhooks', function() { return view('public.documentation.webhooks'); })->name('docs.webhooks');
 Route::get('/docs/sdks', function() { return view('public.documentation.sdks'); })->name('docs.sdks');
+Route::get('/docs/user-guide', function() { return view('public.documentation.user-guide'); })->name('docs.user-guide');
+Route::get('/docs/security-guide', function() { return view('public.documentation.security-guide'); })->name('docs.security-guide');
 
 Route::get('/docs/api/{endpoint}', [DocumentationController::class, 'apiEndpoint'])->name('docs.api');
 

@@ -1,0 +1,43 @@
+{
+  "project": {
+    "name": "One System",
+    "description": "Central Authentication Service (CAS) server built with Laravel, providing SSO authentication, JWT token management, and multi-client system integration.",
+    "type": "laravel"
+  },
+  "conventions": {
+    "language": "php",
+    "framework": "laravel",
+    "phpVersion": "8.3",
+    "style": {
+      "indentation": "spaces",
+      "indentSize": 4,
+      "lineEnding": "lf"
+    }
+  },
+  "structure": {
+    "app": "Application code (Controllers, Models, Services, Middleware, Livewire)",
+    "config": "Configuration files",
+    "database": "Migrations, seeders, and factories",
+    "resources/views": "Blade templates (admin, auth, user, public docs, components)",
+    "routes": "Route definitions (web.php, api.php)",
+    "tests": "PHPUnit tests"
+  },
+  "key_components": {
+    "authentication": "JWT-based SSO with 2FA support",
+    "services": [
+      "AuthService",
+      "SsoService",
+      "SignatureService",
+      "SsoConfigService",
+      "ClientCredentialValidator",
+      "QrCodeService"
+    ],
+    "middleware": [
+      "IpWhitelistMiddleware",
+      "SignatureValidationMiddleware",
+      "AccountLockoutMiddleware",
+      "RateLimitLogin"
+    ],
+    "database": "PostgreSQL with multi-schema (cas_user, cas_admin, cas_audit)"
+  }
+}
