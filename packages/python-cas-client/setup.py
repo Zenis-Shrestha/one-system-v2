@@ -8,7 +8,11 @@ setup(
     long_description_content_type='text/markdown',
     author='CAS System',
     author_email='support@innovativesolution.com.np',
-    url='https://github.com/insol-dev/python-client',
+    url='https://github.com/InSol-2021/one-system',
+    project_urls={
+        'Source': 'https://github.com/InSol-2021/one-system/tree/master/packages/python-cas-client',
+        'Bug Tracker': 'https://github.com/InSol-2021/one-system/issues',
+    },
     packages=find_packages(),
     python_requires='>=3.9',
     install_requires=[
