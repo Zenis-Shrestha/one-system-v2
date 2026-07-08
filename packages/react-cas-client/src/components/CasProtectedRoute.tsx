@@ -38,7 +38,7 @@ export interface CasProtectedRouteProps {
  *
  * @example
  * ```tsx
- * import { CasProtectedRoute } from '@one-system/react-cas-client';
+ * import { CasProtectedRoute } from '@cas-system/react-cas-client';
  *
  * // Basic protection
  * <CasProtectedRoute fallback={<Spinner />}>

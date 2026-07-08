@@ -1,7 +1,7 @@
 # rust-cas-client
 
 A small, framework-agnostic Rust client for the **One System CAS** SSO protocol.
-It is the Rust counterpart to the `@one-system/node-cas-client`, `cas-client`
+It is the Rust counterpart to the `@cas-system/node-cas-client`, `cas-client`
 (Python), and Java/.NET SDKs in this repo.
 
 The crate does two things:

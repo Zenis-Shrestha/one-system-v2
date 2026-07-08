@@ -1,5 +1,5 @@
 /**
- * @module @one-system/nextjs-cas-client/handlers
+ * @module @cas-system/nextjs-cas-client/handlers
  * @description Re-exports all API route handler factories.
  */
 

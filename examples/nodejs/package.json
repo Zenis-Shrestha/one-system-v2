@@ -2,13 +2,13 @@
   "name": "one-system-cas-nodejs-example",
   "version": "1.0.0",
   "private": true,
-  "description": "Minimal Express sample app demonstrating the One System CAS client SDK (@one-system/node-cas-client)",
+  "description": "Minimal Express sample app demonstrating the One System CAS client SDK (@cas-system/node-cas-client)",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
   "dependencies": {
-    "@one-system/node-cas-client": "file:../../packages/nodejs-cas-client",
+    "@cas-system/node-cas-client": "file:../../packages/nodejs-cas-client",
     "better-sqlite3": "^11.10.0",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",

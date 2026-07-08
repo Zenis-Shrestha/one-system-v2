@@ -1,7 +1,7 @@
 // -----------------------------------------------------------------------------
 // App bootstrap.
 //
-// Demonstrates the full @one-system/vue-cas-client install pattern:
+// Demonstrates the full @cas-system/vue-cas-client install pattern:
 //   1. app.use(CasPlugin, config)           -> provides reactive auth context
 //   2. createCasAuthGuard(casContext, opts)  -> protects routes via meta
 //
@@ -26,7 +26,7 @@ import {
   CasPlugin,
   createCasAuthGuard,
   CAS_AUTH_KEY,
-} from '@one-system/vue-cas-client';
+} from '@cas-system/vue-cas-client';
 
 import App from './App.vue';
 import { router } from './router';

@@ -1,5 +1,5 @@
 /**
- * @module @one-system/nextjs-cas-client/handlers/user
+ * @module @cas-system/nextjs-cas-client/handlers/user
  * @description API route handler that returns the current CAS user from
  * the session cookie.  This endpoint is called by the client-side
  * `CasProvider` to hydrate the auth state.
@@ -7,7 +7,7 @@
  * @example
  * ```ts
  * // app/api/cas/user/route.ts
- * import { createUserHandler } from '@one-system/nextjs-cas-client/handlers';
+ * import { createUserHandler } from '@cas-system/nextjs-cas-client/handlers';
  *
  * const handler = createUserHandler();
  * export { handler as GET };

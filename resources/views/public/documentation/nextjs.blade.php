@@ -1,7 +1,7 @@
 @extends('public.documentation.layout')
 
 @section('title', 'Next.js Integration — CAS SSO')
-@section('description', 'Complete guide for integrating Next.js App Router applications with CAS Single Sign-On using the @one-system/nextjs-cas-client SDK.')
+@section('description', 'Complete guide for integrating Next.js App Router applications with CAS Single Sign-On using the @cas-system/nextjs-cas-client SDK.')
 
 @php
     // Highlight palette tuned to the ONE codeblock surface (dark ink background).
@@ -30,7 +30,7 @@
             <span><i class="fas fa-clock mr-1"></i>5 min setup</span>
             <span><i class="fas fa-signal mr-1"></i>Easy</span>
             <span><i class="fas fa-tag mr-1"></i>Next 14+ · React 18+ · Node 18.17+</span>
-            <span><i class="fas fa-cube mr-1"></i>@one-system/nextjs-cas-client</span>
+            <span><i class="fas fa-cube mr-1"></i>@cas-system/nextjs-cas-client</span>
         </div>
     </div>
 </section>
@@ -52,7 +52,7 @@
 <section id="overview" class="mb-12">
     <h2 class="text-xl font-bold text-[var(--color-ink)] mb-4">1. Overview</h2>
     <p class="text-[var(--color-ink-2)] leading-relaxed mb-4">
-        The <code class="os-code-inline">@one-system/nextjs-cas-client</code>
+        The <code class="os-code-inline">@cas-system/nextjs-cas-client</code>
         SDK wires a Next.js App Router app into the One System CAS server. It ships everything you need: edge middleware to guard
         routes, App Router route handlers for the SSO callback / logout / user endpoints, server-side session helpers, and a client
         provider with hooks and components. The SDK depends only on the built-in <code class="os-code-inline">fetch</code>
@@ -78,14 +78,14 @@
     <p class="text-[var(--color-ink-2)] leading-relaxed mb-4">Install from the registry once published, or reference the package from a local path while developing against this repository.</p>
     <div class="os-codeblock mb-6">
         <div class="os-codeblock-head"><span>Terminal — from the registry</span></div>
-        <pre><code>npm install @one-system/nextjs-cas-client
+        <pre><code>npm install @cas-system/nextjs-cas-client
 <span style="{{ $com }}"># peer deps: next >= 14, react >= 18, react-dom >= 18</span></code></pre>
     </div>
     <div class="os-codeblock">
         <div class="os-codeblock-head"><span>package.json — from a local path</span></div>
         <pre><code>{
   <span style="{{ $str }}">"dependencies"</span>: {
-    <span style="{{ $str }}">"@one-system/nextjs-cas-client"</span>: <span style="{{ $str }}">"file:../central-authentication-server/packages/nextjs-cas-client"</span>
+    <span style="{{ $str }}">"@cas-system/nextjs-cas-client"</span>: <span style="{{ $str }}">"file:../central-authentication-server/packages/nextjs-cas-client"</span>
   }
 }</code></pre>
     </div>
@@ -113,7 +113,7 @@
     </div>
     <div class="os-codeblock">
         <div class="os-codeblock-head"><span>lib/cas.ts — shared server config</span></div>
-        <pre><code><span style="{{ $kw }}">import</span> <span style="{{ $kw }}">type</span> { CasServerConfig } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@one-system/nextjs-cas-client/server'</span>;
+        <pre><code><span style="{{ $kw }}">import</span> <span style="{{ $kw }}">type</span> { CasServerConfig } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@cas-system/nextjs-cas-client/server'</span>;
 
 <span style="{{ $kw }}">export const</span> casConfig: CasServerConfig = {
   serverUrl:    process.env.<span style="{{ $var }}">CAS_SERVER_URL</span>!,
@@ -133,7 +133,7 @@
     </p>
     <div class="os-codeblock">
         <div class="os-codeblock-head"><span>middleware.ts (project root)</span></div>
-        <pre><code><span style="{{ $kw }}">import</span> { createCasMiddleware } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@one-system/nextjs-cas-client/middleware'</span>;
+        <pre><code><span style="{{ $kw }}">import</span> { createCasMiddleware } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@cas-system/nextjs-cas-client/middleware'</span>;
 
 <span style="{{ $kw }}">export default</span> <span style="{{ $fn }}">createCasMiddleware</span>({
   protectedPaths: [<span style="{{ $str }}">'/dashboard'</span>, <span style="{{ $str }}">'/admin'</span>, <span style="{{ $str }}">'/settings'</span>],
@@ -155,7 +155,7 @@
     </p>
     <div class="os-codeblock mb-6">
         <div class="os-codeblock-head"><span>app/api/cas/callback/route.ts</span></div>
-        <pre><code><span style="{{ $kw }}">import</span> { createCallbackHandler } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@one-system/nextjs-cas-client/handlers'</span>;
+        <pre><code><span style="{{ $kw }}">import</span> { createCallbackHandler } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@cas-system/nextjs-cas-client/handlers'</span>;
 <span style="{{ $kw }}">import</span> { casConfig } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@/lib/cas'</span>;
 
 <span style="{{ $com }}">// Reads ?token=JWT, validates it server-to-server, sets the session cookie,</span>
@@ -167,7 +167,7 @@
     </div>
     <div class="os-codeblock mb-6">
         <div class="os-codeblock-head"><span>app/api/cas/logout/route.ts</span></div>
-        <pre><code><span style="{{ $kw }}">import</span> { createLogoutHandler } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@one-system/nextjs-cas-client/handlers'</span>;
+        <pre><code><span style="{{ $kw }}">import</span> { createLogoutHandler } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@cas-system/nextjs-cas-client/handlers'</span>;
 <span style="{{ $kw }}">import</span> { casConfig } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@/lib/cas'</span>;
 
 <span style="{{ $kw }}">export const</span> POST = <span style="{{ $fn }}">createLogoutHandler</span>({
@@ -177,7 +177,7 @@
     </div>
     <div class="os-codeblock">
         <div class="os-codeblock-head"><span>app/api/cas/user/route.ts</span></div>
-        <pre><code><span style="{{ $kw }}">import</span> { createUserHandler } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@one-system/nextjs-cas-client/handlers'</span>;
+        <pre><code><span style="{{ $kw }}">import</span> { createUserHandler } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@cas-system/nextjs-cas-client/handlers'</span>;
 
 <span style="{{ $com }}">// Returns { user } from the signed session cookie, or 401 when absent.</span>
 <span style="{{ $kw }}">export const</span> GET = <span style="{{ $fn }}">createUserHandler</span>();</code></pre>
@@ -195,7 +195,7 @@
         <div class="os-codeblock-head"><span>app/dashboard/page.tsx — Server Component</span></div>
         <pre><code><span style="{{ $kw }}">import</span> { cookies } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'next/headers'</span>;
 <span style="{{ $kw }}">import</span> { redirect } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'next/navigation'</span>;
-<span style="{{ $kw }}">import</span> { getCasSession } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@one-system/nextjs-cas-client/server'</span>;
+<span style="{{ $kw }}">import</span> { getCasSession } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@cas-system/nextjs-cas-client/server'</span>;
 
 <span style="{{ $kw }}">export default async function</span> <span style="{{ $fn }}">DashboardPage</span>() {
   <span style="{{ $kw }}">const</span> session = <span style="{{ $kw }}">await</span> <span style="{{ $fn }}">getCasSession</span>(<span style="{{ $kw }}">await</span> <span style="{{ $fn }}">cookies</span>());
@@ -206,7 +206,7 @@
     </div>
     <div class="os-codeblock">
         <div class="os-codeblock-head"><span>app/api/profile/route.ts — protected handler</span></div>
-        <pre><code><span style="{{ $kw }}">import</span> { withCasAuth } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@one-system/nextjs-cas-client/server'</span>;
+        <pre><code><span style="{{ $kw }}">import</span> { withCasAuth } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@cas-system/nextjs-cas-client/server'</span>;
 
 <span style="{{ $kw }}">export const</span> GET = <span style="{{ $fn }}">withCasAuth</span>(<span style="{{ $kw }}">async</span> (req, ctx, user) => {
   <span style="{{ $kw }}">return</span> Response.<span style="{{ $fn }}">json</span>({ message: <span style="{{ $str }}">`Hello ${user.username}`</span>, user });
@@ -223,7 +223,7 @@
     </p>
     <div class="os-codeblock mb-6">
         <div class="os-codeblock-head"><span>app/layout.tsx</span></div>
-        <pre><code><span style="{{ $kw }}">import</span> { CasProvider } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@one-system/nextjs-cas-client'</span>;
+        <pre><code><span style="{{ $kw }}">import</span> { CasProvider } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@cas-system/nextjs-cas-client'</span>;
 
 <span style="{{ $kw }}">export default function</span> <span style="{{ $fn }}">RootLayout</span>({ children }: { children: React.ReactNode }) {
   <span style="{{ $kw }}">return</span> (
@@ -244,7 +244,7 @@
     <div class="os-codeblock mb-6">
         <div class="os-codeblock-head"><span>components/Navbar.tsx</span></div>
         <pre><code><span style="{{ $str }}">'use client'</span>;
-<span style="{{ $kw }}">import</span> { useCasAuth, CasLoginButton } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@one-system/nextjs-cas-client'</span>;
+<span style="{{ $kw }}">import</span> { useCasAuth, CasLoginButton } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@cas-system/nextjs-cas-client'</span>;
 
 <span style="{{ $kw }}">export function</span> <span style="{{ $fn }}">Navbar</span>() {
   <span style="{{ $kw }}">const</span> { user, isAuthenticated, logout } = <span style="{{ $fn }}">useCasAuth</span>();
@@ -259,7 +259,7 @@
     <div class="os-codeblock">
         <div class="os-codeblock-head"><span>components/AdminPanel.tsx — role-gated</span></div>
         <pre><code><span style="{{ $str }}">'use client'</span>;
-<span style="{{ $kw }}">import</span> { CasProtectedRoute, useCasUser } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@one-system/nextjs-cas-client'</span>;
+<span style="{{ $kw }}">import</span> { CasProtectedRoute, useCasUser } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@cas-system/nextjs-cas-client'</span>;
 
 <span style="{{ $kw }}">export function</span> <span style="{{ $fn }}">AdminPanel</span>() {
   <span style="{{ $kw }}">const</span> { hasRole } = <span style="{{ $fn }}">useCasUser</span>();
@@ -283,7 +283,7 @@
     <div class="os-codeblock mb-6">
         <div class="os-codeblock-head"><span>app/login/page.tsx</span></div>
         <pre><code><span style="{{ $str }}">'use client'</span>;
-<span style="{{ $kw }}">import</span> { CasLoginButton } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@one-system/nextjs-cas-client'</span>;
+<span style="{{ $kw }}">import</span> { CasLoginButton } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@cas-system/nextjs-cas-client'</span>;
 
 <span style="{{ $kw }}">export default function</span> <span style="{{ $fn }}">LoginPage</span>() {
   <span style="{{ $kw }}">return</span> (
@@ -302,7 +302,7 @@
     </p>
     <div class="os-codeblock mb-6">
         <div class="os-codeblock-head"><span>Server-to-server with CasClient</span></div>
-        <pre><code><span style="{{ $kw }}">import</span> { CasClient } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@one-system/nextjs-cas-client/server'</span>;
+        <pre><code><span style="{{ $kw }}">import</span> { CasClient } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@cas-system/nextjs-cas-client/server'</span>;
 <span style="{{ $kw }}">import</span> { casConfig } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@/lib/cas'</span>;
 
 <span style="{{ $kw }}">const</span> cas = <span style="{{ $kw }}">new</span> <span style="{{ $fn }}">CasClient</span>(casConfig);

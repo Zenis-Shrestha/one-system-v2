@@ -90,7 +90,7 @@ function getSessionUser(req) {
  * `require.resolve` points at the package's "main"/"browser" entry, so the sample
  * always serves the exact UMD file from the linked local package — no copy/vendor.
  */
-const sdkPath = require.resolve('@one-system/js-cas-client');
+const sdkPath = require.resolve('@cas-system/js-cas-client');
 app.get('/vendor/cas-client.js', (_req, res) => {
   res.type('application/javascript').sendFile(sdkPath);
 });

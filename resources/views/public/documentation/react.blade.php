@@ -30,7 +30,7 @@
             <span class="os-badge"><i class="fas fa-clock"></i>5 min setup</span>
             <span class="os-badge"><i class="fas fa-signal"></i>Easy</span>
             <span class="os-badge"><i class="fab fa-react"></i>React 18.2+</span>
-            <span class="os-badge os-badge-accent"><i class="fas fa-box"></i>@one-system/react-cas-client</span>
+            <span class="os-badge os-badge-accent"><i class="fas fa-box"></i>@cas-system/react-cas-client</span>
         </div>
     </div>
 </section>
@@ -54,7 +54,7 @@
 <section id="overview" class="mb-12">
     <h2 class="text-xl font-bold text-[var(--color-ink)] mb-4">1. Overview</h2>
     <p class="text-[var(--color-muted)] leading-relaxed mb-4">
-        The <code class="os-code-inline">@one-system/react-cas-client</code> SDK wires a React 18+ app into the
+        The <code class="os-code-inline">@cas-system/react-cas-client</code> SDK wires a React 18+ app into the
         One System CAS server using hooks, a context provider, and route-protection components. It manages the
         full SSO redirect flow, extracts the returned token from the callback URL, and keeps the authenticated
         user in <code class="os-code-inline">sessionStorage</code>.
@@ -98,13 +98,13 @@
     <div class="os-codeblock mb-6">
         <div class="os-codeblock-head"><span>Terminal</span><span>npm / yarn / pnpm</span></div>
         <pre><code><span class="text-[var(--color-faint)]"># npm</span>
-npm install @one-system/react-cas-client
+npm install @cas-system/react-cas-client
 
 <span class="text-[var(--color-faint)]"># yarn</span>
-yarn add @one-system/react-cas-client
+yarn add @cas-system/react-cas-client
 
 <span class="text-[var(--color-faint)]"># pnpm</span>
-pnpm add @one-system/react-cas-client</code></pre>
+pnpm add @cas-system/react-cas-client</code></pre>
     </div>
     <p class="text-[var(--color-muted)] leading-relaxed mb-4">
         Working from a local checkout of the monorepo? Reference the package by path instead:
@@ -113,7 +113,7 @@ pnpm add @one-system/react-cas-client</code></pre>
         <div class="os-codeblock-head"><span>package.json</span><span>local path</span></div>
         <pre><code>{
   <span class="text-[var(--color-accent-line)]">"dependencies"</span>: {
-    <span class="text-[var(--color-accent-line)]">"@one-system/react-cas-client"</span>: <span style="{{ $str }}">"file:../packages/react-cas-client"</span>
+    <span class="text-[var(--color-accent-line)]">"@cas-system/react-cas-client"</span>: <span style="{{ $str }}">"file:../packages/react-cas-client"</span>
   }
 }</code></pre>
     </div>
@@ -140,7 +140,7 @@ pnpm add @one-system/react-cas-client</code></pre>
     </div>
     <div class="os-codeblock mb-6">
         <div class="os-codeblock-head"><span>src/casConfig.ts</span><span>CasConfig</span></div>
-        <pre><code><span style="{{ $kw }}">import type</span> { CasConfig } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@one-system/react-cas-client'</span>;
+        <pre><code><span style="{{ $kw }}">import type</span> { CasConfig } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@cas-system/react-cas-client'</span>;
 
 <span style="{{ $kw }}">export const</span> casConfig: CasConfig = {
   serverUrl:          import.meta.env.<span style="{{ $var }}">VITE_CAS_SERVER_URL</span>,   <span class="text-[var(--color-faint)]">// CAS_BASE, no trailing slash</span>
@@ -196,7 +196,7 @@ pnpm add @one-system/react-cas-client</code></pre>
         <div class="os-codeblock-head"><span>src/main.tsx</span><span>React</span></div>
         <pre><code><span style="{{ $kw }}">import</span> { StrictMode } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'react'</span>;
 <span style="{{ $kw }}">import</span> { createRoot } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'react-dom/client'</span>;
-<span style="{{ $kw }}">import</span> { CasProvider } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@one-system/react-cas-client'</span>;
+<span style="{{ $kw }}">import</span> { CasProvider } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@cas-system/react-cas-client'</span>;
 <span style="{{ $kw }}">import</span> { casConfig } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'./casConfig'</span>;
 <span style="{{ $kw }}">import</span> App <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'./App'</span>;
 
@@ -268,7 +268,7 @@ router.post(<span style="{{ $str }}">'/api/auth/validate'</span>, <span style="{
     </p>
     <div class="os-codeblock mb-6">
         <div class="os-codeblock-head"><span>src/components/Header.tsx</span><span>useCasAuth</span></div>
-        <pre><code><span style="{{ $kw }}">import</span> { useCasAuth } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@one-system/react-cas-client'</span>;
+        <pre><code><span style="{{ $kw }}">import</span> { useCasAuth } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@cas-system/react-cas-client'</span>;
 
 <span style="{{ $kw }}">export function</span> Header() {
   <span style="{{ $kw }}">const</span> { user, isAuthenticated, isLoading, login, logout } = useCasAuth();
@@ -289,7 +289,7 @@ router.post(<span style="{{ $str }}">'/api/auth/validate'</span>, <span style="{
     </div>
     <div class="os-codeblock">
         <div class="os-codeblock-head"><span>src/components/ProfileBadge.tsx</span><span>useCasUser</span></div>
-        <pre><code><span style="{{ $kw }}">import</span> { useCasUser } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@one-system/react-cas-client'</span>;
+        <pre><code><span style="{{ $kw }}">import</span> { useCasUser } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@cas-system/react-cas-client'</span>;
 
 <span style="{{ $kw }}">export function</span> ProfileBadge() {
   <span style="{{ $kw }}">const</span> { user, hasRole, hasAllRoles } = useCasUser();
@@ -320,7 +320,7 @@ router.post(<span style="{{ $str }}">'/api/auth/validate'</span>, <span style="{
 <span style="{{ $kw }}">import</span> {
   CasProtectedRoute,
   CasLoginButton,
-} <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@one-system/react-cas-client'</span>;
+} <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@cas-system/react-cas-client'</span>;
 
 <span style="{{ $kw }}">export function</span> AppRoutes() {
   <span style="{{ $kw }}">return</span> (
@@ -364,7 +364,7 @@ router.post(<span style="{{ $str }}">'/api/auth/validate'</span>, <span style="{
         <pre><code><span style="{{ $kw }}">import</span> {
   CasProtectedRoute,
   useCasUser,
-} <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@one-system/react-cas-client'</span>;
+} <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@cas-system/react-cas-client'</span>;
 
 <span style="{{ $kw }}">function</span> Sidebar() {
   <span style="{{ $kw }}">const</span> { hasRole, hasAnyRole } = useCasUser();
@@ -408,7 +408,7 @@ router.post(<span style="{{ $str }}">'/api/auth/validate'</span>, <span style="{
   CasProtectedRoute,
   CasLoginButton,
   useCasAuth,
-} <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@one-system/react-cas-client'</span>;
+} <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@cas-system/react-cas-client'</span>;
 <span style="{{ $kw }}">import</span> { casConfig } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'./casConfig'</span>;
 
 <span style="{{ $kw }}">function</span> Home() {
@@ -459,7 +459,7 @@ router.post(<span style="{{ $str }}">'/api/auth/validate'</span>, <span style="{
     </p>
     <div class="os-codeblock">
         <div class="os-codeblock-head"><span>src/casClient.ts</span><span>CasClient (advanced)</span></div>
-        <pre><code><span style="{{ $kw }}">import</span> { CasClient } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@one-system/react-cas-client'</span>;
+        <pre><code><span style="{{ $kw }}">import</span> { CasClient } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@cas-system/react-cas-client'</span>;
 <span style="{{ $kw }}">import</span> { casConfig } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'./casConfig'</span>;
 
 <span style="{{ $kw }}">const</span> client = <span style="{{ $kw }}">new</span> CasClient(casConfig);

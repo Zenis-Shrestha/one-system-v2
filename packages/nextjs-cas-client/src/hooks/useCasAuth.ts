@@ -1,14 +1,14 @@
 'use client';
 
 /**
- * @module @one-system/nextjs-cas-client/hooks/useCasAuth
+ * @module @cas-system/nextjs-cas-client/hooks/useCasAuth
  * @description Client-side hook for accessing CAS authentication state and
  * actions (login, logout, refresh).
  *
  * @example
  * ```tsx
  * 'use client';
- * import { useCasAuth } from '@one-system/nextjs-cas-client';
+ * import { useCasAuth } from '@cas-system/nextjs-cas-client';
  *
  * export function Navbar() {
  *   const { user, isAuthenticated, login, logout } = useCasAuth();

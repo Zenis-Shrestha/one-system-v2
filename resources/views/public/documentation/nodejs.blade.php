@@ -1,7 +1,7 @@
 @extends('public.documentation.layout')
 
 @section('title', 'Node.js integration — CAS SSO')
-@section('description', 'Integrate Node.js and Express applications with CAS Single Sign-On using the official @one-system/node-cas-client package.')
+@section('description', 'Integrate Node.js and Express applications with CAS Single Sign-On using the official @cas-system/node-cas-client package.')
 
 @section('content')
 @php
@@ -52,7 +52,7 @@
     <p class="text-[var(--color-muted)] mb-4">Install the official client from npm. The package ships <code class="os-code-inline">axios</code> as its only dependency, so there is nothing else to add.</p>
     <div class="os-codeblock">
         <div class="os-codeblock-head"><span>Terminal</span></div>
-        <pre><code>npm install @one-system/node-cas-client</code></pre>
+        <pre><code>npm install @cas-system/node-cas-client</code></pre>
     </div>
 </section>
 
@@ -77,7 +77,7 @@
     <p class="text-[var(--color-muted)] mb-4">The package exports a single <code class="os-code-inline">CasClient</code> class. Create one instance and reuse it across your app.</p>
     <div class="os-codeblock">
         <div class="os-codeblock-head"><span>cas.js</span></div>
-        <pre><code><span style="{{ $kw }}">const</span> CasClient = <span style="{{ $fn }}">require</span>(<span style="{{ $str }}">'@one-system/node-cas-client'</span>);
+        <pre><code><span style="{{ $kw }}">const</span> CasClient = <span style="{{ $fn }}">require</span>(<span style="{{ $str }}">'@cas-system/node-cas-client'</span>);
 
 <span style="{{ $kw }}">const</span> cas = <span style="{{ $kw }}">new</span> <span style="{{ $fn }}">CasClient</span>({
   serverUrl:    process.env.<span style="{{ $var }}">CAS_SERVER_URL</span>,
@@ -141,7 +141,7 @@ router.<span style="{{ $fn }}">post</span>(<span style="{{ $str }}">'/logout'</s
         <div class="os-codeblock-head"><span>routes/app.js</span></div>
         <pre><code><span style="{{ $kw }}">const</span> express = <span style="{{ $fn }}">require</span>(<span style="{{ $str }}">'express'</span>);
 <span style="{{ $kw }}">const</span> cas     = <span style="{{ $fn }}">require</span>(<span style="{{ $str }}">'../cas'</span>);
-<span style="{{ $kw }}">const</span> { casAuth, casRole } = <span style="{{ $fn }}">require</span>(<span style="{{ $str }}">'@one-system/node-cas-client/src/middleware'</span>);
+<span style="{{ $kw }}">const</span> { casAuth, casRole } = <span style="{{ $fn }}">require</span>(<span style="{{ $str }}">'@cas-system/node-cas-client/src/middleware'</span>);
 <span style="{{ $kw }}">const</span> router  = express.<span style="{{ $fn }}">Router</span>();
 
 <span style="{{ $com }}">// Any signed-in user</span>

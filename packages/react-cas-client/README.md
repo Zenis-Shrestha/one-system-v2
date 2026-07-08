@@ -1,4 +1,4 @@
-# @one-system/react-cas-client
+# @cas-system/react-cas-client
 
 React SDK for integrating with the **One System CAS (Central Authentication System)** server. Provides hooks, components, and a context provider for seamless SSO authentication in React 18+ applications.
 
@@ -16,11 +16,11 @@ React SDK for integrating with the **One System CAS (Central Authentication Syst
 ## Installation
 
 ```bash
-npm install @one-system/react-cas-client
+npm install @cas-system/react-cas-client
 # or
-yarn add @one-system/react-cas-client
+yarn add @cas-system/react-cas-client
 # or
-pnpm add @one-system/react-cas-client
+pnpm add @cas-system/react-cas-client
 ```
 
 > **Peer dependency:** `react >= 18.2`
@@ -41,7 +41,7 @@ pnpm add @one-system/react-cas-client
 ### 1. Wrap your app with `<CasProvider>`
 
 ```tsx
-import { CasProvider } from '@one-system/react-cas-client';
+import { CasProvider } from '@cas-system/react-cas-client';
 
 const casConfig = {
   serverUrl: 'https://cas.example.com',
@@ -66,7 +66,7 @@ function App() {
 ### 2. Use hooks in any component
 
 ```tsx
-import { useCasAuth } from '@one-system/react-cas-client';
+import { useCasAuth } from '@cas-system/react-cas-client';
 
 function Header() {
   const { user, isAuthenticated, isLoading, login, logout } = useCasAuth();
@@ -89,7 +89,7 @@ function Header() {
 ### 3. Protect routes
 
 ```tsx
-import { CasProtectedRoute } from '@one-system/react-cas-client';
+import { CasProtectedRoute } from '@cas-system/react-cas-client';
 
 function AppRoutes() {
   return (
@@ -255,7 +255,7 @@ A button that triggers CAS login on click. Accepts all standard `<button>` attri
 Low-level client class for advanced use cases. Most users should use the hooks/provider instead.
 
 ```ts
-import { CasClient } from '@one-system/react-cas-client';
+import { CasClient } from '@cas-system/react-cas-client';
 
 const client = new CasClient({
   serverUrl: 'https://cas.example.com',
@@ -325,7 +325,7 @@ interface CasAuthState {
 ### Custom Login Flow
 
 ```tsx
-import { useCasAuth } from '@one-system/react-cas-client';
+import { useCasAuth } from '@cas-system/react-cas-client';
 
 function LoginPage() {
   const { login, isAuthenticated, error } = useCasAuth();
@@ -349,7 +349,7 @@ function LoginPage() {
 ### Role-Based UI
 
 ```tsx
-import { useCasUser } from '@one-system/react-cas-client';
+import { useCasUser } from '@cas-system/react-cas-client';
 
 function Sidebar() {
   const { user, hasRole, hasAnyRole } = useCasUser();
@@ -402,7 +402,7 @@ app.post('/api/auth/validate', async (req, res) => {
 
 ```tsx
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { CasProvider, CasProtectedRoute } from '@one-system/react-cas-client';
+import { CasProvider, CasProtectedRoute } from '@cas-system/react-cas-client';
 
 function App() {
   return (

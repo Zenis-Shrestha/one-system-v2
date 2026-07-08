@@ -7,13 +7,13 @@
  * client_secret stays on the server and is only used by the route handlers.
  */
 import type { ReactNode } from 'react';
-import { CasProvider } from '@one-system/nextjs-cas-client';
+import { CasProvider } from '@cas-system/nextjs-cas-client';
 import { Navbar } from '@/components/Navbar';
 import './globals.css';
 
 export const metadata = {
   title: 'One System CAS — Next.js sample',
-  description: 'Minimal Next.js App Router app using @one-system/nextjs-cas-client',
+  description: 'Minimal Next.js App Router app using @cas-system/nextjs-cas-client',
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

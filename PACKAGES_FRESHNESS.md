@@ -10,15 +10,15 @@ _Generated: 2026-06-18_
 
 | Component | Ecosystem | Runtime target (EOL?) | # Deps | # Outdated |
 |---|---|---|---|---|
-| `@one-system/angular-cas-client` | npm (Angular/TS library) | Angular peer floor `>=17` — **floor admits EOL Angular 17** (TS target ES2022) | 4 | 3 |
+| `@cas-system/angular-cas-client` | npm (Angular/TS library) | Angular peer floor `>=17` — **floor admits EOL Angular 17** (TS target ES2022) | 4 | 3 |
 | `dotnet-cas-client` (CasSystem.Client) | NuGet (.NET) | **net6.0 — EOL (2024-11-12)** | 2 | 2 |
 | `java-cas-client` (cas-client) | Maven (Java) | **Java 11 — past free/community maintenance** (LTS 17/21 current) | 5 | 4 |
-| `@one-system/js-cas-client` | npm (vanilla JS, browser UMD) | Browser; no Node runtime pinned — nothing to flag | 0 | 0 |
+| `@cas-system/js-cas-client` | npm (vanilla JS, browser UMD) | Browser; no Node runtime pinned — nothing to flag | 0 | 0 |
 | `nextjs-cas-client` | npm (Next.js/TS) | **Node 20 — maintenance LTS, EOL ~Apr 2026 (near/at EOL)** | 6 | 6 |
 | `nodejs-cas-client` | npm (Node.js) | **Node 16 — EOL (Sept 2023)** | 1 | 1 |
 | `python-cas-client` | PyPI (Python) | **Python 3.8 — EOL (2024-10-07)** | 3 | 3 |
-| `@one-system/react-cas-client` | npm (React/TS) | No runtime pinned (TS target ES2020) — nothing to flag | 3 | 2 |
-| `@one-system/vue-cas-client` | npm (Vue 3/TS library) | Vue 3 peer (`>=3.3`) — not EOL | 3 | 0 |
+| `@cas-system/react-cas-client` | npm (React/TS) | No runtime pinned (TS target ES2020) — nothing to flag | 3 | 2 |
+| `@cas-system/vue-cas-client` | npm (Vue 3/TS library) | Vue 3 peer (`>=3.3`) — not EOL | 3 | 0 |
 | `pkg:laravel` (laravel-cas-client-package) | Composer (Laravel/PHP) | **PHP constraint caps at 8.0 — every permitted runtime is EOL** | 6 | 5 |
 | `server:composer` (CAS server) | Composer (PHP) | PHP `^8.2` — not EOL (security support ~Dec 2026) | 17 | 14 |
 | `server:npm` (CAS server frontend) | npm | No engines field; Vite 6 toolchain 2 majors behind | 6 | 6 |
@@ -39,7 +39,7 @@ This section lists every dependency (and runtime) that is **major-behind**, **EO
 | `pkg:laravel` | PHP `^7.2 7.3 7.4 8.0` | **All EOL** (8.0 EOL 2023-11); excludes supported 8.1+ | Raise floor to `^8.1` |
 | `nextjs-cas-client` | Node 20 (`@types/node ^20`) | Maintenance LTS, **EOL ~Apr 2026** (near/at EOL) | Move to Node 22/24 LTS; bump `@types/node`; add `engines` field |
 | `java-cas-client` | Java 11 (`maven.compiler.source/target=11`) | Past free/community maintenance (OpenJDK 11 updates ended Oct 2024) | Migrate to LTS 17 or 21 |
-| `@one-system/angular-cas-client` | Angular peer floor `>=17.0.0` | Floor **admits EOL Angular 17.x** (left active+LTS ~mid-2025) | Raise peer floor to `>=18` or `>=19` |
+| `@cas-system/angular-cas-client` | Angular peer floor `>=17.0.0` | Floor **admits EOL Angular 17.x** (left active+LTS ~mid-2025) | Raise peer floor to `>=18` or `>=19` |
 
 ### Dependencies needing attention
 
@@ -71,9 +71,9 @@ This section lists every dependency (and runtime) that is **major-behind**, **EO
 | `java-cas-client` | `com.squareup.okhttp3:okhttp` | 4.12.0 | 5.4.0 | **major-behind** — 4.x EOL-track; 5.x is maintained branch | Upgrade to 5.x (update Kotlin stdlib transitives) |
 | `java-cas-client` | `io.jsonwebtoken:jjwt-api` | 0.12.3 | 0.12.6 | patch-behind but **security-sensitive (JWT)**; runtime modules `jjwt-impl` + `jjwt-gson/jjwt-jackson` **missing from pom.xml** | Update to 0.12.6; verify/add runtime impl modules |
 | `java-cas-client` | `javax.servlet:javax.servlet-api` | 4.0.1 | 4.0.1 | current in namespace, but **`javax.*` is frozen/EOL** (Java EE) | Plan migration to `jakarta.servlet:jakarta.servlet-api` 6.x (Tomcat 10+/Jetty 11+) |
-| `@one-system/angular-cas-client` | `@angular/core` | >=17.0.0 (peer) | 20.1.x (approx.) | **major-behind** — floor admits EOL Angular 17 | Raise floor to `>=18`/`>=19` |
-| `@one-system/angular-cas-client` | `@angular/common` | >=17.0.0 (peer) | 20.1.x (approx.) | **major-behind** — same lockstep concern | Raise floor to `>=18`/`>=19` |
-| `@one-system/angular-cas-client` | `@angular/router` | >=17.0.0 (peer) | 20.1.x (approx.) | **major-behind** — same lockstep concern | Raise floor to `>=18`/`>=19` |
+| `@cas-system/angular-cas-client` | `@angular/core` | >=17.0.0 (peer) | 20.1.x (approx.) | **major-behind** — floor admits EOL Angular 17 | Raise floor to `>=18`/`>=19` |
+| `@cas-system/angular-cas-client` | `@angular/common` | >=17.0.0 (peer) | 20.1.x (approx.) | **major-behind** — same lockstep concern | Raise floor to `>=18`/`>=19` |
+| `@cas-system/angular-cas-client` | `@angular/router` | >=17.0.0 (peer) | 20.1.x (approx.) | **major-behind** — same lockstep concern | Raise floor to `>=18`/`>=19` |
 
 > Dependencies that are minor/patch-behind but **within constraint and not security-flagged** (e.g. `gson`, `slf4j-api`, `bacon/bacon-qr-code`, `laravel/pint`, `laravel/sail`, `@tailwindcss/vite`, `tailwindcss`, etc.) are listed in the per-component tables below rather than here.
 
@@ -81,7 +81,7 @@ This section lists every dependency (and runtime) that is **major-behind**, **EO
 
 ## 3. Per-component detail
 
-### `@one-system/angular-cas-client` — npm (Angular/TS library)
+### `@cas-system/angular-cas-client` — npm (Angular/TS library)
 
 No direct/dev dependencies; 4 peerDependencies only. Versions **(approx.)** are knowledge-sourced (npm registry unreachable).
 
@@ -111,7 +111,7 @@ Manifest: `/Users/rajankalyan/PhpstormProjects/one-system-final/one-system/packa
 | `javax.servlet:javax.servlet-api` | 4.0.1 | 4.0.1 | current (but `javax.*` namespace frozen/EOL) |
 | `org.slf4j:slf4j-api` | 2.0.9 | 2.0.17 | patch-behind |
 
-### `@one-system/js-cas-client` — npm (vanilla JS, browser UMD)
+### `@cas-system/js-cas-client` — npm (vanilla JS, browser UMD)
 
 Zero declared dependencies; nothing to assess. Manifest: `/Users/rajankalyan/PhpstormProjects/one-system-final/one-system/packages/javascript-cas-client/package.json`.
 
@@ -152,7 +152,7 @@ No lockfile; constraints are open-ended `>=` floors.
 | `django` (extra) | >=3.2 | 6.0.6 | major-behind + EOL/vulnerable |
 | `flask` (extra) | >=2.0 | 3.1.3 | major-behind |
 
-### `@one-system/react-cas-client` — npm (React/TS)
+### `@cas-system/react-cas-client` — npm (React/TS)
 
 No package-level lockfile; 1 peer + 2 dev deps.
 
@@ -162,7 +162,7 @@ No package-level lockfile; 1 peer + 2 dev deps.
 | `@types/react` | ^18.0.0 (dev) | 19.2.17 | major-behind (types-only) |
 | `typescript` | ^5.0.0 (dev) | 6.0.3 | major-behind (build-time only) |
 
-### `@one-system/vue-cas-client` — npm (Vue 3/TS library)
+### `@cas-system/vue-cas-client` — npm (Vue 3/TS library)
 
 No hard deps; open-ended peer/optional ranges. 0 formally outdated, but lower bounds cross major boundaries.
 
@@ -237,9 +237,9 @@ Ordered by risk: EOL runtimes and known-vulnerable dependencies first, then majo
 5. **`server:composer` — coordinated major upgrade.** Do Laravel 12→13 + Livewire 3→4 + PHPUnit 11→13 + google2fa 8→9 (with google2fa-laravel 2→3) + tinker 2→3 together; bump `phpmailer` 6→7; and **pin `firebase/php-jwt`** off its `*` wildcard (`^6.11` or `^7.0`). PHP `^8.2` is fine; optionally raise to `^8.3`.
 6. **`server:npm` — Vite toolchain major bump.** Upgrade `vite` 6→8 together with `laravel-vite-plugin` 1→3 (coupled), verify against the Tailwind v4 Vite plugin, and bump `concurrently` 9→10. Keep `tailwindcss` + `@tailwindcss/vite` in lockstep at 4.3.1. The lockfile keeps axios safe today; still raise the floor.
 7. **`java-cas-client` — upgrade okhttp and harden JWT.** Bump `okhttp` 4.12.0→5.x (update Kotlin stdlib transitives); update `jjwt-api` to 0.12.6 **and confirm the runtime `jjwt-impl` + serializer module are actually provided** (currently missing from pom.xml). Then plan the `javax`→`jakarta.servlet` 6.x migration and the Java 11→17/21 move.
-8. **`@one-system/angular-cas-client` — raise the EOL peer floor.** Bump the `@angular/*` peerDependency floor from `>=17` to `>=18`/`>=19` so consumers are steered off EOL Angular 17. `rxjs >=7.0.0` is fine.
+8. **`@cas-system/angular-cas-client` — raise the EOL peer floor.** Bump the `@angular/*` peerDependency floor from `>=17` to `>=18`/`>=19` so consumers are steered off EOL Angular 17. `rxjs >=7.0.0` is fine.
 9. **`nextjs-cas-client` — move off near-EOL Node 20.** Bump `@types/node` to 22/24 and add an `engines` field for Node 22/24 LTS. Optionally validate against React 19 / Next 15+ (peer ranges already permit them) and adopt TS 6 when ready. No security urgency (locked versions clean).
-10. **`@one-system/react-cas-client` — align types.** Bump `@types/react` to `^19` to match the `>=18` peer range that already allows React 19; adopt TS `^6` when convenient. Dev/build-only; no urgency.
-11. **`@one-system/vue-cas-client` — tighten loose ranges.** Add upper bounds (`vue-router '>=4 <6'`, `pinia '>=2 <4'`) to avoid silently pulling untested majors (vue-router 5, pinia 3), and raise the `vue` floor if 3.4+ features are used. Also declare `vue-tsc`/`typescript` used by the typecheck script. No outdated deps.
+10. **`@cas-system/react-cas-client` — align types.** Bump `@types/react` to `^19` to match the `>=18` peer range that already allows React 19; adopt TS `^6` when convenient. Dev/build-only; no urgency.
+11. **`@cas-system/vue-cas-client` — tighten loose ranges.** Add upper bounds (`vue-router '>=4 <6'`, `pinia '>=2 <4'`) to avoid silently pulling untested majors (vue-router 5, pinia 3), and raise the `vue` floor if 3.4+ features are used. Also declare `vue-tsc`/`typescript` used by the typecheck script. No outdated deps.
 12. **Routine hygiene (within-constraint minor/patch).** `java-cas-client`: `gson` 2.10.1→2.14.0, `slf4j-api` 2.0.9→2.0.17. `server:composer`: `bacon/bacon-qr-code`, `laravel-recaptchav3`, `pint`, `sail`, `pail`, `collision`. `server:npm`: `tailwindcss`/`@tailwindcss/vite` to 4.3.1. These are drop-in.
-13. **No action needed.** `@one-system/js-cas-client` (zero deps). Within `@one-system/vue-cas-client`, all current. If deps are added to `js-cas-client` later, introduce a lockfile and an `engines` field.
+13. **No action needed.** `@cas-system/js-cas-client` (zero deps). Within `@cas-system/vue-cas-client`, all current. If deps are added to `js-cas-client` later, introduce a lockfile and an `engines` field.

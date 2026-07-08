@@ -47,12 +47,12 @@
                 <div class="os-icon-tile os-icon-tile-ink"><i class="fab fa-node-js"></i></div>
                 <div>
                     <h3 class="text-sm font-semibold text-[var(--color-ink)]">Node.js SDK</h3>
-                    <p class="text-xs text-[var(--color-faint)] font-mono">@one-system/node-sso-client</p>
+                    <p class="text-xs text-[var(--color-faint)] font-mono">@cas-system/node-sso-client</p>
                 </div>
                 <span class="os-badge ml-auto">v2.0.3</span>
             </div>
             <div class="os-codeblock mb-3">
-                <pre><code>npm install @one-system/node-sso-client</code></pre>
+                <pre><code>npm install @cas-system/node-sso-client</code></pre>
             </div>
             <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[var(--color-muted)]">
                 <span>Node 18+</span>
@@ -143,7 +143,7 @@
                 <div class="os-icon-tile os-icon-tile-ink"><i class="fab fa-js"></i></div>
                 <div>
                     <h3 class="text-sm font-semibold text-[var(--color-ink)]">JavaScript SDK</h3>
-                    <p class="text-xs text-[var(--color-faint)] font-mono">@one-system/js-sso-client</p>
+                    <p class="text-xs text-[var(--color-faint)] font-mono">@cas-system/js-sso-client</p>
                 </div>
                 <span class="os-badge ml-auto">v2.0.0</span>
             </div>

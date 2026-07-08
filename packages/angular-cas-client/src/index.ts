@@ -1,5 +1,5 @@
 /**
- * @one-system/angular-cas-client — Public API Surface
+ * @cas-system/angular-cas-client — Public API Surface
  *
  * @packageDocumentation
  */

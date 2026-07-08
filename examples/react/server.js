@@ -3,7 +3,7 @@
 //
 // This sample supports TWO independent ways to sign in:
 //
-//   A) CAS Single-Sign-On (unchanged) -- the @one-system/react-cas-client SDK
+//   A) CAS Single-Sign-On (unchanged) -- the @cas-system/react-cas-client SDK
 //      redirects to {CAS}/sso/login, the CAS server redirects back with a
 //      single-use ?token=, and the browser SDK POSTs that token to
 //      POST /api/auth/validate, where THIS backend performs the real

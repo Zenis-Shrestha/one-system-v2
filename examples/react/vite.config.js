@@ -13,7 +13,7 @@ export default defineConfig({
 
   resolve: {
     alias: {
-      // Resolve @one-system/react-cas-client to its TypeScript SOURCE.
+      // Resolve @cas-system/react-cas-client to its TypeScript SOURCE.
       //
       // The package's package.json "exports" point at dist/, which is only
       // present after you run `npm run build` inside the package. Vite happily
@@ -24,7 +24,7 @@ export default defineConfig({
       // (If you prefer to consume the built artifact instead, build the package
       //  -- `cd ../../packages/react-cas-client && npm i && npm run build` --
       //  and delete this alias.)
-      '@one-system/react-cas-client': path.resolve(
+      '@cas-system/react-cas-client': path.resolve(
         __dirname,
         '../../packages/react-cas-client/src/index.ts',
       ),

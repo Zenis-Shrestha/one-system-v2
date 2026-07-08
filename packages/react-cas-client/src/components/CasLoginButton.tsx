@@ -31,7 +31,7 @@ export interface CasLoginButtonProps
  *
  * @example
  * ```tsx
- * import { CasLoginButton } from '@one-system/react-cas-client';
+ * import { CasLoginButton } from '@cas-system/react-cas-client';
  *
  * // Default label
  * <CasLoginButton className="btn btn-primary" />

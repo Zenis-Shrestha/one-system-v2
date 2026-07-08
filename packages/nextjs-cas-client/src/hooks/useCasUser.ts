@@ -1,14 +1,14 @@
 'use client';
 
 /**
- * @module @one-system/nextjs-cas-client/hooks/useCasUser
+ * @module @cas-system/nextjs-cas-client/hooks/useCasUser
  * @description Client-side hook focused on the current CAS user and
  * role-based access control helpers.
  *
  * @example
  * ```tsx
  * 'use client';
- * import { useCasUser } from '@one-system/nextjs-cas-client';
+ * import { useCasUser } from '@cas-system/nextjs-cas-client';
  *
  * export function AdminPanel() {
  *   const { user, hasRole, hasAnyRole } = useCasUser();

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Minimal Vite + React sample for @one-system/react-cas-client (CasProvider + useCasAuth/useCasUser + CasLoginButton + CasProtectedRoute), with a tiny Express backend that performs the server-to-server /api/validate-token call.",
+  "description": "Minimal Vite + React sample for @cas-system/react-cas-client (CasProvider + useCasAuth/useCasUser + CasLoginButton + CasProtectedRoute), with a tiny Express backend that performs the server-to-server /api/validate-token call.",
   "scripts": {
     "dev": "concurrently -k -n web,api -c cyan,magenta \"npm:dev:web\" \"npm:dev:api\"",
     "dev:web": "cross-env API_PORT=9108 vite",
@@ -12,7 +12,7 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "@one-system/react-cas-client": "file:../../packages/react-cas-client",
+    "@cas-system/react-cas-client": "file:../../packages/react-cas-client",
     "better-sqlite3": "^11.8.1",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",

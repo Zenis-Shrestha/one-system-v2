@@ -1,7 +1,7 @@
 # One System CAS — React sample
 
 The smallest end-to-end React app that proves
-[`@one-system/react-cas-client`](../../packages/react-cas-client) works against a
+[`@cas-system/react-cas-client`](../../packages/react-cas-client) works against a
 running One System CAS server. It demonstrates the full lifecycle:
 
 1. **(a) Trigger CAS login** — `<CasLoginButton>` / `login()` redirect to `{CAS_BASE}/sso/login`.
@@ -60,7 +60,7 @@ The SDK's flow (see the package README): `<CasProvider>` → `validateTokenViaBa
 `package.json` links the SDK locally — no publishing:
 
 ```json
-"@one-system/react-cas-client": "file:../../packages/react-cas-client"
+"@cas-system/react-cas-client": "file:../../packages/react-cas-client"
 ```
 
 The package's `package.json` `exports` point at `dist/`, which isn't pre-built. Rather than

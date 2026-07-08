@@ -1,7 +1,7 @@
 {
-  "name": "@one-system/react-cas-client",
+  "name": "@cas-system/react-cas-client",
   "version": "1.0.0",
-  "description": "React SDK for CAS (Central Authentication System) integration — provides hooks, components, and context for seamless SSO authentication.",
+  "description": "React SDK for CAS (Central Authentication System) integration \u2014 provides hooks, components, and context for seamless SSO authentication.",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
@@ -39,7 +39,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/insol-dev/central-authentication-server",
+    "url": "git+https://github.com/InSol-2021/one-system.git",
     "directory": "packages/react-cas-client"
   },
   "publishConfig": {

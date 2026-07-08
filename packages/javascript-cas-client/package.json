@@ -1,5 +1,5 @@
 {
-  "name": "@one-system/js-cas-client",
+  "name": "@cas-system/js-cas-client",
   "version": "1.0.0",
   "description": "Browser JavaScript SDK for CAS (Central Authentication Service) SSO integration",
   "main": "src/cas-client.js",
@@ -9,14 +9,22 @@
     "README.md"
   ],
   "scripts": {
-    "build": "echo 'No build step needed — vanilla JS'"
+    "build": "echo 'No build step needed \u2014 vanilla JS'"
   },
-  "keywords": ["cas", "sso", "authentication", "browser", "single-sign-on", "javascript", "one-system"],
+  "keywords": [
+    "cas",
+    "sso",
+    "authentication",
+    "browser",
+    "single-sign-on",
+    "javascript",
+    "one-system"
+  ],
   "author": "One System",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/insol-dev/central-authentication-server",
+    "url": "git+https://github.com/InSol-2021/one-system.git",
     "directory": "packages/javascript-cas-client"
   },
   "publishConfig": {

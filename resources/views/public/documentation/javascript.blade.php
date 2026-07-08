@@ -17,7 +17,7 @@
         <div class="flex flex-wrap gap-2">
             <span class="os-badge"><i class="fas fa-clock"></i> 5 min read</span>
             <span class="os-badge"><i class="fas fa-signal"></i> Beginner</span>
-            <span class="os-badge"><i class="fas fa-cube"></i> @one-system/js-cas-client v1.0.0</span>
+            <span class="os-badge"><i class="fas fa-cube"></i> @cas-system/js-cas-client v1.0.0</span>
             <span class="os-badge"><i class="fas fa-box"></i> Zero dependencies</span>
         </div>
     </div>
@@ -39,11 +39,11 @@
 
 <section id="install" class="mb-12">
     <h2 class="text-xl font-semibold text-[var(--color-ink)] mb-3">1. Install the SDK</h2>
-    <p class="text-sm text-[var(--color-ink-2)] mb-5">The <code class="os-code-inline">@one-system/js-cas-client</code> package is a lightweight, zero-dependency browser SDK. It needs no build step. Install it from npm, or drop it in with a single <code class="os-code-inline">&lt;script&gt;</code> tag (UMD: exposes a global <code class="os-code-inline">CasClient</code>).</p>
+    <p class="text-sm text-[var(--color-ink-2)] mb-5">The <code class="os-code-inline">@cas-system/js-cas-client</code> package is a lightweight, zero-dependency browser SDK. It needs no build step. Install it from npm, or drop it in with a single <code class="os-code-inline">&lt;script&gt;</code> tag (UMD: exposes a global <code class="os-code-inline">CasClient</code>).</p>
 
     <div class="os-codeblock mb-5">
         <div class="os-codeblock-head"><span>npm</span><span>terminal</span></div>
-        <pre><code>npm install @one-system/js-cas-client</code></pre>
+        <pre><code>npm install @cas-system/js-cas-client</code></pre>
     </div>
 
     <div class="os-codeblock">
@@ -58,7 +58,7 @@
 
     <div class="os-codeblock mb-5">
         <div class="os-codeblock-head"><span>ES module import</span><span>cas.js</span></div>
-        <pre><code>import CasClient from '@one-system/js-cas-client';
+        <pre><code>import CasClient from '@cas-system/js-cas-client';
 
 const cas = new CasClient({
   serverUrl: 'https://your-cas-server.com',

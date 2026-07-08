@@ -1,7 +1,7 @@
 # One System CAS — Node.js / Express sample
 
 A real little Express app that proves the
-[`@one-system/node-cas-client`](../../packages/nodejs-cas-client) package works
+[`@cas-system/node-cas-client`](../../packages/nodejs-cas-client) package works
 end-to-end against a One System CAS SSO server **and** carries its OWN local
 username/password accounts (backed by SQLite). A user can sign in **either** way.
 
@@ -74,15 +74,15 @@ which this app relies solely on its own session cookie.
 `package.json` links the package by relative path (no publishing required):
 
 ```json
-"@one-system/node-cas-client": "file:../../packages/nodejs-cas-client"
+"@cas-system/node-cas-client": "file:../../packages/nodejs-cas-client"
 ```
 
 `npm install` symlinks/copies the local package into `node_modules`, so the
 sample uses the real package source.
 
 > **Import paths used in this sample**
-> - `require('@one-system/node-cas-client')` → the `CasClient` class (package `main`).
-> - `require('@one-system/node-cas-client/src/middleware')` → `{ casAuth, casRole }`.
+> - `require('@cas-system/node-cas-client')` → the `CasClient` class (package `main`).
+> - `require('@cas-system/node-cas-client/src/middleware')` → `{ casAuth, casRole }`.
 >   The package ships the middleware at `src/middleware.js` and has no `exports`
 >   map, so the sample references that real path rather than the bare
 >   `/middleware` subpath shown in the package README.

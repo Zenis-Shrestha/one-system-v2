@@ -9,7 +9,7 @@
  * username and a logout button (logout() POSTs /api/cas/logout, clears the
  * session cookie, then redirects home).
  */
-import { useCasAuth, CasLoginButton } from '@one-system/nextjs-cas-client';
+import { useCasAuth, CasLoginButton } from '@cas-system/nextjs-cas-client';
 import Link from 'next/link';
 
 export function Navbar() {

@@ -1,5 +1,5 @@
 /**
- * @module @one-system/nextjs-cas-client/handlers/logout
+ * @module @cas-system/nextjs-cas-client/handlers/logout
  * @description API route handler for the CAS logout endpoint.
  *
  * 1. Reads the session to obtain the JWT token.
@@ -10,7 +10,7 @@
  * @example
  * ```ts
  * // app/api/cas/logout/route.ts
- * import { createLogoutHandler } from '@one-system/nextjs-cas-client/handlers';
+ * import { createLogoutHandler } from '@cas-system/nextjs-cas-client/handlers';
  *
  * const handler = createLogoutHandler({
  *   cas: {

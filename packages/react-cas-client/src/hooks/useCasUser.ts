@@ -47,7 +47,7 @@ export interface UseCasUserReturn {
  *
  * @example
  * ```tsx
- * import { useCasUser } from '@one-system/react-cas-client';
+ * import { useCasUser } from '@cas-system/react-cas-client';
  *
  * function ProfileBadge() {
  *   const { user, hasRole } = useCasUser();

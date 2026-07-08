@@ -49,7 +49,7 @@ export interface UseCasAuthReturn {
  * @example
  * ```vue
  * <script setup lang="ts">
- * import { useCasAuth } from '@one-system/vue-cas-client';
+ * import { useCasAuth } from '@cas-system/vue-cas-client';
  *
  * const { user, isAuthenticated, login, logout } = useCasAuth();
  * </script>

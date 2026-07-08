@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 
-import { CasAuthService, CasUser } from '@one-system/angular-cas-client';
+import { CasAuthService, CasUser } from '@cas-system/angular-cas-client';
 import { LocalSessionService } from '../services/local-session.service';
 
 /**

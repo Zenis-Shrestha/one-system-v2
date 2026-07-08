@@ -11,7 +11,7 @@
  *   3. on success, creates THIS app's own signed, HttpOnly session cookie
  *   4. redirects to `afterLoginUrl` (or the `?returnUrl=` the middleware set)
  */
-import { createCallbackHandler } from '@one-system/nextjs-cas-client/handlers';
+import { createCallbackHandler } from '@cas-system/nextjs-cas-client/handlers';
 
 export const GET = createCallbackHandler({
   cas: {

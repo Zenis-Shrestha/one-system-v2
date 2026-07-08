@@ -1,7 +1,7 @@
 # One System CAS — JavaScript Sample (UMD browser SDK + tiny Express backend)
 
 A small but **real** app: it has its OWN local username/password accounts (stored
-in SQLite) **and** keeps the **`@one-system/js-cas-client`** CAS Single-Sign-On flow.
+in SQLite) **and** keeps the **`@cas-system/js-cas-client`** CAS Single-Sign-On flow.
 Users can sign in EITHER way.
 
 CAS SSO flow:
@@ -74,10 +74,10 @@ backend mints its own `sid` session cookie.
 `package.json` links the SDK locally — no publishing:
 
 ```json
-"@one-system/js-cas-client": "file:../../packages/javascript-cas-client"
+"@cas-system/js-cas-client": "file:../../packages/javascript-cas-client"
 ```
 
-`server.js` resolves the actual UMD file with `require.resolve('@one-system/js-cas-client')`
+`server.js` resolves the actual UMD file with `require.resolve('@cas-system/js-cas-client')`
 and serves it at `/vendor/cas-client.js`, so the browser loads the exact local package file.
 
 ## Prerequisites

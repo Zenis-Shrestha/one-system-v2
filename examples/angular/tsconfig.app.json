@@ -8,6 +8,6 @@
   "include": [
     "src/**/*.d.ts",
     "src/**/*.ts",
-    "node_modules/@one-system/angular-cas-client/src/**/*.ts"
+    "node_modules/@cas-system/angular-cas-client/src/**/*.ts"
   ]
 }

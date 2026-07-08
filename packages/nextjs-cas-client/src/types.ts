@@ -1,5 +1,5 @@
 /**
- * @module @one-system/nextjs-cas-client/types
+ * @module @cas-system/nextjs-cas-client/types
  * @description Core TypeScript type definitions for the CAS Client SDK.
  */
 

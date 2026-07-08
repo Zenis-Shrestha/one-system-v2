@@ -26,7 +26,7 @@ import {
   CasTokenInterceptor,
   CasCallbackComponent,
   CasAuthGuard,
-} from '@one-system/angular-cas-client';
+} from '@cas-system/angular-cas-client';
 
 import { AppComponent } from './app/app.component';
 import { HomeComponent } from './app/pages/home.component';

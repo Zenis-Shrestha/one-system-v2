@@ -16,17 +16,17 @@
     "plugins": [{ "name": "next" }],
     "paths": {
       "@/*": ["./src/*"],
-      "@one-system/nextjs-cas-client": [
-        "./node_modules/@one-system/nextjs-cas-client/src/index.ts"
+      "@cas-system/nextjs-cas-client": [
+        "./node_modules/@cas-system/nextjs-cas-client/src/index.ts"
       ],
-      "@one-system/nextjs-cas-client/handlers": [
-        "./node_modules/@one-system/nextjs-cas-client/src/handlers/index.ts"
+      "@cas-system/nextjs-cas-client/handlers": [
+        "./node_modules/@cas-system/nextjs-cas-client/src/handlers/index.ts"
       ],
-      "@one-system/nextjs-cas-client/middleware": [
-        "./node_modules/@one-system/nextjs-cas-client/src/middleware.ts"
+      "@cas-system/nextjs-cas-client/middleware": [
+        "./node_modules/@cas-system/nextjs-cas-client/src/middleware.ts"
       ],
-      "@one-system/nextjs-cas-client/server": [
-        "./node_modules/@one-system/nextjs-cas-client/src/server/index.ts"
+      "@cas-system/nextjs-cas-client/server": [
+        "./node_modules/@cas-system/nextjs-cas-client/src/server/index.ts"
       ]
     }
   },

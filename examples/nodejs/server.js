@@ -1,7 +1,7 @@
 /**
  * One System CAS — Node.js / Express sample app
  * -----------------------------------------------------
- * This sample proves @one-system/node-cas-client works end-to-end AND now also
+ * This sample proves @cas-system/node-cas-client works end-to-end AND now also
  * acts as a REAL application with its OWN local username/password accounts,
  * backed by a SQLite user store. A user can sign in EITHER way:
  *
@@ -46,11 +46,11 @@ const { initDb } = require('./db');
 // Import the LOCAL package (linked via "file:../../packages/nodejs-cas-client"
 // in package.json). The package's main export is the CasClient class.
 // ---------------------------------------------------------------------------
-const CasClient = require('@one-system/node-cas-client');
+const CasClient = require('@cas-system/node-cas-client');
 
 // The middleware lives at src/middleware.js. The package has no "exports" map,
 // so we reference the real file path under the package root.
-const { casAuth } = require('@one-system/node-cas-client/src/middleware');
+const { casAuth } = require('@cas-system/node-cas-client/src/middleware');
 
 // ---------------------------------------------------------------------------
 // Configuration — everything comes from the environment (.env / .env.example).

@@ -1,5 +1,5 @@
 /**
- * @module @one-system/nextjs-cas-client/server
+ * @module @cas-system/nextjs-cas-client/server
  * @description Server-only entry point for the Next.js CAS Client SDK.
  *
  * Exposes the {@link CasClient} (token validation / generation / logout) and

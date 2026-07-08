@@ -1,4 +1,4 @@
-# @one-system/vue-cas-client
+# @cas-system/vue-cas-client
 
 > Vue 3 CAS (Central Authentication System) Client SDK — composables, plugin, router guards, Pinia store, and components for seamless SSO integration.
 
@@ -41,13 +41,13 @@
 
 ```bash
 # npm
-npm install @one-system/vue-cas-client
+npm install @cas-system/vue-cas-client
 
 # yarn
-yarn add @one-system/vue-cas-client
+yarn add @cas-system/vue-cas-client
 
 # pnpm
-pnpm add @one-system/vue-cas-client
+pnpm add @cas-system/vue-cas-client
 ```
 
 ### Peer Dependencies
@@ -107,7 +107,7 @@ pnpm add @one-system/vue-cas-client
 ```ts
 // main.ts
 import { createApp } from 'vue';
-import { CasPlugin } from '@one-system/vue-cas-client';
+import { CasPlugin } from '@cas-system/vue-cas-client';
 import App from './App.vue';
 
 const app = createApp(App);
@@ -126,7 +126,7 @@ app.mount('#app');
 
 ```vue
 <script setup lang="ts">
-import { useCasAuth } from '@one-system/vue-cas-client';
+import { useCasAuth } from '@cas-system/vue-cas-client';
 
 const { user, isAuthenticated, login, logout } = useCasAuth();
 </script>
@@ -149,7 +149,7 @@ const { user, isAuthenticated, login, logout } = useCasAuth();
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { useCasAuth } from '@one-system/vue-cas-client';
+import { useCasAuth } from '@cas-system/vue-cas-client';
 
 const router = useRouter();
 const { handleCallback, error } = useCasAuth();
@@ -284,7 +284,7 @@ export const router = createRouter({
 ```ts
 // main.ts
 import { createApp } from 'vue';
-import { CasPlugin, createCasAuthGuard, CAS_AUTH_KEY } from '@one-system/vue-cas-client';
+import { CasPlugin, createCasAuthGuard, CAS_AUTH_KEY } from '@cas-system/vue-cas-client';
 import { router } from './router';
 import App from './App.vue';
 
@@ -351,7 +351,7 @@ app.mount('#app');
 ```vue
 <script setup lang="ts">
 import { onMounted } from 'vue';
-import { useCasStore } from '@one-system/vue-cas-client';
+import { useCasStore } from '@cas-system/vue-cas-client';
 
 const auth = useCasStore();
 
@@ -593,7 +593,7 @@ const routes = [
 
 ```vue
 <script setup lang="ts">
-import { useCasUser } from '@one-system/vue-cas-client';
+import { useCasUser } from '@cas-system/vue-cas-client';
 
 const { user, hasRole, hasAnyRole } = useCasUser();
 
@@ -636,7 +636,7 @@ reactive store.
 // main.ts
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
-import { CasPlugin } from '@one-system/vue-cas-client';
+import { CasPlugin } from '@cas-system/vue-cas-client';
 
 const app = createApp(App);
 const pinia = createPinia();

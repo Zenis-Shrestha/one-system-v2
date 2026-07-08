@@ -9,7 +9,7 @@
  */
 import Link from 'next/link';
 import { cookies } from 'next/headers';
-import { getCasSession } from '@one-system/nextjs-cas-client/server';
+import { getCasSession } from '@cas-system/nextjs-cas-client/server';
 import { LogoutButton } from '@/components/LogoutButton';
 
 export const dynamic = 'force-dynamic'; // auth state is per-request
@@ -44,7 +44,7 @@ export default async function HomePage() {
       )}
 
       <p>
-        End-to-end demo of <code>@one-system/nextjs-cas-client</code> — now with
+        End-to-end demo of <code>@cas-system/nextjs-cas-client</code> — now with
         the app&apos;s OWN local accounts too. Sign in EITHER with a local
         username/password or via CAS SSO.
       </p>

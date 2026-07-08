@@ -2,7 +2,7 @@
   "name": "one-system-cas-angular-example",
   "version": "1.0.0",
   "private": true,
-  "description": "Minimal Angular sample app demonstrating the One System CAS client SDK (@one-system/angular-cas-client) with a tiny Express backend for server-to-server token validation",
+  "description": "Minimal Angular sample app demonstrating the One System CAS client SDK (@cas-system/angular-cas-client) with a tiny Express backend for server-to-server token validation",
   "scripts": {
     "// --- dev ---": "Run the Express backend (validate + static host) and the Angular dev server together",
     "start": "node server/server.js",
@@ -13,7 +13,7 @@
   },
   "comment": "The CAS SDK is referenced locally via the file: dependency below AND a tsconfig path mapping (see tsconfig.json). The package's main/types point at raw TypeScript (src/index.ts), so Angular compiles it from source.",
   "dependencies": {
-    "@one-system/angular-cas-client": "file:../../packages/angular-cas-client",
+    "@cas-system/angular-cas-client": "file:../../packages/angular-cas-client",
     "@angular/animations": "^18.2.0",
     "@angular/common": "^18.2.0",
     "@angular/compiler": "^18.2.0",

@@ -24,8 +24,8 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import { setCasSession } from '@one-system/nextjs-cas-client/server';
-import type { CasUser } from '@one-system/nextjs-cas-client/server';
+import { setCasSession } from '@cas-system/nextjs-cas-client/server';
+import type { CasUser } from '@cas-system/nextjs-cas-client/server';
 import { validateLocalCredentials } from '@/lib/db';
 
 // Local accounts live in a SQLite file on disk — this route must run on Node.

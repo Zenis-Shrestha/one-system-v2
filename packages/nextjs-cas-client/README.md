@@ -1,4 +1,4 @@
-# @one-system/nextjs-cas-client
+# @cas-system/nextjs-cas-client
 
 Next.js CAS (Central Authentication System) Client SDK for the **One System** CAS server.
 Supports the App Router, Server Components, Route Handlers, Middleware, and client-side hooks.
@@ -6,7 +6,7 @@ Supports the App Router, Server Components, Route Handlers, Middleware, and clie
 ## Install
 
 ```bash
-npm install @one-system/nextjs-cas-client
+npm install @cas-system/nextjs-cas-client
 # peer deps: next >= 14, react >= 18, react-dom >= 18
 # runtime: Node.js >= 18.17 (App Router). Verified on Node 22.
 ```
@@ -38,7 +38,7 @@ The session cookie is signed with `CAS_COOKIE_SECRET` (falls back to `CAS_CLIENT
 
 ```ts
 // app/api/cas/callback/route.ts
-import { createCallbackHandler } from '@one-system/nextjs-cas-client/handlers';
+import { createCallbackHandler } from '@cas-system/nextjs-cas-client/handlers';
 
 export const GET = createCallbackHandler({
   cas: {
@@ -52,7 +52,7 @@ export const GET = createCallbackHandler({
 
 ```ts
 // app/api/cas/logout/route.ts
-import { createLogoutHandler } from '@one-system/nextjs-cas-client/handlers';
+import { createLogoutHandler } from '@cas-system/nextjs-cas-client/handlers';
 
 export const POST = createLogoutHandler({
   cas: {
@@ -66,7 +66,7 @@ export const POST = createLogoutHandler({
 
 ```ts
 // app/api/cas/user/route.ts
-import { createUserHandler } from '@one-system/nextjs-cas-client/handlers';
+import { createUserHandler } from '@cas-system/nextjs-cas-client/handlers';
 
 export const GET = createUserHandler();
 ```
@@ -75,7 +75,7 @@ export const GET = createUserHandler();
 
 ```ts
 // middleware.ts
-import { createCasMiddleware } from '@one-system/nextjs-cas-client/middleware';
+import { createCasMiddleware } from '@cas-system/nextjs-cas-client/middleware';
 
 export default createCasMiddleware({
   protectedPaths: ['/dashboard', '/admin'],
@@ -95,7 +95,7 @@ from the environment when `loginPath` is not configured.
 
 ```tsx
 // app/layout.tsx
-import { CasProvider } from '@one-system/nextjs-cas-client';
+import { CasProvider } from '@cas-system/nextjs-cas-client';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -118,7 +118,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
 ```tsx
 'use client';
-import { useCasAuth, useCasUser, CasLoginButton, CasProtectedRoute } from '@one-system/nextjs-cas-client';
+import { useCasAuth, useCasUser, CasLoginButton, CasProtectedRoute } from '@cas-system/nextjs-cas-client';
 
 export function Navbar() {
   const { user, isAuthenticated, login, logout } = useCasAuth();
@@ -132,7 +132,7 @@ export function Navbar() {
 
 ```ts
 import { cookies } from 'next/headers';
-import { getCasSession, withCasAuth, CasClient } from '@one-system/nextjs-cas-client/server';
+import { getCasSession, withCasAuth, CasClient } from '@cas-system/nextjs-cas-client/server';
 
 // In a Server Component / Route Handler
 const session = await getCasSession(await cookies());

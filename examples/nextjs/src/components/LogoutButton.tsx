@@ -5,7 +5,7 @@
  * Calls the provider's logout() which POSTs /api/cas/logout, clears the
  * session cookie, and redirects home.
  */
-import { useCasAuth } from '@one-system/nextjs-cas-client';
+import { useCasAuth } from '@cas-system/nextjs-cas-client';
 
 export function LogoutButton() {
   const { logout } = useCasAuth();

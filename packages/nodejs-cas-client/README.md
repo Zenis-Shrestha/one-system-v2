@@ -14,7 +14,7 @@ A Node.js package for seamless integration with CAS (Central Authentication Serv
 ## Installation
 
 ```bash
-npm install @one-system/node-cas-client
+npm install @cas-system/node-cas-client
 ```
 
 **Requirements:** Node.js >= 18. The package's only runtime dependency is `axios` (^1.12.0).
@@ -24,7 +24,7 @@ npm install @one-system/node-cas-client
 ### 1. Initialize the Client
 
 ```javascript
-const CasClient = require('@one-system/node-cas-client');
+const CasClient = require('@cas-system/node-cas-client');
 
 const cas = new CasClient({
   serverUrl: 'https://your-cas-server.com',
@@ -43,8 +43,8 @@ const cas = new CasClient({
 ```javascript
 const express = require('express');
 const session = require('express-session');
-const CasClient = require('@one-system/node-cas-client');
-const { casAuth, casRole } = require('@one-system/node-cas-client/src/middleware');
+const CasClient = require('@cas-system/node-cas-client');
+const { casAuth, casRole } = require('@cas-system/node-cas-client/src/middleware');
 
 const app = express();
 app.use(session({ secret: 'session-secret', resave: false, saveUninitialized: false }));

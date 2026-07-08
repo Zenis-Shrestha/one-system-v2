@@ -1,6 +1,6 @@
 # Vue CAS Client Sample
 
-A runnable app that proves [`@one-system/vue-cas-client`](../../packages/vue-cas-client)
+A runnable app that proves [`@cas-system/vue-cas-client`](../../packages/vue-cas-client)
 works end-to-end against the One System CAS server **and** is a real application
 with its own local accounts. A user can sign in **either** way:
 
@@ -94,7 +94,7 @@ npm install                   # links the local package via file:../../packages/
 The dependency on the SDK is a local path link in `package.json`:
 
 ```json
-"@one-system/vue-cas-client": "file:../../packages/vue-cas-client"
+"@cas-system/vue-cas-client": "file:../../packages/vue-cas-client"
 ```
 
 The package ships raw TypeScript + `.vue` source (its `main` is `src/index.ts`),

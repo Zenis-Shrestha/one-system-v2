@@ -1,5 +1,5 @@
 /**
- * @module @one-system/nextjs-cas-client/handlers/callback
+ * @module @cas-system/nextjs-cas-client/handlers/callback
  * @description API route handler for the CAS SSO callback endpoint.
  *
  * After the CAS server authenticates the user it redirects to
@@ -13,7 +13,7 @@
  * @example
  * ```ts
  * // app/api/cas/callback/route.ts
- * import { createCallbackHandler } from '@one-system/nextjs-cas-client/handlers';
+ * import { createCallbackHandler } from '@cas-system/nextjs-cas-client/handlers';
  *
  * const handler = createCallbackHandler({
  *   cas: {

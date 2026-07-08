@@ -1,5 +1,5 @@
 /**
- * @module @one-system/react-cas-client
+ * @module @cas-system/react-cas-client
  * @description React SDK for CAS (Central Authentication System) integration.
  *
  * Provides hooks, components, and a context provider for seamless SSO
@@ -11,7 +11,7 @@
  *   CasProvider,
  *   useCasAuth,
  *   CasProtectedRoute,
- * } from '@one-system/react-cas-client';
+ * } from '@cas-system/react-cas-client';
  * ```
  */
 

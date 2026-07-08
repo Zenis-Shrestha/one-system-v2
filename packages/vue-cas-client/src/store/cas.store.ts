@@ -13,7 +13,7 @@ import type { CasConfig, CasUser } from '../types';
  *
  * @example
  * ```ts
- * import { useCasStore } from '@one-system/vue-cas-client';
+ * import { useCasStore } from '@cas-system/vue-cas-client';
  *
  * const auth = useCasStore();
  *

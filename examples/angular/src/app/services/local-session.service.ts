@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CasAuthService, CasUser } from '@one-system/angular-cas-client';
+import { CasAuthService, CasUser } from '@cas-system/angular-cas-client';
 
 /**
  * Bridges LOCAL username/password login into the app's OWN session — the very

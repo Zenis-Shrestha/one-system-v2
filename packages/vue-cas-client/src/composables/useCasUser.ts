@@ -44,7 +44,7 @@ export interface UseCasUserReturn {
  * @example
  * ```vue
  * <script setup lang="ts">
- * import { useCasUser } from '@one-system/vue-cas-client';
+ * import { useCasUser } from '@cas-system/vue-cas-client';
  *
  * const { user, roles, hasRole, hasAnyRole } = useCasUser();
  *

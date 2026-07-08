@@ -1,7 +1,7 @@
 'use client';
 
 /**
- * @module @one-system/nextjs-cas-client/CasProvider
+ * @module @cas-system/nextjs-cas-client/CasProvider
  * @description Client-side React context provider that manages CAS
  * authentication state.  Fetches the current session from
  * `/api/cas/user` on mount and exposes login / logout / refresh actions.
@@ -9,7 +9,7 @@
  * @example
  * ```tsx
  * // app/layout.tsx
- * import { CasProvider } from '@one-system/nextjs-cas-client';
+ * import { CasProvider } from '@cas-system/nextjs-cas-client';
  *
  * export default function RootLayout({ children }: { children: React.ReactNode }) {
  *   return (

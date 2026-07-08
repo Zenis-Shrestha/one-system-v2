@@ -21,7 +21,7 @@
 
     // ── Local CAS SDK link ─────────────────────────────────────────────
     // No tsconfig "paths" mapping is needed. The `file:` dependency in
-    // package.json symlinks the package into node_modules/@one-system/
+    // package.json symlinks the package into node_modules/@cas-system/
     // angular-cas-client, and that package's main/types already point at
     // raw TypeScript (src/index.ts). Angular therefore compiles the SDK
     // from source AND resolves its @angular/* peer imports against THIS

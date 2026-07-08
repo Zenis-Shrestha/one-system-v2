@@ -10,7 +10,7 @@ import { CAS_AUTH_KEY } from './types';
  * Usage:
  * ```ts
  * import { createApp } from 'vue';
- * import { CasPlugin } from '@one-system/vue-cas-client';
+ * import { CasPlugin } from '@cas-system/vue-cas-client';
  *
  * const app = createApp(App);
  *

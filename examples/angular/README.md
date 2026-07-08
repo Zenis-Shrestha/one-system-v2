@@ -3,7 +3,7 @@
 A small but REAL Angular app that supports TWO ways to sign in:
 
 - **Local accounts** — its OWN username/password store backed by SQLite.
-- **CAS single sign-on** — the [`@one-system/angular-cas-client`](../../packages/angular-cas-client) SDK.
+- **CAS single sign-on** — the [`@cas-system/angular-cas-client`](../../packages/angular-cas-client) SDK.
 
 Either path establishes the SAME app session, so the guarded `/profile` page and
 the nav bar work identically afterwards.
@@ -89,8 +89,8 @@ you control. This sample provides that backend in **`server/server.js`** (Expres
 Two cooperating mechanisms:
 
 1. **`package.json`** depends on the package by path:
-   `"@one-system/angular-cas-client": "file:../../packages/angular-cas-client"`.
-   `npm install` symlinks it into `node_modules/@one-system/angular-cas-client`.
+   `"@cas-system/angular-cas-client": "file:../../packages/angular-cas-client"`.
+   `npm install` symlinks it into `node_modules/@cas-system/angular-cas-client`.
 2. The package's own `package.json` points `main`/`types` at **raw TypeScript**
    (`src/index.ts`), so Angular compiles the SDK **from source**. To make that
    work across the symlink, this sample sets:

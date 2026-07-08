@@ -15,7 +15,7 @@ import type { CasContextValue } from '../types';
  *
  * @example
  * ```tsx
- * import { useCasAuth } from '@one-system/react-cas-client';
+ * import { useCasAuth } from '@cas-system/react-cas-client';
  *
  * function Header() {
  *   const { user, isAuthenticated, login, logout } = useCasAuth();

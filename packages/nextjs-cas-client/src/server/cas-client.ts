@@ -1,5 +1,5 @@
 /**
- * @module @one-system/nextjs-cas-client/server/cas-client
+ * @module @cas-system/nextjs-cas-client/server/cas-client
  * @description Server-side CAS client for token validation, generation, and
  * SSO login URL construction.  Uses only the built-in `fetch` API — zero
  * external dependencies.
@@ -36,7 +36,7 @@ function normaliseUrl(url: string): string {
  *
  * @example
  * ```ts
- * import { CasClient } from '@one-system/nextjs-cas-client/server';
+ * import { CasClient } from '@cas-system/nextjs-cas-client/server';
  *
  * const cas = new CasClient({
  *   serverUrl: process.env.CAS_SERVER_URL!,

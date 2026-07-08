@@ -12,7 +12,7 @@
  */
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { getCasSession } from '@one-system/nextjs-cas-client/server';
+import { getCasSession } from '@cas-system/nextjs-cas-client/server';
 import { LogoutButton } from '@/components/LogoutButton';
 
 export const dynamic = 'force-dynamic'; // never cache — auth state is per-request

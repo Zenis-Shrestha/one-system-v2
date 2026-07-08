@@ -1,14 +1,14 @@
 'use client';
 
 /**
- * @module @one-system/nextjs-cas-client/components/CasProtectedRoute
+ * @module @cas-system/nextjs-cas-client/components/CasProtectedRoute
  * @description Client component that guards its children behind CAS
  * authentication.  Shows a loading state while the session is being
  * fetched and redirects to login when no valid session exists.
  *
  * @example
  * ```tsx
- * import { CasProtectedRoute } from '@one-system/nextjs-cas-client';
+ * import { CasProtectedRoute } from '@cas-system/nextjs-cas-client';
  *
  * export default function SecretPage() {
  *   return (

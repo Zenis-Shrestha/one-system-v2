@@ -5,6 +5,6 @@
  * `{ user }` (200) when authenticated, or `{ user: null }` (401) otherwise.
  * The client-side <CasProvider> calls this on mount to hydrate auth state.
  */
-import { createUserHandler } from '@one-system/nextjs-cas-client/handlers';
+import { createUserHandler } from '@cas-system/nextjs-cas-client/handlers';
 
 export const GET = createUserHandler();

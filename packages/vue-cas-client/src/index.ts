@@ -1,5 +1,5 @@
 /**
- * @module @one-system/vue-cas-client
+ * @module @cas-system/vue-cas-client
  *
  * Vue 3 CAS (Central Authentication System) Client SDK.
  *

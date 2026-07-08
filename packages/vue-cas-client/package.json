@@ -1,7 +1,7 @@
 {
-  "name": "@one-system/vue-cas-client",
+  "name": "@cas-system/vue-cas-client",
   "version": "1.0.0",
-  "description": "Vue 3 CAS (Central Authentication System) Client SDK — composables, plugin, router guards, and Pinia store for seamless SSO integration.",
+  "description": "Vue 3 CAS (Central Authentication System) Client SDK \u2014 composables, plugin, router guards, and Pinia store for seamless SSO integration.",
   "type": "module",
   "main": "./src/index.ts",
   "module": "./src/index.ts",
@@ -51,7 +51,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/insol-dev/central-authentication-server",
+    "url": "git+https://github.com/InSol-2021/one-system.git",
     "directory": "packages/vue-cas-client"
   },
   "publishConfig": {

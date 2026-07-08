@@ -55,7 +55,7 @@ export interface CasProviderProps {
  *
  * @example
  * ```tsx
- * import { CasProvider } from '@one-system/react-cas-client';
+ * import { CasProvider } from '@cas-system/react-cas-client';
  *
  * function App() {
  *   return (

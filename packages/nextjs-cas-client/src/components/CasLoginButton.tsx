@@ -1,13 +1,13 @@
 'use client';
 
 /**
- * @module @one-system/nextjs-cas-client/components/CasLoginButton
+ * @module @cas-system/nextjs-cas-client/components/CasLoginButton
  * @description A ready-to-use login button that redirects to the CAS SSO
  * login page when clicked.
  *
  * @example
  * ```tsx
- * import { CasLoginButton } from '@one-system/nextjs-cas-client';
+ * import { CasLoginButton } from '@cas-system/nextjs-cas-client';
  *
  * export default function Header() {
  *   return (

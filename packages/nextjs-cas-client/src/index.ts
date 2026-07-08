@@ -1,9 +1,9 @@
 /**
- * @module @one-system/nextjs-cas-client
+ * @module @cas-system/nextjs-cas-client
  * @description Public entry point for the Next.js CAS Client SDK.
  *
  * Re-exports the client-side provider, hooks, components, and shared types.
- * Server-only helpers live under `@one-system/nextjs-cas-client/server`,
+ * Server-only helpers live under `@cas-system/nextjs-cas-client/server`,
  * route handlers under `/handlers`, and middleware under `/middleware`.
  */
 

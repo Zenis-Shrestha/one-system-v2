@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterOutlet, RouterLink } from '@angular/router';
 
-import { CasAuthService } from '@one-system/angular-cas-client';
+import { CasAuthService } from '@cas-system/angular-cas-client';
 import { LocalSessionService } from './services/local-session.service';
 
 /**

@@ -1,12 +1,12 @@
 /**
- * @module @one-system/nextjs-cas-client/middleware
+ * @module @cas-system/nextjs-cas-client/middleware
  * @description Factory for creating a Next.js middleware that guards routes
  * behind CAS authentication.
  *
  * @example
  * ```ts
  * // middleware.ts (project root)
- * import { createCasMiddleware } from '@one-system/nextjs-cas-client/middleware';
+ * import { createCasMiddleware } from '@cas-system/nextjs-cas-client/middleware';
  *
  * export default createCasMiddleware({
  *   protectedPaths: ['/dashboard', '/admin', '/settings'],

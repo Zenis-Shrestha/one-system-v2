@@ -1,7 +1,7 @@
 @extends('public.documentation.layout')
 
 @section('title', 'Vue 3 Integration — CAS SSO')
-@section('description', 'Complete guide for integrating Vue 3 applications with CAS Single Sign-On using the @one-system/vue-cas-client SDK — plugin, composables, router guards, and Pinia store.')
+@section('description', 'Complete guide for integrating Vue 3 applications with CAS Single Sign-On using the @cas-system/vue-cas-client SDK — plugin, composables, router guards, and Pinia store.')
 
 @section('content')
 <section class="border-b border-[var(--color-line)] pb-10 mb-12">
@@ -41,7 +41,7 @@
 <section id="overview" class="mb-12">
     <h2 class="text-xl font-bold text-[var(--color-ink)] mb-4">1. Overview</h2>
     <p class="text-[var(--color-ink-2)] leading-relaxed mb-4">
-        <code class="os-code-inline">@one-system/vue-cas-client</code> is a Vue 3 SDK for the CAS Single
+        <code class="os-code-inline">@cas-system/vue-cas-client</code> is a Vue 3 SDK for the CAS Single
         Sign-On flow. It ships a plugin (<code class="os-code-inline">app.use(CasPlugin, config)</code>),
         the <code class="os-code-inline">useCasAuth()</code> and <code class="os-code-inline">useCasUser()</code>
         composables, a factory-based Vue Router guard, an optional Pinia store, and the
@@ -85,19 +85,19 @@
     <div class="os-codeblock mb-6">
         <div class="os-codeblock-head"><span>Terminal — package manager</span></div>
         <pre><code># npm
-npm install @one-system/vue-cas-client
+npm install @cas-system/vue-cas-client
 
 # yarn
-yarn add @one-system/vue-cas-client
+yarn add @cas-system/vue-cas-client
 
 # pnpm
-pnpm add @one-system/vue-cas-client</code></pre>
+pnpm add @cas-system/vue-cas-client</code></pre>
     </div>
     <div class="os-codeblock">
         <div class="os-codeblock-head"><span>package.json — local path (monorepo)</span></div>
         <pre><code>{
   "dependencies": {
-    "@one-system/vue-cas-client": "file:../packages/vue-cas-client"
+    "@cas-system/vue-cas-client": "file:../packages/vue-cas-client"
   }
 }</code></pre>
     </div>
@@ -170,7 +170,7 @@ CAS_CLIENT_SECRET=your_hashed_client_secret   # shown once on creation/regenerat
     <div class="os-codeblock">
         <div class="os-codeblock-head"><span>main.ts</span></div>
         <pre><code>import { createApp } from 'vue';
-import { CasPlugin } from '@one-system/vue-cas-client';
+import { CasPlugin } from '@cas-system/vue-cas-client';
 import App from './App.vue';
 
 const app = createApp(App);
@@ -197,7 +197,7 @@ app.mount('#app');</code></pre>
     <div class="os-codeblock mb-6">
         <div class="os-codeblock-head"><span>components/AuthButton.vue</span></div>
         <pre><code>&lt;script setup lang="ts"&gt;
-import { useCasAuth } from '@one-system/vue-cas-client';
+import { useCasAuth } from '@cas-system/vue-cas-client';
 
 const { user, isAuthenticated, isLoading, login, logout } = useCasAuth();
 &lt;/script&gt;
@@ -219,7 +219,7 @@ const { user, isAuthenticated, isLoading, login, logout } = useCasAuth();
     <div class="os-codeblock">
         <div class="os-codeblock-head"><span>components/AppNav.vue</span></div>
         <pre><code>&lt;script setup lang="ts"&gt;
-import { useCasUser } from '@one-system/vue-cas-client';
+import { useCasUser } from '@cas-system/vue-cas-client';
 
 const { hasRole, hasAnyRole } = useCasUser();
 
@@ -269,7 +269,7 @@ export const router = createRouter({
     </div>
     <div class="os-codeblock">
         <div class="os-codeblock-head"><span>main.ts — attach the guard</span></div>
-        <pre><code>import { CasPlugin, createCasAuthGuard, CAS_AUTH_KEY } from '@one-system/vue-cas-client';
+        <pre><code>import { CasPlugin, createCasAuthGuard, CAS_AUTH_KEY } from '@cas-system/vue-cas-client';
 import { router } from './router';
 
 app.use(CasPlugin, {
@@ -301,7 +301,7 @@ app.mount('#app');</code></pre>
         <div class="os-codeblock-head"><span>App.vue — Pinia store</span></div>
         <pre><code>&lt;script setup lang="ts"&gt;
 import { onMounted } from 'vue';
-import { useCasStore } from '@one-system/vue-cas-client';
+import { useCasStore } from '@cas-system/vue-cas-client';
 
 const auth = useCasStore();
 
@@ -339,7 +339,7 @@ onMounted(() =&gt; {
         <pre><code>&lt;script setup lang="ts"&gt;
 import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { useCasAuth } from '@one-system/vue-cas-client';
+import { useCasAuth } from '@cas-system/vue-cas-client';
 
 const router = useRouter();
 const { handleCallback, error } = useCasAuth();
@@ -422,7 +422,7 @@ app.post('/api/auth/validate', async (req, res) =&gt; {
     <div class="os-codeblock mb-6">
         <div class="os-codeblock-head"><span>views/Dashboard.vue</span></div>
         <pre><code>&lt;script setup lang="ts"&gt;
-import { CasProtectedView } from '@one-system/vue-cas-client';
+import { CasProtectedView } from '@cas-system/vue-cas-client';
 &lt;/script&gt;
 
 &lt;template&gt;

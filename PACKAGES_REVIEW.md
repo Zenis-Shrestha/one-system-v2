@@ -25,14 +25,14 @@ conformance, cross-package consistency, per-package findings, and prioritized fo
 
 | Package | Language | Protocol conformance | # Issues | # Fixes applied |
 |---|---|---|---:|---:|
-| `@one-system/angular-cas-client` | Angular / TypeScript | minor-issues | 6 | 4 |
+| `@cas-system/angular-cas-client` | Angular / TypeScript | minor-issues | 6 | 4 |
 | `CasSystem.Client` (dotnet-cas-client) | .NET / C# | minor-issues | 7 | 3 |
 | `io.github.insol-2021:cas-client` (java-cas-client) | Java | minor-issues | 7 | 3 |
-| `@one-system/nextjs-cas-client` | Next.js / TypeScript | minor-issues | 7 | 10 |
-| `@one-system/node-cas-client` | Node.js | minor-issues | 7 | 7 |
+| `@cas-system/nextjs-cas-client` | Next.js / TypeScript | minor-issues | 7 | 10 |
+| `@cas-system/node-cas-client` | Node.js | minor-issues | 7 | 7 |
 | `cas-client` (python-cas-client) | Python | minor-issues | 5 | 2 |
-| `@one-system/react-cas-client` | React / TypeScript | minor-issues | 4 | 5 |
-| `@one-system/vue-cas-client` | Vue 3 / TypeScript | minor-issues | 4 | 1 |
+| `@cas-system/react-cas-client` | React / TypeScript | minor-issues | 4 | 5 |
+| `@cas-system/vue-cas-client` | Vue 3 / TypeScript | minor-issues | 4 | 1 |
 | `cas-system/laravel-client` | PHP / Laravel | minor-issues | 9 | 0 (review-only / symlink) |
 
 All nine packages are rated **minor-issues**. None is fully conformant out of the box; each had at least one
@@ -160,7 +160,7 @@ dist-publish, uncompiled) and several manifest/file mismatches.
 
 ## 3. Per-package details
 
-### 3.1 `@one-system/angular-cas-client` (Angular / TypeScript) — minor-issues
+### 3.1 `@cas-system/angular-cas-client` (Angular / TypeScript) — minor-issues
 
 **API summary:** Angular library: `CasModule.forRoot(config, interceptUrls?)`, `CasClientService` (low-level),
 `CasAuthService` (reactive `user$`/`isAuthenticated$`/`isLoading$`), `CasAuthGuard`, `CasTokenInterceptor`
@@ -269,7 +269,7 @@ HMAC in docs.
 
 ---
 
-### 3.4 `@one-system/nextjs-cas-client` (Next.js / TypeScript) — minor-issues
+### 3.4 `@cas-system/nextjs-cas-client` (Next.js / TypeScript) — minor-issues
 
 **API summary:** Client root: `CasProvider`/`useCasAuthContext`, hooks `useCasAuth`/`useCasUser`, components
 `CasLoginButton`/`CasProtectedRoute`, shared types. `/server`: `CasClient`
@@ -307,7 +307,7 @@ emitted**; single-use depends on server enforcement.
 
 ---
 
-### 3.5 `@one-system/node-cas-client` (Node.js) — minor-issues
+### 3.5 `@cas-system/node-cas-client` (Node.js) — minor-issues
 
 **API summary:** Single `CasClient` (default export) with `{ serverUrl, clientId, clientSecret, callbackUrl,
 signatureSecret?, enableSignatureValidation?, timeout?, verifySsl? }`. Methods: `getLoginUrl()`,
@@ -321,8 +321,8 @@ signatureSecret?, enableSignatureValidation?, timeout?, verifySsl? }`. Methods: 
 **Issues found:**
 - **High (FIXED):** `validateToken()` used alt `/api/sso/validate` → fixed to `/api/validate-token` (URL +
   signature URI).
-- **High (FIXED):** Package-name drift — manifest is `@one-system/node-cas-client` but README install/require and
-  `@module` JSDoc said `@insol-dev/node-cas-client` → aligned to `@one-system/...`.
+- **High (FIXED):** Package-name drift — manifest is `@cas-system/node-cas-client` but README install/require and
+  `@module` JSDoc said `@insol-dev/node-cas-client` → aligned to `@cas-system/...`.
 - **Medium (FIXED):** Ignored `valid` flag → now requires `response.data.valid && response.data.user`.
 - **Medium (FIXED):** `getLoginUrl()` emitted `response_type`/`redirect_uri` → now `client_id` only.
 - **Low (FIXED):** `types: src/index.d.ts` pointed at a non-existent file → removed.
@@ -369,7 +369,7 @@ enabled in the deployment.
 
 ---
 
-### 3.7 `@one-system/react-cas-client` (React / TypeScript) — minor-issues
+### 3.7 `@cas-system/react-cas-client` (React / TypeScript) — minor-issues
 
 **API summary:** Named exports: `CasClient` (`getLoginUrl`, `login`, `extractTokenFromUrl`,
 `validateTokenViaBackend`, `handleCallback`, getters, `logout`, role helpers); `CasProvider` (+ `CasContext`);
@@ -402,7 +402,7 @@ consider documenting the bare-`CasUser` backend contract as a typed contract.
 
 ---
 
-### 3.8 `@one-system/vue-cas-client` (Vue 3 / TypeScript) — minor-issues
+### 3.8 `@cas-system/vue-cas-client` (Vue 3 / TypeScript) — minor-issues
 
 **API summary:** Named exports: `CasClient` (`getLoginUrl`, `login`, `extractTokenFromUrl`,
 `validateTokenViaBackend`, `handleCallback`, getters, `logout`, role helpers, `clearSession`); `CasPlugin`;

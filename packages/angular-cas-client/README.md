@@ -1,4 +1,4 @@
-# @one-system/angular-cas-client
+# @cas-system/angular-cas-client
 
 Angular SDK for **CAS (Central Authentication System)** SSO integration — guards, interceptors, reactive services.
 
@@ -20,7 +20,7 @@ Angular SDK for **CAS (Central Authentication System)** SSO integration — guar
 ## Installation
 
 ```bash
-npm install @one-system/angular-cas-client
+npm install @cas-system/angular-cas-client
 ```
 
 ### Peer dependencies
@@ -43,7 +43,7 @@ npm install @one-system/angular-cas-client
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-import { CasModule } from '@one-system/angular-cas-client';
+import { CasModule } from '@cas-system/angular-cas-client';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -77,7 +77,7 @@ import { RouterModule, Routes } from '@angular/router';
 import {
   CasCallbackComponent,
   CasAuthGuard,
-} from '@one-system/angular-cas-client';
+} from '@cas-system/angular-cas-client';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginComponent } from './login/login.component';
@@ -109,7 +109,7 @@ export class AppRoutingModule {}
 
 ```typescript
 import { Component } from '@angular/core';
-import { CasAuthService } from '@one-system/angular-cas-client';
+import { CasAuthService } from '@cas-system/angular-cas-client';
 
 @Component({
   selector: 'app-navbar',
@@ -225,7 +225,7 @@ CasModule.forRoot(
 Or provide the token manually:
 
 ```typescript
-import { CAS_INTERCEPT_URLS } from '@one-system/angular-cas-client';
+import { CAS_INTERCEPT_URLS } from '@cas-system/angular-cas-client';
 
 providers: [
   { provide: CAS_INTERCEPT_URLS, useValue: ['/api/'] },
@@ -313,7 +313,7 @@ import {
   CasTokenInterceptor,
   CasCallbackComponent,
   CasAuthGuard,
-} from '@one-system/angular-cas-client';
+} from '@cas-system/angular-cas-client';
 
 import { AppComponent } from './app/app.component';
 
@@ -354,7 +354,7 @@ bootstrapApplication(AppComponent, {
 
 ```typescript
 import { Component } from '@angular/core';
-import { CasClientService } from '@one-system/angular-cas-client';
+import { CasClientService } from '@cas-system/angular-cas-client';
 
 @Component({
   selector: 'app-sidebar',

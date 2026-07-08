@@ -1,5 +1,5 @@
 /**
- * @module @one-system/nextjs-cas-client/server/auth
+ * @module @cas-system/nextjs-cas-client/server/auth
  * @description Server-side session helpers for reading / writing CAS session
  * data to Next.js cookies.
  *
@@ -89,7 +89,7 @@ async function verifyPayload(
  * @example
  * ```ts
  * import { cookies } from 'next/headers';
- * import { getCasSession } from '@one-system/nextjs-cas-client/server';
+ * import { getCasSession } from '@cas-system/nextjs-cas-client/server';
  *
  * export default async function DashboardPage() {
  *   const session = await getCasSession(cookies());
@@ -136,7 +136,7 @@ export async function getCasSession(
  * @example
  * ```ts
  * import { cookies } from 'next/headers';
- * import { setCasSession } from '@one-system/nextjs-cas-client/server';
+ * import { setCasSession } from '@cas-system/nextjs-cas-client/server';
  *
  * await setCasSession(cookies(), user, token);
  * ```
@@ -171,7 +171,7 @@ export async function setCasSession(
  * @example
  * ```ts
  * import { cookies } from 'next/headers';
- * import { clearCasSession } from '@one-system/nextjs-cas-client/server';
+ * import { clearCasSession } from '@cas-system/nextjs-cas-client/server';
  *
  * clearCasSession(cookies());
  * ```
@@ -211,7 +211,7 @@ type AuthenticatedHandler = (
  * @example
  * ```ts
  * // app/api/admin/route.ts
- * import { withCasAuth } from '@one-system/nextjs-cas-client/server';
+ * import { withCasAuth } from '@cas-system/nextjs-cas-client/server';
  *
  * export const GET = withCasAuth(async (req, ctx, user) => {
  *   return NextResponse.json({ message: `Hello ${user.username}` });

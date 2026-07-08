@@ -9,7 +9,7 @@
  * It reads CAS_SERVER_URL, CAS_CLIENT_ID and CAS_CALLBACK_URL from the
  * environment (we do NOT set `loginPath`, so it goes directly to CAS).
  */
-import { createCasMiddleware } from '@one-system/nextjs-cas-client/middleware';
+import { createCasMiddleware } from '@cas-system/nextjs-cas-client/middleware';
 
 export default createCasMiddleware({
   protectedPaths: ['/dashboard'],

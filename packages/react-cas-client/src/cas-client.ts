@@ -17,7 +17,7 @@ const TOKEN_STORAGE_KEY = 'cas_token';
  *
  * @example
  * ```ts
- * import { CasClient } from '@one-system/react-cas-client';
+ * import { CasClient } from '@cas-system/react-cas-client';
  *
  * const client = new CasClient({
  *   serverUrl: 'https://cas.example.com',

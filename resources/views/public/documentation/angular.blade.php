@@ -30,7 +30,7 @@
             <span><i class="fas fa-clock mr-1"></i>5 min setup</span>
             <span><i class="fas fa-signal mr-1"></i>Easy</span>
             <span><i class="fas fa-tag mr-1"></i>Angular 18+</span>
-            <span><i class="fas fa-cube mr-1"></i>@one-system/angular-cas-client</span>
+            <span><i class="fas fa-cube mr-1"></i>@cas-system/angular-cas-client</span>
         </div>
     </div>
 </section>
@@ -81,14 +81,14 @@
     <p class="text-[var(--color-ink-2)] leading-relaxed mb-4">Install from npm:</p>
     <div class="os-codeblock mb-6">
         <div class="os-codeblock-head"><span>Terminal</span></div>
-        <pre><code>npm install @one-system/angular-cas-client</code></pre>
+        <pre><code>npm install @cas-system/angular-cas-client</code></pre>
     </div>
     <p class="text-[var(--color-ink-2)] leading-relaxed mb-4">Or, to develop against the package straight from the monorepo, reference it by <strong>local path</strong> in your <code class="os-code-inline">package.json</code> and install:</p>
     <div class="os-codeblock mb-6">
         <div class="os-codeblock-head"><span>package.json</span></div>
         <pre><code>{
   <span style="{{ $var }}">"dependencies"</span>: {
-    <span style="{{ $var }}">"@one-system/angular-cas-client"</span>: <span style="{{ $str }}">"file:../packages/angular-cas-client"</span>
+    <span style="{{ $var }}">"@cas-system/angular-cas-client"</span>: <span style="{{ $str }}">"file:../packages/angular-cas-client"</span>
   }
 }</code></pre>
     </div>
@@ -145,7 +145,7 @@
         <pre><code><span style="{{ $kw }}">import</span> { NgModule } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@angular/core'</span>;
 <span style="{{ $kw }}">import</span> { BrowserModule } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@angular/platform-browser'</span>;
 <span style="{{ $kw }}">import</span> { HttpClientModule } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@angular/common/http'</span>;
-<span style="{{ $kw }}">import</span> { CasModule } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@one-system/angular-cas-client'</span>;
+<span style="{{ $kw }}">import</span> { CasModule } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@cas-system/angular-cas-client'</span>;
 
 <span style="{{ $kw }}">import</span> { environment } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'../environments/environment'</span>;
 <span style="{{ $kw }}">import</span> { AppRoutingModule } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'./app-routing.module'</span>;
@@ -180,7 +180,7 @@
   CasTokenInterceptor,
   CasCallbackComponent,
   CasAuthGuard,
-} <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@one-system/angular-cas-client'</span>;
+} <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@cas-system/angular-cas-client'</span>;
 
 <span style="{{ $kw }}">import</span> { AppComponent } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'./app/app.component'</span>;
 <span style="{{ $kw }}">import</span> { environment } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'./environments/environment'</span>;
@@ -212,7 +212,7 @@
         <div class="os-codeblock-head"><span>app-routing.module.ts</span></div>
         <pre><code><span style="{{ $kw }}">import</span> { NgModule } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@angular/core'</span>;
 <span style="{{ $kw }}">import</span> { RouterModule, Routes } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@angular/router'</span>;
-<span style="{{ $kw }}">import</span> { CasCallbackComponent, CasAuthGuard } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@one-system/angular-cas-client'</span>;
+<span style="{{ $kw }}">import</span> { CasCallbackComponent, CasAuthGuard } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@cas-system/angular-cas-client'</span>;
 
 <span style="{{ $kw }}">import</span> { DashboardComponent } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'./dashboard/dashboard.component'</span>;
 <span style="{{ $kw }}">import</span> { LoginComponent } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'./login/login.component'</span>;
@@ -300,7 +300,7 @@
     </p>
     <div class="os-codeblock">
         <div class="os-codeblock-head"><span>Restrict the interceptor</span></div>
-        <pre><code><span style="{{ $kw }}">import</span> { CAS_INTERCEPT_URLS } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@one-system/angular-cas-client'</span>;
+        <pre><code><span style="{{ $kw }}">import</span> { CAS_INTERCEPT_URLS } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@cas-system/angular-cas-client'</span>;
 
 providers: [
   { provide: CAS_INTERCEPT_URLS, useValue: [<span style="{{ $str }}">'/api/'</span>, <span style="{{ $str }}">'https://backend.example.com'</span>] },
@@ -319,7 +319,7 @@ providers: [
     <div class="os-codeblock mb-6">
         <div class="os-codeblock-head"><span>navbar.component.ts</span></div>
         <pre><code><span style="{{ $kw }}">import</span> { Component } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@angular/core'</span>;
-<span style="{{ $kw }}">import</span> { CasAuthService } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@one-system/angular-cas-client'</span>;
+<span style="{{ $kw }}">import</span> { CasAuthService } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@cas-system/angular-cas-client'</span>;
 
 <span style="{{ $fn }}">&commat;Component</span>({
   selector: <span style="{{ $str }}">'app-navbar'</span>,
@@ -375,7 +375,7 @@ providers: [
     <div class="os-codeblock mb-6">
         <div class="os-codeblock-head"><span>dashboard.component.ts</span></div>
         <pre><code><span style="{{ $kw }}">import</span> { Component } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@angular/core'</span>;
-<span style="{{ $kw }}">import</span> { CasAuthService, CasClientService } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@one-system/angular-cas-client'</span>;
+<span style="{{ $kw }}">import</span> { CasAuthService, CasClientService } <span style="{{ $kw }}">from</span> <span style="{{ $str }}">'@cas-system/angular-cas-client'</span>;
 
 <span style="{{ $fn }}">&commat;Component</span>({
   selector: <span style="{{ $str }}">'app-dashboard'</span>,

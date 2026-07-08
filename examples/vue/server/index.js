@@ -3,7 +3,7 @@
 //
 // WHY THIS EXISTS
 // ---------------
-// The @one-system/vue-cas-client SDK NEVER validates the JWT in the browser,
+// The @cas-system/vue-cas-client SDK NEVER validates the JWT in the browser,
 // because validation requires the CAS `client_secret` and the token is
 // single-use. Instead, the browser SDK (CasClient.validateTokenViaBackend)
 // POSTs `{ token }` to a backend endpoint. THIS server is that backend:

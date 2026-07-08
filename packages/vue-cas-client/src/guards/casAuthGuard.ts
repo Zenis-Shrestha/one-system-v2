@@ -39,7 +39,7 @@ declare module 'vue-router' {
  * ```ts
  * // router/index.ts
  * import { createRouter, createWebHistory } from 'vue-router';
- * import { createCasAuthGuard, CAS_AUTH_KEY } from '@one-system/vue-cas-client';
+ * import { createCasAuthGuard, CAS_AUTH_KEY } from '@cas-system/vue-cas-client';
  *
  * export function setupRouter(app) {
  *   const router = createRouter({ ... });

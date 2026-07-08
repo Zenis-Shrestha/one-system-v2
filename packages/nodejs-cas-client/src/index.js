@@ -1,6 +1,6 @@
 /**
  * CAS SSO Client for Node.js
- * @module @one-system/node-cas-client
+ * @module @cas-system/node-cas-client
  */
 
 const crypto = require('crypto');

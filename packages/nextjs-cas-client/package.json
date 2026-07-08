@@ -1,5 +1,5 @@
 {
-  "name": "@one-system/nextjs-cas-client",
+  "name": "@cas-system/nextjs-cas-client",
   "version": "1.0.0",
   "description": "Next.js CAS (Central Authentication System) Client SDK \u2014 App Router, Server Components, Middleware, and Client Hooks",
   "main": "./dist/index.js",
@@ -64,7 +64,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/insol-dev/central-authentication-server",
+    "url": "git+https://github.com/InSol-2021/one-system.git",
     "directory": "packages/nextjs-cas-client"
   },
   "publishConfig": {

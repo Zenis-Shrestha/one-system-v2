@@ -1,7 +1,7 @@
 # One System CAS — Next.js sample
 
 The smallest end-to-end Next.js (App Router) app demonstrating the
-[`@one-system/nextjs-cas-client`](../../packages/nextjs-cas-client) SDK:
+[`@cas-system/nextjs-cas-client`](../../packages/nextjs-cas-client) SDK:
 
 1. **Trigger CAS login** — `<CasLoginButton>` / `useCasAuth().login()`, or just
    navigating to a protected route (the middleware redirects to CAS).
@@ -71,7 +71,7 @@ Flow:
 `package.json` depends on the package via a local path:
 
 ```json
-"@one-system/nextjs-cas-client": "file:../../packages/nextjs-cas-client"
+"@cas-system/nextjs-cas-client": "file:../../packages/nextjs-cas-client"
 ```
 
 `npm install` symlinks the package directory into `node_modules`, including its
