@@ -4,7 +4,7 @@ version = "1.0.0"
 edition = "2021"
 description = "One System CAS SSO client for Rust — build the login URL and validate single-use tokens server-to-server."
 license = "MIT"
-repository = "https://github.com/one-system/one-system"
+repository = "https://github.com/InSol-2021/one-system"
 keywords = ["cas", "sso", "authentication", "jwt"]
 categories = ["authentication", "web-programming"]
 
