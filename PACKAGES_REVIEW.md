@@ -27,7 +27,7 @@ conformance, cross-package consistency, per-package findings, and prioritized fo
 |---|---|---|---:|---:|
 | `@cas-system/angular-cas-client` | Angular / TypeScript | minor-issues | 6 | 4 |
 | `CasSystem.Client` (dotnet-cas-client) | .NET / C# | minor-issues | 7 | 3 |
-| `io.github.insol-2021:cas-client` (java-cas-client) | Java | minor-issues | 7 | 3 |
+| `io.github.insol-dev:cas-client` (java-cas-client) | Java | minor-issues | 7 | 3 |
 | `@cas-system/nextjs-cas-client` | Next.js / TypeScript | minor-issues | 7 | 10 |
 | `@cas-system/node-cas-client` | Node.js | minor-issues | 7 | 7 |
 | `cas-client` (python-cas-client) | Python | minor-issues | 5 | 2 |
@@ -235,7 +235,7 @@ headers + weak default; single-use vs Bearer revalidation.
 
 ---
 
-### 3.3 `io.github.insol-2021:cas-client` (java-cas-client) (Java) — minor-issues
+### 3.3 `io.github.insol-dev:cas-client` (java-cas-client) (Java) — minor-issues
 
 **API summary:** `com.cassystem.client.CasClient(CasConfig)`: `getLoginUrl(String returnUrl)` + new no-arg
 `getLoginUrl()`, `generateSSOToken(username)` (POST `/api/sso/token`), `validateToken(token)` (POST

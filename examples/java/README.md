@@ -1,7 +1,7 @@
 # One System CAS - Java (Spring Boot) sample
 
 A small but real app with its **own local username/password accounts** that ALSO
-supports the **`java-cas-client`** package (`io.github.insol-2021:cas-client`) CAS single
+supports the **`java-cas-client`** package (`io.github.insol-dev:cas-client`) CAS single
 sign-on flow. A user can sign in **either way**.
 
 ## Local accounts (SQLite)
@@ -106,7 +106,7 @@ cd ../../packages/java-cas-client
 mvn install -DskipTests
 ```
 
-This publishes `io.github.insol-2021:cas-client:2.0.0` to `~/.m2/repository`.
+This publishes `io.github.insol-dev:cas-client:2.0.0` to `~/.m2/repository`.
 
 ## Run (local)
 

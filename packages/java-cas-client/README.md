@@ -17,7 +17,7 @@ A Java library for seamless integration with One System CAS (Central Authenticat
 
 ```xml
 <dependency>
-    <groupId>io.github.insol-2021</groupId>
+    <groupId>io.github.insol-dev</groupId>
     <artifactId>cas-client</artifactId>
     <version>2.0.0</version>
 </dependency>
@@ -26,7 +26,7 @@ A Java library for seamless integration with One System CAS (Central Authenticat
 ### Gradle
 
 ```groovy
-implementation 'io.github.insol-2021:cas-client:2.0.0'
+implementation 'io.github.insol-dev:cas-client:2.0.0'
 ```
 
 ## Requirements

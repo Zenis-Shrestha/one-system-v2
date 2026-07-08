@@ -51,12 +51,12 @@
 
 <section id="dependency" class="mb-12">
     <h2 class="text-xl font-semibold text-[var(--color-ink)] mb-2">1. Add the dependency</h2>
-    <p class="text-[var(--color-muted)] mb-4">Add <code class="os-code-inline">io.github.insol-2021:cas-client</code> to your build.</p>
+    <p class="text-[var(--color-muted)] mb-4">Add <code class="os-code-inline">io.github.insol-dev:cas-client</code> to your build.</p>
 
     <div class="os-codeblock mb-4">
         <div class="os-codeblock-head"><span>pom.xml</span><span>Maven</span></div>
         <pre><code>&lt;dependency&gt;
-    &lt;groupId&gt;io.github.insol-2021&lt;/groupId&gt;
+    &lt;groupId&gt;io.github.insol-dev&lt;/groupId&gt;
     &lt;artifactId&gt;cas-client&lt;/artifactId&gt;
     &lt;version&gt;2.0.0&lt;/version&gt;
 &lt;/dependency&gt;</code></pre>
@@ -64,7 +64,7 @@
 
     <div class="os-codeblock">
         <div class="os-codeblock-head"><span>build.gradle</span><span>Gradle</span></div>
-        <pre><code>implementation 'io.github.insol-2021:cas-client:2.0.0'</code></pre>
+        <pre><code>implementation 'io.github.insol-dev:cas-client:2.0.0'</code></pre>
     </div>
 
     <div class="os-alert mt-4">

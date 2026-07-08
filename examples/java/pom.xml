@@ -43,11 +43,11 @@
               cd ../../packages/java-cas-client
               mvn install -DskipTests
 
-          That publishes io.github.insol-2021:cas-client:2.0.0 to ~/.m2/repository, and
+          That publishes io.github.insol-dev:cas-client:2.0.0 to ~/.m2/repository, and
           this dependency then resolves it locally. See README.md for details.
         -->
         <dependency>
-            <groupId>io.github.insol-2021</groupId>
+            <groupId>io.github.insol-dev</groupId>
             <artifactId>cas-client</artifactId>
             <version>2.0.0</version>
         </dependency>
