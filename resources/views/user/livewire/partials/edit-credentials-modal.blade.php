@@ -89,7 +89,8 @@
                         <x-icon name="times" class="w-4 h-4" />Cancel
                     </button>
 
-                    <button type="submit"
+                    <button type="button"
+                            wire:click="saveCredentials"
                             wire:loading.attr="disabled"
                             wire:target="saveCredentials"
                             class="os-btn os-btn-primary w-full disabled:opacity-50 sm:w-auto">
