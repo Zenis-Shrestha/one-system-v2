@@ -26,7 +26,8 @@ return new class extends Migration
             $table->json('preferences')->nullable();
             $table->text('two_factor_secret')->nullable();
             $table->boolean('two_factor_enabled')->default(false);
-            $table->json('two_factor_backup_codes')->nullable();
+            // EncryptedArrayFallback stores ciphertext, which requires TEXT.
+            $table->text('two_factor_backup_codes')->nullable();
             $table->timestamps();
 
             $table->index('username');

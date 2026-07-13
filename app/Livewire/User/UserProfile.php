@@ -187,7 +187,8 @@ class UserProfile extends Component
             $this->show2FAForm = true;
 
         } catch (\Exception $e) {
-            $this->showMessage('Failed to setup 2FA: ' . $e->getMessage(), 'error');
+            Log::error('2FA setup failed', ['user_id' => $this->user?->id, 'exception' => $e]);
+            $this->showMessage('Failed to set up two-factor authentication. Please try again.', 'error');
         }
     }
 
@@ -240,7 +241,8 @@ class UserProfile extends Component
             $this->showMessage('Two-factor authentication enabled successfully! Please save your backup codes securely.', 'success');
             $this->loadUserProfile();
         } catch (\Exception $e) {
-            $this->showMessage('Failed to enable 2FA: ' . $e->getMessage(), 'error');
+            Log::error('2FA enable failed', ['user_id' => $this->user?->id, 'exception' => $e]);
+            $this->showMessage('Failed to enable two-factor authentication. Please try again.', 'error');
         }
     }
 
@@ -271,8 +273,8 @@ class UserProfile extends Component
             $this->loadUserProfile();
 
         } catch (\Exception $e) {
-            $this->showMessage('Failed to disable 2FA: ' . $e->getMessage(), 'error');
-            Log::error('2FA Disable Error: ' . $e->getMessage());
+            Log::error('2FA disable failed', ['user_id' => $this->user?->id, 'exception' => $e]);
+            $this->showMessage('Failed to disable two-factor authentication. Please try again.', 'error');
         }
     }
 

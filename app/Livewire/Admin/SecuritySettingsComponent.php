@@ -6,6 +6,7 @@ use App\Models\User;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use PragmaRX\Google2FA\Google2FA;
 use App\Models\SecuritySetting;
 use App\Models\UserSecurity;
@@ -220,7 +221,8 @@ class SecuritySettingsComponent extends Component
             session()->flash('message', '2FA enabled successfully! Please save your backup codes.');
 
         } catch (\Exception $e) {
-            session()->flash('error', 'Failed to enable 2FA: ' . $e->getMessage());
+            Log::error('Admin 2FA enable failed', ['user_id' => $userId, 'exception' => $e]);
+            session()->flash('error', 'Failed to enable two-factor authentication. Please try again.');
         }
     }
 
@@ -254,7 +256,8 @@ class SecuritySettingsComponent extends Component
             session()->flash('message', '2FA disabled successfully.');
 
         } catch (\Exception $e) {
-            session()->flash('error', 'Failed to disable 2FA: ' . $e->getMessage());
+            Log::error('Admin 2FA disable failed', ['user_id' => $userId, 'exception' => $e]);
+            session()->flash('error', 'Failed to disable two-factor authentication. Please try again.');
         }
     }
 
@@ -277,7 +280,8 @@ class SecuritySettingsComponent extends Component
             session()->flash('message', 'Backup codes regenerated successfully.');
 
         } catch (\Exception $e) {
-            session()->flash('error', 'Failed to regenerate backup codes: ' . $e->getMessage());
+            Log::error('Admin 2FA backup-code regeneration failed', ['user_id' => $userId, 'exception' => $e]);
+            session()->flash('error', 'Failed to regenerate backup codes. Please try again.');
         }
     }
 

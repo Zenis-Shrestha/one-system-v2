@@ -16,7 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->boolean('two_factor_enabled')->default(false);
             $table->text('two_factor_secret')->nullable();
-            $table->json('two_factor_backup_codes')->nullable();
+            // EncryptedArrayFallback stores ciphertext, which requires TEXT.
+            $table->text('two_factor_backup_codes')->nullable();
             $table->timestamp('two_factor_setup_at')->nullable();
             $table->boolean('password_reset_required')->default(false);
             $table->integer('failed_login_attempts')->default(0);

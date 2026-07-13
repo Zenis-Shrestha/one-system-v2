@@ -24,13 +24,15 @@
             <form wire:submit.prevent="saveCredentials">
                 <div class="space-y-6 px-6 py-6">
                     <div>
-                        <label for="modalUsername" class="os-label">Username</label>
+                        <label for="modalUsername" class="os-label">Username or email</label>
                         <input type="text"
                                id="modalUsername"
                                wire:model.defer="modalUsername"
                                class="os-input"
-                               placeholder="Enter your username for this system"
+                               placeholder="Enter your username or email for this system"
+                               autocomplete="username"
                                required>
+                        <p class="mt-1 text-xs text-[var(--color-faint)]">Use whichever identity you use to sign in to this system.</p>
                         @error('modalUsername')
                             <span class="mt-1 flex items-center gap-1 text-sm text-[var(--color-danger)]">
                                 <x-icon name="exclamation" class="w-4 h-4" />{{ $message }}

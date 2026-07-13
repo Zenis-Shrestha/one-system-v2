@@ -113,7 +113,9 @@ class UserDashboard extends Component
         if ($system) {
             $this->selectedSystemId = $clientSystemId;
             $this->selectedSystemName = $system['name'];
-            $this->modalUsername = $system['is_linked'] ? $system['linked_username'] : '';
+            $this->modalUsername = $system['is_linked']
+                ? $system['linked_username']
+                : $this->defaultLinkedIdentity();
             $this->modalPassword = '';
             $this->showLinkModal = true;
         }
@@ -125,7 +127,9 @@ class UserDashboard extends Component
         if ($system) {
             $this->selectedSystemId = $clientSystemId;
             $this->selectedSystemName = $system['name'];
-            $this->modalUsername = $system['is_linked'] ? $system['linked_username'] : '';
+            $this->modalUsername = $system['is_linked']
+                ? $system['linked_username']
+                : $this->defaultLinkedIdentity();
             $this->modalPassword = '';
             $this->showLinkModal = true;
         }
@@ -232,11 +236,10 @@ class UserDashboard extends Component
             return;
         }
 
-        // Username defaults to the signed-in user's identity (it becomes the SSO
-        // identity presented to this client system).
-        $username = trim((string) $this->modalUsername) ?: optional(User::find($userId))->username;
+        // The linked identity may be either the account's username or email.
+        $username = trim((string) $this->modalUsername) ?: $this->defaultLinkedIdentity();
         if (empty($username)) {
-            $this->showMessage('Please provide a username for this system', 'error');
+            $this->showMessage('Please provide a username or email for this system', 'error');
             $this->processing = false;
             return;
         }
@@ -291,6 +294,13 @@ class UserDashboard extends Component
         } finally {
             $this->processing = false;
         }
+    }
+
+    private function defaultLinkedIdentity(): string
+    {
+        $user = $this->user ?: User::find(session('user_id'));
+
+        return trim((string) ($user?->email ?: $user?->username));
     }
 
     public function editCredentials($clientSystemId)
