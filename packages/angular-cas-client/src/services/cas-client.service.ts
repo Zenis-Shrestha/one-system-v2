@@ -237,24 +237,39 @@ export class CasClientService {
   }
 
   /**
-   * Log out: clears `sessionStorage` and optionally redirects.
+   * Log out: clears `sessionStorage`, notifies CAS with a credentialed POST,
+   * and redirects back to the client application.
    *
-   * The browser is redirected to the CAS server's logout endpoint. When the
-   * CAS server finishes its logout flow it will redirect back to
-   * `redirectUrl` (defaults to the current origin).
+   * CAS logout is POST-only to prevent forced logout through a cross-site GET.
+   * The local redirect runs in `finally`, so users are never stranded on an
+   * API error response if the CAS notification is unavailable.
    *
    * @param redirectUrl - URL to land on after logout completes.
    */
-  logout(redirectUrl?: string): void {
+  async logout(redirectUrl?: string): Promise<void> {
     if (typeof sessionStorage !== 'undefined') {
       sessionStorage.removeItem(TOKEN_STORAGE_KEY);
       sessionStorage.removeItem(USER_STORAGE_KEY);
       sessionStorage.removeItem('cas_return_url');
     }
 
-    if (typeof window !== 'undefined') {
-      const finalRedirect = redirectUrl ?? window.location.origin;
-      window.location.href = `${this.config.serverUrl}/api/logout?redirect_uri=${encodeURIComponent(finalRedirect)}`;
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    const finalRedirect = new URL(redirectUrl ?? '/', window.location.origin).toString();
+
+    try {
+      await fetch(`${this.config.serverUrl}/api/logout`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          Accept: 'application/json',
+          'X-Requested-With': 'XMLHttpRequest',
+        },
+      });
+    } finally {
+      window.location.assign(finalRedirect);
     }
   }
 

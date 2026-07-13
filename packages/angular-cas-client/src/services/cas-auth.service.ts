@@ -80,9 +80,9 @@ export class CasAuthService {
    *
    * @param redirectUrl - URL to redirect to once logout is complete.
    */
-  logout(redirectUrl?: string): void {
+  logout(redirectUrl?: string): Promise<void> {
     this.userSubject.next(null);
-    this.casClient.logout(redirectUrl);
+    return this.casClient.logout(redirectUrl);
   }
 
   /**
