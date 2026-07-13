@@ -31,7 +31,7 @@
             <span class="os-badge">Composer package</span>
             <span class="os-badge">Laravel 10 / 11 / 12</span>
             <span class="os-badge">PHP 7.2 – 8.x</span>
-            <span class="os-badge-accent os-badge">cas-system/laravel-client 1.0.1</span>
+            <span class="os-badge-accent os-badge">cas-system/laravel-client 1.0.2</span>
         </div>
     </div>
 </section>
@@ -42,7 +42,7 @@
     <ol class="space-y-1.5 text-sm">
         <li><a href="#installation" class="text-[var(--color-accent)] hover:text-[var(--color-accent-strong)]">1. {{ $laravelGuide['sections']['installation'] }}</a></li>
         <li><a href="#configuration" class="text-[var(--color-accent)] hover:text-[var(--color-accent-strong)]">2. {{ $laravelGuide['sections']['configuration'] }}</a></li>
-        <li><a href="#model-setup" class="text-[var(--color-accent)] hover:text-[var(--color-accent-strong)]">3. User model setup</a></li>
+        <li><a href="#model-setup" class="text-[var(--color-accent)] hover:text-[var(--color-accent-strong)]">3. Local user handling</a></li>
         <li><a href="#middleware" class="text-[var(--color-accent)] hover:text-[var(--color-accent-strong)]">4. {{ $laravelGuide['sections']['middleware'] }} &amp; {{ $laravelGuide['sections']['routes'] }}</a></li>
         <li><a href="#flow" class="text-[var(--color-accent)] hover:text-[var(--color-accent-strong)]">5. How the SSO flow works</a></li>
         <li><a href="#api" class="text-[var(--color-accent)] hover:text-[var(--color-accent-strong)]">6. {{ $laravelGuide['sections']['examples'] }}</a></li>
@@ -59,25 +59,23 @@
         <pre><code>composer require cas-system/laravel-client</code></pre>
     </div>
 
-    <p class="text-sm text-[var(--color-ink-2)] leading-relaxed mb-4">Then run the bundled installer. It publishes the config, adds the <code class="os-code-inline">CasUserTrait</code> to your User model and seeds the required <code class="os-code-inline">.env</code> keys. It does not modify the database:</p>
+    <p class="text-sm text-[var(--color-ink-2)] leading-relaxed mb-4">Then run the bundled installer. It publishes the config and seeds the required <code class="os-code-inline">.env</code> keys. It does not modify your User model or database schema:</p>
 
     <div class="os-codeblock mb-6">
         <div class="os-codeblock-head"><span>Terminal</span></div>
-        <pre><code>php artisan cas:install
-php artisan migrate</code></pre>
+        <pre><code>php artisan cas:install</code></pre>
     </div>
 
     <div class="os-alert os-alert-info mb-6">
         <i class="fas fa-circle-info mt-0.5"></i>
-        <div><strong class="font-semibold">Why is migration required?</strong> Laravel packages may register migrations directly with <code class="os-code-inline">loadMigrationsFrom()</code>. This package does so, and <code class="os-code-inline">php artisan migrate</code> applies its bundled migration to add four CAS fields to the host application's <code class="os-code-inline">users</code> table. No migration publishing step is needed.</div>
+        <div><strong class="font-semibold">No package migration required.</strong> CAS user data and the callback token are stored in Laravel's session and cache. Optional local-user provisioning uses your existing <code class="os-code-inline">name</code>, <code class="os-code-inline">email</code>, and <code class="os-code-inline">password</code> columns, so the package does not add CAS-specific database fields.</div>
     </div>
 
-    <p class="text-sm text-[var(--color-ink-2)] leading-relaxed mb-4">Prefer to configure it by hand? Publish the config file with the <code class="os-code-inline">cas-client-config</code> tag, add <code class="os-code-inline">CasUserTrait</code> to your User model, set the environment values shown below, and run the registered package migration:</p>
+    <p class="text-sm text-[var(--color-ink-2)] leading-relaxed mb-4">Prefer to configure it by hand? Publish the config file with the <code class="os-code-inline">cas-client-config</code> tag and set the environment values shown below:</p>
 
     <div class="os-codeblock">
         <div class="os-codeblock-head"><span>Terminal</span></div>
-        <pre><code>php artisan vendor:publish --tag=cas-client-config
-php artisan migrate</code></pre>
+        <pre><code>php artisan vendor:publish --tag=cas-client-config</code></pre>
     </div>
 </section>
 
@@ -92,6 +90,7 @@ php artisan migrate</code></pre>
 <span style="{{ $var }}">CAS_CLIENT_ID</span>=<span style="{{ $str }}">your_client_id</span>
 <span style="{{ $var }}">CAS_CLIENT_SECRET</span>=<span style="{{ $str }}">your_client_secret</span>
 <span style="{{ $var }}">CAS_CALLBACK_URL</span>=<span style="{{ $str }}">https://your-app.example.com/cas/callback</span>
+<span style="{{ $var }}">CAS_CREATE_LOCAL_USERS</span>=<span style="{{ $num }}">true</span>
 
 <span style="{{ $com }}"># Optional — security &amp; behaviour</span>
 <span style="{{ $var }}">CAS_ENABLE_SIGNATURE_VALIDATION</span>=<span style="{{ $num }}">true</span>
@@ -131,7 +130,7 @@ php artisan migrate</code></pre>
 
     <span style="{{ $com }}">// Local user provisioning</span>
     <span style="{{ $str }}">'user'</span> => [
-        <span style="{{ $str }}">'create_local_users'</span> => <span style="{{ $num }}">true</span>,
+        <span style="{{ $str }}">'create_local_users'</span> => <span style="{{ $fn }}">env</span>(<span style="{{ $str }}">'CAS_CREATE_LOCAL_USERS'</span>, <span style="{{ $num }}">true</span>),
         <span style="{{ $str }}">'model'</span>              => <span style="{{ $fn }}">env</span>(<span style="{{ $str }}">'CAS_USER_MODEL'</span>, <span style="{{ $str }}">'App\Models\Auth\User'</span>),
         <span style="{{ $str }}">'defaults'</span>           => [<span style="{{ $str }}">'user_type'</span> => <span style="{{ $str }}">'Guest'</span>],
     ],
@@ -146,28 +145,17 @@ php artisan migrate</code></pre>
     </div>
 </section>
 
-{{-- 3. User model setup --}}
+{{-- 3. Local user handling --}}
 <section id="model-setup" class="mb-12">
-    <h2 class="text-xl font-bold text-[var(--color-ink)] mb-4">3. User model setup</h2>
-    <p class="text-sm text-[var(--color-ink-2)] leading-relaxed mb-4">Add the <code class="os-code-inline">CasUserTrait</code> to your User model. The trait merges the CAS columns into <code class="os-code-inline">$fillable</code> and casts, so you do not edit those arrays yourself. The migration adds <code class="os-code-inline">cas_user</code>, <code class="os-code-inline">cas_username</code>, <code class="os-code-inline">cas_token</code> and <code class="os-code-inline">cas_token_expires_at</code> to the <code class="os-code-inline">users</code> table.</p>
+    <h2 class="text-xl font-bold text-[var(--color-ink)] mb-4">3. Local user handling</h2>
+    <p class="text-sm text-[var(--color-ink-2)] leading-relaxed mb-4">No trait or CAS-specific database columns are required. After ONE validates the callback token, the package keeps the CAS identity in the Laravel session and optionally signs in a matching local user by email.</p>
 
-    <div class="os-codeblock">
-        <div class="os-codeblock-head"><span>app/Models/User.php</span></div>
-        <pre><code><span style="{{ $kw }}">namespace</span> <span style="{{ $fn }}">App\Models</span>;
-
-<span style="{{ $kw }}">use</span> <span style="{{ $fn }}">Illuminate\Foundation\Auth\User</span> <span style="{{ $kw }}">as</span> <span style="{{ $fn }}">Authenticatable</span>;
-<span style="{{ $kw }}">use</span> <span style="{{ $fn }}">CasSystem\LaravelClient\Traits\CasUserTrait</span>;
-
-<span style="{{ $kw }}">class</span> <span style="{{ $fn }}">User</span> <span style="{{ $kw }}">extends</span> <span style="{{ $fn }}">Authenticatable</span>
-{
-    <span style="{{ $kw }}">use</span> <span style="{{ $fn }}">CasUserTrait</span>;
-
-    <span style="{{ $com }}">// The trait already registers cas_user, cas_username,</span>
-    <span style="{{ $com }}">// cas_token and cas_token_expires_at as fillable + cast.</span>
-    <span style="{{ $kw }}">protected</span> <span style="{{ $var }}">$fillable</span> = [
-        <span style="{{ $str }}">'name'</span>, <span style="{{ $str }}">'email'</span>, <span style="{{ $str }}">'password'</span>,
-    ];
-}</code></pre>
+    <div class="os-card os-card-pad">
+        <ul class="text-sm text-[var(--color-ink-2)] leading-relaxed space-y-2 list-disc pl-5">
+            <li><code class="os-code-inline">CAS_CREATE_LOCAL_USERS=true</code> (default): if no matching user exists, create one using the model's existing <code class="os-code-inline">name</code>, <code class="os-code-inline">email</code>, and <code class="os-code-inline">password</code> fields.</li>
+            <li><code class="os-code-inline">CAS_CREATE_LOCAL_USERS=false</code>: only an existing local user with the same email can be signed in; missing users are rejected.</li>
+            <li>CAS roles, callback token, and remote user details remain in session/cache and are not written to the <code class="os-code-inline">users</code> table.</li>
+        </ul>
     </div>
 </section>
 
