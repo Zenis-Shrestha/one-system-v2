@@ -38,7 +38,7 @@
 
                 <div>
                     <label for="code" class="os-label">Verification code</label>
-                    <input id="code" name="code" type="text" required maxlength="8"
+                    <input id="code" name="code" type="text" required maxlength="8" autofocus
                            class="os-input text-center tracking-[0.5em] font-mono"
                            placeholder="000000" autocomplete="off" inputmode="numeric">
                 </div>
@@ -56,15 +56,4 @@
         </div>
 </div>
 
-<script>
-document.getElementById('code').focus();
-
-document.getElementById('code').addEventListener('input', function(e) {
-    if (e.target.value.length === 6 && /^\d{6}$/.test(e.target.value)) {
-        setTimeout(() => {
-            e.target.closest('form').submit();
-        }, 500);
-    }
-});
-</script>
 @endsection
