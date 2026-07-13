@@ -85,7 +85,7 @@
         <div class="os-codeblock-head"><span>package.json</span></div>
         <pre><code>{
   <span style="{{ $str }}">"dependencies"</span>: {
-    <span style="{{ $str }}">"@cas-system/nextjs-cas-client"</span>: <span style="{{ $str }}">"^1.0.0"</span>
+    <span style="{{ $str }}">"@cas-system/nextjs-cas-client"</span>: <span style="{{ $str }}">"^1.0.1"</span>
   }
 }</code></pre>
     </div>

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
 class DocumentationController extends Controller
 {
@@ -291,7 +290,7 @@ class DocumentationController extends Controller
                 'description' => 'Complete REST API reference for CAS authentication system',
                 'endpoints' => [
                     'POST /api/sso/token' => 'Generate SSO authentication token',
-                    'POST /api/sso/validate' => 'Validate SSO token',
+                    'POST /api/validate-token' => 'Validate and consume an SSO token',
                     'GET /api/user' => 'Get authenticated user information',
                     'POST /api/logout' => 'Logout and invalidate session'
                 ]
@@ -310,7 +309,7 @@ class DocumentationController extends Controller
                 'description' => 'Single Sign-On API endpoints',
                 'endpoints' => [
                     'POST /api/sso/token' => 'Generate SSO token with client credentials',
-                    'POST /api/sso/validate' => 'Validate and verify SSO token',
+                    'POST /api/validate-token' => 'Validate and consume an SSO token',
                     'GET /auth/sso/callback' => 'SSO callback handler'
                 ]
             ]

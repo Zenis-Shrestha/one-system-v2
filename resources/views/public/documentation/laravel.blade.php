@@ -59,14 +59,20 @@
         <pre><code>composer require cas-system/laravel-client</code></pre>
     </div>
 
-    <p class="text-sm text-[var(--color-ink-2)] leading-relaxed mb-4">Then run the bundled installer. It publishes the config, runs the migration prompt, adds the <code class="os-code-inline">CasUserTrait</code> to your User model and seeds the required <code class="os-code-inline">.env</code> keys:</p>
+    <p class="text-sm text-[var(--color-ink-2)] leading-relaxed mb-4">Then run the bundled installer. It publishes the config, adds the <code class="os-code-inline">CasUserTrait</code> to your User model and seeds the required <code class="os-code-inline">.env</code> keys. It does not modify the database:</p>
 
     <div class="os-codeblock mb-6">
         <div class="os-codeblock-head"><span>Terminal</span></div>
-        <pre><code>php artisan cas:install</code></pre>
+        <pre><code>php artisan cas:install
+php artisan migrate</code></pre>
     </div>
 
-    <p class="text-sm text-[var(--color-ink-2)] leading-relaxed mb-4">Prefer to do it by hand? Publish just the config file with the <code class="os-code-inline">cas-client-config</code> tag, then run the migration that adds the CAS columns to <code class="os-code-inline">users</code>:</p>
+    <div class="os-alert os-alert-info mb-6">
+        <i class="fas fa-circle-info mt-0.5"></i>
+        <div><strong class="font-semibold">Why is migration required?</strong> Laravel packages may register migrations directly with <code class="os-code-inline">loadMigrationsFrom()</code>. This package does so, and <code class="os-code-inline">php artisan migrate</code> applies its bundled migration to add four CAS fields to the host application's <code class="os-code-inline">users</code> table. No migration publishing step is needed.</div>
+    </div>
+
+    <p class="text-sm text-[var(--color-ink-2)] leading-relaxed mb-4">Prefer to configure it by hand? Publish the config file with the <code class="os-code-inline">cas-client-config</code> tag, add <code class="os-code-inline">CasUserTrait</code> to your User model, set the environment values shown below, and run the registered package migration:</p>
 
     <div class="os-codeblock">
         <div class="os-codeblock-head"><span>Terminal</span></div>

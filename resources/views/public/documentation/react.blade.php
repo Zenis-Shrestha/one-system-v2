@@ -90,7 +90,7 @@
     <div class="os-alert mb-6">
         <i class="fas fa-circle-info mt-0.5"></i>
         <div>
-            <strong>Compatibility.</strong> Current package <code class="os-code-inline">v1.0.0</code> &mdash; peer
+            <strong>Compatibility.</strong> Current package <code class="os-code-inline">v1.0.1</code> &mdash; peer
             <code class="os-code-inline">react &gt;= 18.2</code>, built with TypeScript&nbsp;6. The reference sample runs on
             Vite&nbsp;6, React&nbsp;18.3, and Node&nbsp;20.
         </div>
@@ -113,7 +113,7 @@ pnpm add @cas-system/react-cas-client</code></pre>
         <div class="os-codeblock-head"><span>package.json</span><span>registry dependency</span></div>
         <pre><code>{
   <span class="text-[var(--color-accent-line)]">"dependencies"</span>: {
-    <span class="text-[var(--color-accent-line)]">"@cas-system/react-cas-client"</span>: <span style="{{ $str }}">"^1.0.0"</span>
+    <span class="text-[var(--color-accent-line)]">"@cas-system/react-cas-client"</span>: <span style="{{ $str }}">"^1.0.1"</span>
   }
 }</code></pre>
     </div>
